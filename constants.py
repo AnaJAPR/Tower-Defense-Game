@@ -7,8 +7,11 @@ SCREEN_HEIGHT = 600
 # Frames per Second
 FPS = 60
 
-TILE_SIZE = 48
+# Botton Menu
+BOTTOM_PANEL = 100
 
+# Dealing with tower position
+TILE_SIZE = 48
 ROWS = 15
 COLS = 15
 

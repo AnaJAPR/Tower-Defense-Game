@@ -8,6 +8,7 @@ from turret import Turret
 from game import load_maps as lm
 from game import load_turrets as lt
 from game import load_enemy as le
+from game import in_game_buttons as igb
 
 # Starting Pygame
 pygame.init()
@@ -16,10 +17,10 @@ pygame.init()
 clock = pygame.time.Clock()
 
 # Setting the Screen Information
-screen = pygame.display.set_mode((c.SCREEN_WIDTH, c.SCREEN_HEIGHT))
+screen = pygame.display.set_mode((c.SCREEN_WIDTH, c.SCREEN_HEIGHT + c.BOTTOM_PANEL))
 pygame.display.set_caption("Tower Defense Game")
-
-#game variables
+# Game Variable
+placing_turrets = False
 selected_turret = None
 
 # Loop
@@ -32,7 +33,7 @@ while running:
     lm.map.draw_map(screen)
 
     # Enemy movement
-    le.enemy.move()
+    le.enemy_group.update()
 
     # Update groups
     lt.turret_group.update()
@@ -43,15 +44,13 @@ while running:
 
     # Drawing Groups
     le.enemy_group.draw(screen)
-    for turret in lt.turret_group:
-        turret.draw(screen)
+    lt.turret_group.draw(screen)
 
     # Quit Event
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:    
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:    
             # mouse click
             mouse_pos = pygame.mouse.get_pos()
             #check if mouse is on the game area
