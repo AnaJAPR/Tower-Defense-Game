@@ -1,6 +1,7 @@
 import pygame
 import sys
 
+
 class Button:
     def __init__(self, text, x, y, width, height, action=None):
         # Initialize a Button object with its position, size, text, and associated action
