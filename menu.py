@@ -5,8 +5,8 @@ class Button:
     def __init__(self, text, x, y, width, height, action=None):
         # Initialize a Button object with its position, size, text, and associated action
         self.rect = pygame.Rect(x, y, width, height)
-        self.color = (0, 255, 0)
-        self.hover_color = (0, 200, 0)
+        self.color = (186, 147, 216)
+        self.hover_color = (160, 110, 200)
         self.text = text
         self.action = action
 
@@ -52,7 +52,10 @@ class Menu:
 
             for button in self.buttons:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and button.rect.collidepoint(event.pos):
-                    button.action()
+                    if button.text == "Start":
+                        self.show_level_buttons() 
+                    else:
+                        button.action()
 
     def handle_resize(self, event):
         # Resize the screen and update button positions to remain centered
@@ -64,16 +67,27 @@ class Menu:
             button.rect.x = SCREEN_WIDTH // 2 - button.rect.width // 2
             button.rect.y = SCREEN_HEIGHT // 2 - len(self.buttons) * 25 + i * 50
 
+    # Main loop for handling events and updating the screen
     def run(self):
-        # Main loop for handling events and updating the screen
         while True:
             self.handle_events()
             self.screen.fill((255, 255, 255))
-
+        
             for button in self.buttons:
                 button.draw(self.screen)
 
             pygame.display.flip()
+    
+    def show_level_buttons(self):
+        Menu.buttons.clear()
+
+        easy_button = Button("Easy", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 75, 200, 50, start_game)
+        middle_button = Button("Middle", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 25, 200, 50, start_game)
+        hard_button = Button("Hard", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 25, 200, 50, start_game)
+
+        menu.add_button(easy_button)
+        menu.add_button(middle_button)
+        menu.add_button(hard_button)
 
 def start_game():
     print("Starting the game...")
@@ -83,6 +97,24 @@ def toggle_sound():
 
 def show_options():
     print("Showing options...")
+    
+def show_almanac():
+    print("Showing almanac...")
+    
+def game_story():
+    print("Telling the story of the game...")
+    
+def show_help():
+    print("displaying help...")
+    
+def level_easy():
+    print("Selected Easy level...")
+
+def level_middle():
+    print("Selected Middle level...")
+
+def level_hard():
+    print("Selected Hard level...")
 
 def main():
     pygame.init()
@@ -98,11 +130,15 @@ def main():
     # Create buttons and add them to the menu
     start_button = Button("Start", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 25, 200, 50, start_game)
     options_button = Button("Options", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 25, 200, 50, show_options)
-    quit_button = Button("Quit", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 75, 200, 50, sys.exit)
+    almanac_button = Button("Almanac", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 75, 200, 50, show_almanac)
+    game_story_button = Button("Game's story", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 125, 200, 50, game_story)
+    help_button = Button("Help", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 175, 200, 50, show_help)
 
     menu.add_button(start_button)
     menu.add_button(options_button)
-    menu.add_button(quit_button)
+    menu.add_button(almanac_button)
+    menu.add_button(game_story_button)
+    menu.add_button(help_button)
 
     menu.run()
 
