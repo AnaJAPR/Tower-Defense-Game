@@ -13,8 +13,12 @@ clock = pygame.time.Clock()
 map = pygame.image.load("assets/maps/map_1.png")
 map = pygame.transform.scale(map, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
+# Defina o modo de vídeo
+largura, altura = 800, 600
+tela = pygame.display.set_mode((largura, altura))
+
 #individual turret image for mouse cursor
-cursor_turret = pygame.image.load("assets/towers/Blue/Weapons/turret_01_mk1.gif").convert_alpha()
+cursor_turret = pygame.image.load("assets/towers/Purple/Weapons/turret_01_mk1.png").convert_alpha()
 
 # loading Enemies
 enemy_image = pygame.image.load("assets/enemies/enemy.png")
@@ -65,17 +69,17 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-            
-    #mouse click
-    if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-        mouse_pos = pg.mouse.get_pos()
-        turret = Turret(cursor_turret, mouse_pos)
-        turret_group.add(turret)
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:    
+            # mouse click
+            mouse_pos = pygame.mouse.get_pos()
+            turret = Turret(cursor_turret, mouse_pos)
+            turret_group.add(turret)
+        
     
-    # Pressione ESC para sair
-    elif event.type == pygame.KEYDOWN:
-        if event.type == pygame.K_ESCAPE:
-            running = False
+        # Pressione ESC para sair
+        elif event.type == pygame.KEYDOWN:
+            if event.type == pygame.K_ESCAPE:
+                running = False
 
     # Display Update
     pygame.display.flip()
