@@ -11,3 +11,7 @@ TILE_SIZE = 48
 
 ROWS = 15
 COLS = 15
+
+#turret constants
+ANIMATION_STEPS = 8
+ANIMATION_DELAY = 15

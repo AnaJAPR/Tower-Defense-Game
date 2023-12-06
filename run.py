@@ -19,6 +19,9 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode((c.SCREEN_WIDTH, c.SCREEN_HEIGHT))
 pygame.display.set_caption("Tower Defense Game")
 
+#game variables
+selected_turret = None
+
 # Loop
 running = True
 while running:
@@ -31,20 +34,31 @@ while running:
     # Enemy movement
     le.enemy.move()
 
+    # Update groups
+    lt.turret_group.update()
+
+    # Highlight selected turret
+    if selected_turret:
+        selected_turret.selected = True
+
     # Drawing Groups
     le.enemy_group.draw(screen)
-    lt.turret_group.draw(screen)
+    for turret in lt.turret_group:
+        turret.draw(screen)
 
     # Quit Event
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:    
+        
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:    
             # mouse click
             mouse_pos = pygame.mouse.get_pos()
             #check if mouse is on the game area
             if mouse_pos[0] < c.SCREEN_WIDTH and mouse_pos[1] < c.SCREEN_HEIGHT:
                 lt.create_turret(mouse_pos)
+            #else:
+            #    selected_turret = lt.select_turret(mouse_pos)
     
         # Press ESC to leave
         elif event.type == pygame.KEYDOWN:
