@@ -5,7 +5,7 @@ from enemy import Enemy
 from game import waypoints as wp
 
 # loading Enemies
-enemy_image = pygame.image.load("assets/enemies/enemy.png")
+enemy_image = pygame.image.load("assets/enemies/enemy_1.png")
 
 # Groups
 enemy_group = pygame.sprite.Group()
