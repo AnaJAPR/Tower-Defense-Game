@@ -26,7 +26,7 @@ while running:
     clock.tick(c.FPS)
 
     # Inserting the map on the screen
-    screen.blit(lm.map, (0, 0))
+    lm.map.draw_map(screen)
 
     # Enemy movement
     le.enemy.move()
