@@ -1,5 +1,6 @@
 import pygame
 import sys
+import subprocess
 
 
 class Button:
@@ -10,6 +11,7 @@ class Button:
         self.hover_color = (160, 110, 200)
         self.text = text
         self.action = action
+        self.action_triggered = False
 
     def draw(self, screen):
         # Draw the button on the screen, change color when hovered, and execute action on click
@@ -19,8 +21,9 @@ class Button:
 
         if self.rect.collidepoint(mouse_pos):
             pygame.draw.rect(screen, self.hover_color, self.rect)
-            if mouse_click[0] == 1 and self.action is not None:
+            if mouse_click[0] == 1 and self.action is not None and not self.action_triggered:
                 self.action()
+                self.action_triggered = True
 
         font = pygame.font.Font(None, 36)
         text_surface = font.render(self.text, True, (0, 0, 0))
@@ -52,11 +55,12 @@ class Menu:
                 self.handle_resize(event)
 
             for button in self.buttons:
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and button.rect.collidepoint(event.pos):
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and button.rect.collidepoint(event.pos) and not button.action_triggered:
                     if button.text == "Start":
                         self.show_level_buttons() 
                     else:
                         button.action()
+                        button.action_triggered = True
 
     def handle_resize(self, event):
         # Resize the screen and update button positions to remain centered
@@ -82,13 +86,13 @@ class Menu:
     def show_level_buttons(self):
         self.buttons.clear()
 
-        easy_button = Button("Easy", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 75, 200, 50, start_game)
-        middle_button = Button("Middle", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 25, 200, 50, start_game)
+        easy_button = Button("Easy", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 75, 200, 50, level_easy)
+        medium_button = Button("Medium", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 25, 200, 50, start_game)
         hard_button = Button("Hard", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 25, 200, 50, start_game)
         come_back_button = Button("Come Back", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 75, 200, 50, self.show_main_menu)
 
         menu.add_button(easy_button)
-        menu.add_button(middle_button)
+        menu.add_button(medium_button)
         menu.add_button(hard_button)
         menu.add_button(come_back_button)
         
@@ -108,7 +112,7 @@ class Menu:
     def show_main_menu(self):
         self.buttons.clear()
         self.create_main_menu_buttons()
-        
+        self.run()
 
 def start_game():
     print("Starting the game...")
@@ -131,11 +135,21 @@ def show_help():
 def level_easy():
     print("Selected Easy level...")
 
-def level_middle():
-    print("Selected Middle level...")
+def level_medium():
+    print("Selected Medium level...")
 
 def level_hard():
     print("Selected Hard level...")
+    
+'''
+def level_easy():
+    print("Selected Easy level...")
+
+    python_command = "python3"
+    script_path = "run.py"
+        
+    subprocess.run([python_command, script_path])
+'''
 
 def main():
     pygame.init()
