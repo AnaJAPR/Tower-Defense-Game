@@ -145,14 +145,18 @@ class Menu:
     
     def level_easy(self):
         print("Selected Easy level...")
+        
+        self.current_level = "Easy"
 
     def level_medium(self):
         print("Selected Medium level...")
         
-        self.current_level = "Easy"
+        self.current_level = "Medium"
 
     def level_hard(self):
         print("Selected Hard level...")
+        
+        self.current_level = "Hard"
 
 def main():
     pygame.init()
