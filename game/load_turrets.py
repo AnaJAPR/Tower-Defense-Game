@@ -16,13 +16,14 @@ turret_sheet = pygame.image.load("assets/towers/turret_01_mk1.png").convert_alph
 def create_turret(mouse_pos):
     mouse_tile_x = mouse_pos[0] // c.TILE_SIZE
     mouse_tile_y = mouse_pos[1] // c.TILE_SIZE
-    #space_is_free = True
-    #for turret in turret_group:
+    # Seção com problema
+    # space_is_free = True
+    # for turret in turret_group:
     #    if (mouse_tile_x, mouse_tile_y) == (turret.tile_x, turret.tile_y):
     #        space_is_free = False
     #    if space_is_free == True:
-    turret = Turret(turret_sheet, mouse_tile_x, mouse_tile_y)
-    turret_group.add(turret)
+    new_turret = Turret(turret_sheet, mouse_tile_x, mouse_tile_y)
+    turret_group.add(new_turret)
 
 def select_turret(mouse_pos):
     mouse_tile_x = mouse_pos[0] // c.TILE_SIZE
@@ -30,6 +31,10 @@ def select_turret(mouse_pos):
     for turret in turret_group:
         if (mouse_tile_x, mouse_tile_y) == (turret.tile_x, turret.tile_y):
             return turret
+        
+def clear_selection():
+   for turret in turret_group:
+      turret.selected = False
         
 # Creating turret group
 turret_group = pygame.sprite.Group()

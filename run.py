@@ -32,11 +32,9 @@ while running:
     # Inserting the map on the screen
     lm.map.draw_map(screen)
 
-    # Enemy movement
-    le.enemy_group.update()
-
     # Update groups
-    lt.turret_group.update()
+    le.enemy_group.update()
+    lt.turret_group.update(le.enemy_group)
 
     # Highlight selected turret
     if selected_turret:
@@ -52,7 +50,8 @@ while running:
 
     # Drawing Groups
     le.enemy_group.draw(screen)
-    lt.turret_group.draw(screen)
+    for turret in lt.turret_group:
+        turret.draw(screen)
 
     # Quit Event
     for event in pygame.event.get():
@@ -63,9 +62,14 @@ while running:
             mouse_pos = pygame.mouse.get_pos()
             #check if mouse is on the game area
             if mouse_pos[0] < c.SCREEN_WIDTH and mouse_pos[1] < c.SCREEN_HEIGHT:
-                lt.create_turret(mouse_pos)
-            #else:
-            #    selected_turret = lt.select_turret(mouse_pos)
+                #clear selected turrets
+                selected_turret = None
+                lt.clear_selection()
+                if placing_turrets == True:
+                    print("tap 2")
+                    lt.create_turret(mouse_pos)
+                else:
+                    selected_turret = lt.select_turret(mouse_pos)
     
         # Press ESC to leave
         elif event.type == pygame.KEYDOWN:
