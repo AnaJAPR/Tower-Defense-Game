@@ -19,6 +19,30 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self._image.get_rect()
         self.rect.center = self.__position
 
+    @property
+    def speed(self):
+        return self._speed
+    
+    @speed.setter
+    def speed(self, speed):
+        self._speed = speed
+
+    @property
+    def health(self):
+        return self._health
+    
+    @health.setter
+    def health(self, health):
+        self._health = health
+
+    @property
+    def xp(self):
+        return self._xp
+    
+    @xp.setter
+    def xp(self, xp):
+        self._xp = xp
+
     def update(self):
         self.move()
         self.rotate()
@@ -55,9 +79,3 @@ class Enemy(pygame.sprite.Sprite):
         self.image= pygame.transform.rotate(self._original_image, self.__angle)
         self.rect = self._image.get_rect()
         self.rect.center = self.__position
-
-# class Enemy_1(Enemy):
-#     def __init__(self, waypoints, image):
-#         super().__init__(waypoints, image)
-
-        
