@@ -80,15 +80,35 @@ class Menu:
             pygame.display.flip()
     
     def show_level_buttons(self):
-        Menu.buttons.clear()
+        self.buttons.clear()
 
         easy_button = Button("Easy", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 75, 200, 50, start_game)
         middle_button = Button("Middle", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 25, 200, 50, start_game)
         hard_button = Button("Hard", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 25, 200, 50, start_game)
+        come_back_button = Button("Come Back", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 75, 200, 50, self.show_main_menu)
 
         menu.add_button(easy_button)
         menu.add_button(middle_button)
         menu.add_button(hard_button)
+        menu.add_button(come_back_button)
+        
+    def create_main_menu_buttons(self):
+        start_button = Button("Start", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 75, 200, 50, self.show_level_buttons)
+        options_button = Button("Options", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 25, 200, 50, show_options)
+        almanac_button = Button("Almanac", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 25, 200, 50, show_almanac)
+        game_story_button = Button("Game's story", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 75, 200, 50, game_story)
+        help_button = Button("Help", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 125, 200, 50, show_help)
+
+        self.add_button(start_button)
+        self.add_button(options_button)
+        self.add_button(almanac_button)
+        self.add_button(game_story_button)
+        self.add_button(help_button)
+
+    def show_main_menu(self):
+        self.buttons.clear()
+        self.create_main_menu_buttons()
+        
 
 def start_game():
     print("Starting the game...")
@@ -126,20 +146,11 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
     pygame.display.set_caption("Tower Defense Menu")
 
+    global menu 
     menu = Menu(screen)
 
     # Create buttons and add them to the menu
-    start_button = Button("Start", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 25, 200, 50, start_game)
-    options_button = Button("Options", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 25, 200, 50, show_options)
-    almanac_button = Button("Almanac", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 75, 200, 50, show_almanac)
-    game_story_button = Button("Game's story", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 125, 200, 50, game_story)
-    help_button = Button("Help", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 175, 200, 50, show_help)
-
-    menu.add_button(start_button)
-    menu.add_button(options_button)
-    menu.add_button(almanac_button)
-    menu.add_button(game_story_button)
-    menu.add_button(help_button)
+    menu.create_main_menu_buttons()
 
     menu.run()
 
