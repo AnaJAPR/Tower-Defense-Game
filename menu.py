@@ -35,6 +35,9 @@ class Menu:
         self.screen = screen
         self.buttons = []
         self.current_level = None
+        self.original_background = pygame.image.load("menu_image.jpeg")
+        self.background = self.original_background.copy()
+        self.background_rect = self.background.get_rect()
 
     def add_button(self, button):
         # Add a button to the list of buttons in the menu
@@ -62,6 +65,9 @@ class Menu:
                     else:
                         button.action()
                         button.action_triggered = True
+        
+            # Update the position and size of the background image
+            self.background_rect = self.background.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
 
     def handle_resize(self, event):
         # Resize the screen and update button positions to remain centered
@@ -72,13 +78,17 @@ class Menu:
         for i, button in enumerate(self.buttons):
             button.rect.x = SCREEN_WIDTH // 2 - button.rect.width // 2
             button.rect.y = SCREEN_HEIGHT // 2 - len(self.buttons) * 25 + i * 50
-
+        
+        # Update the position and size of the background image while maintaining the original aspect ratio
+        self.background = pygame.transform.scale(self.original_background, (SCREEN_WIDTH, SCREEN_HEIGHT))
+        self.background_rect = self.background.get_rect()
+        
     # Main loop for handling events and updating the screen
     def run(self):
         while True:
             self.handle_events()
-            self.screen.fill((255, 255, 255))
-        
+            self.screen.blit(self.background, self.background_rect)  # Draw the image
+    
             for button in self.buttons:
                 button.draw(self.screen)
 
@@ -125,8 +135,19 @@ class Menu:
         if self.current_level:
             python_command = "python"
             script_path = "run.py"
+            
+            # Start the game in a new process
+            subprocess.Popen([python_command, script_path])
         
-            subprocess.run([python_command, script_path])
+            # Close the menu window
+            pygame.quit()
+            sys.exit()
+            
+            # Reset the menu after the game ends
+            pygame.init()
+            self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
+            pygame.display.set_caption("Tower Defense Menu")
+            self.create_main_menu_buttons()
 
     def toggle_sound(self):
         print("Toggling sound...")
