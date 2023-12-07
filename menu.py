@@ -2,7 +2,6 @@ import pygame
 import sys
 import subprocess
 
-
 class Button:
     def __init__(self, text, x, y, width, height, action=None):
         # Initialize a Button object with its position, size, text, and associated action
@@ -35,6 +34,7 @@ class Menu:
         # Initialize the menu with its associated screen and an empty list of buttons
         self.screen = screen
         self.buttons = []
+        self.current_level = None
 
     def add_button(self, button):
         # Add a button to the list of buttons in the menu
@@ -49,7 +49,8 @@ class Menu:
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    return
+                    print("Tecla Escape pressionada")
+                    return 
 
             if event.type == pygame.VIDEORESIZE:
                 self.handle_resize(event)
@@ -82,13 +83,17 @@ class Menu:
                 button.draw(self.screen)
 
             pygame.display.flip()
+            
+            if self.current_level:
+                self.start_game()
+                self.current_level = None
     
     def show_level_buttons(self):
         self.buttons.clear()
-
-        easy_button = Button("Easy", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 75, 200, 50, level_easy)
-        medium_button = Button("Medium", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 25, 200, 50, start_game)
-        hard_button = Button("Hard", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 25, 200, 50, start_game)
+        
+        easy_button = Button("Easy", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 75, 200, 50, self.level_easy)
+        medium_button = Button("Medium", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 25, 200, 50, self.level_medium)
+        hard_button = Button("Hard", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 25, 200, 50, self.level_hard)
         come_back_button = Button("Come Back", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 75, 200, 50, self.show_main_menu)
 
         menu.add_button(easy_button)
@@ -98,10 +103,10 @@ class Menu:
         
     def create_main_menu_buttons(self):
         start_button = Button("Start", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 75, 200, 50, self.show_level_buttons)
-        options_button = Button("Options", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 25, 200, 50, show_options)
-        almanac_button = Button("Almanac", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 25, 200, 50, show_almanac)
-        game_story_button = Button("Game's story", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 75, 200, 50, game_story)
-        help_button = Button("Help", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 125, 200, 50, show_help)
+        options_button = Button("Options", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 25, 200, 50, self.show_options)
+        almanac_button = Button("Almanac", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 25, 200, 50, self.show_almanac)
+        game_story_button = Button("Game's story", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 75, 200, 50, self.game_story)
+        help_button = Button("Help", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 125, 200, 50, self.show_help)
 
         self.add_button(start_button)
         self.add_button(options_button)
@@ -114,42 +119,40 @@ class Menu:
         self.create_main_menu_buttons()
         self.run()
 
-def start_game():
-    print("Starting the game...")
-
-def toggle_sound():
-    print("Toggling sound...")
-
-def show_options():
-    print("Showing options...")
-    
-def show_almanac():
-    print("Showing almanac...")
-    
-def game_story():
-    print("Telling the story of the game...")
-    
-def show_help():
-    print("displaying help...")
-    
-def level_easy():
-    print("Selected Easy level...")
-
-def level_medium():
-    print("Selected Medium level...")
-
-def level_hard():
-    print("Selected Hard level...")
-    
-'''
-def level_easy():
-    print("Selected Easy level...")
-
-    python_command = "python3"
-    script_path = "run.py"
+    def start_game(self):
+        print("Starting the game...")
         
-    subprocess.run([python_command, script_path])
-'''
+        if self.current_level:
+            python_command = "python"
+            script_path = "run.py"
+        
+            subprocess.run([python_command, script_path])
+
+    def toggle_sound(self):
+        print("Toggling sound...")
+
+    def show_options(self):
+        print("Showing options...")
+    
+    def show_almanac(self):
+        print("Showing almanac...")
+    
+    def game_story(self):
+        print("Telling the story of the game...")
+    
+    def show_help(self):
+        print("displaying help...")
+    
+    def level_easy(self):
+        print("Selected Easy level...")
+
+    def level_medium(self):
+        print("Selected Medium level...")
+        
+        self.current_level = "Easy"
+
+    def level_hard(self):
+        print("Selected Hard level...")
 
 def main():
     pygame.init()
