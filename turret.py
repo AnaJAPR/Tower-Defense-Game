@@ -66,8 +66,8 @@ class Turret(pygame.sprite.Sprite):
         y_dist = 0
         #check distance to each enemy to see if it is in range
         for enemy in le.enemy_group:
-            x_dist = enemy.pos[0] - self.x
-            y_dist = enemy.pos[1] - self.y
+            x_dist = enemy.position[0] - self.x
+            y_dist = enemy.position[1] - self.y
             dist = math.sqrt(x_dist ** 2 + y_dist ** 2)
             if dist < self.range:
                 self.target = enemy

@@ -14,13 +14,10 @@ enemy_4_image = pygame.image.load("assets/enemies/enemy_4.png")
 enemy_group = pygame.sprite.Group()
 
 # Creating an Enemy
-enemy_1 = Enemy(wp.lvl1_waypoints, enemy_1_image)
-enemy_2 = Enemy(wp.lvl1_waypoints, enemy_2_image)
-enemy_2.speed = 3
-enemy_3 = Enemy(wp.lvl1_waypoints, enemy_3_image)
-enemy_3.speed = 2
-enemy_4 = Enemy(wp.lvl1_waypoints, enemy_4_image)
-enemy_4.speed = 5
+enemy_1 = Enemy(wp.lvl1_waypoints, enemy_1_image, 1)
+enemy_2 = Enemy(wp.lvl1_waypoints, enemy_2_image, 3)
+enemy_3 = Enemy(wp.lvl1_waypoints, enemy_3_image, 2)
+enemy_4 = Enemy(wp.lvl1_waypoints, enemy_4_image, 5)
 
 enemy_group.add(enemy_1)
 enemy_group.add(enemy_2)
