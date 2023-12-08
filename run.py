@@ -40,13 +40,9 @@ while running:
     if selected_turret:
         selected_turret.selected = True
 
+    # Creating the button to add turrets and cancel the action
     if igb.turret_button.draw_button(screen):
-        placing_turrets = True
-
-    if placing_turrets == True:
-        if igb.cancel_button.draw_button(screen):
-            print("aaaaa")
-            placing_turrets = False
+        placing_turrets = not placing_turrets
 
     # Drawing Groups
     le.enemy_group.draw(screen)
