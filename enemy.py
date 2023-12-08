@@ -50,6 +50,7 @@ class Enemy(pygame.sprite.Sprite):
     def update(self):
         self.move()
         self.rotate()
+        self.check_alive()
 
     # Method to make the enemy move
     def move(self):
@@ -83,3 +84,7 @@ class Enemy(pygame.sprite.Sprite):
         self.image= pygame.transform.rotate(self._original_image, self.__angle)
         self.rect = self._image.get_rect()
         self.rect.center = self.position
+
+    def check_alive(self):
+        if self._health <= 0:
+            self.kill()
