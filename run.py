@@ -31,6 +31,7 @@ def draw_text(text, font, text_col, x, y):
 # Game Variable
 placing_turrets = False
 selected_turret = None
+is_paused = False
 
 # Loop
 running = True
@@ -45,8 +46,11 @@ while running:
     lm.map.draw_map(screen)
 
     # Update groups
-    le.enemy_group.update(screen)
-    lt.turret_group.update(le.enemy_group)
+    if not is_paused:
+        le.enemy_group.update(screen)
+        lt.turret_group.update(le.enemy_group)
+    if is_paused:
+        pass
 
     # Highlight selected turret
     if selected_turret:
@@ -56,14 +60,18 @@ while running:
     if igb.turret_button.draw_button(screen):
         placing_turrets = not placing_turrets
 
-    #if turret is selected, show upgrade button
-    if selected_turret:
-        #if turret can be upgraded, show upgrade button
-        if selected_turret.upgrade_level < c.TURRET_LEVELS:
-            if igb.upgrade_button.draw_button(screen):
-                if lm.map.money >= c.UPGRADE_COST:
-                    selected_turret.upgrade()
-                    lm.map.money -= c.UPGRADE_COST
+    if igb.pause_button.draw_button(screen):
+        is_paused = not is_paused
+
+    if not is_paused:
+        #if turret is selected, show upgrade button
+        if selected_turret:
+            #if turret can be upgraded, show upgrade button
+            if selected_turret.upgrade_level < c.TURRET_LEVELS:
+                if igb.upgrade_button.draw_button(screen):
+                    if lm.map.money >= c.UPGRADE_COST:
+                        selected_turret.upgrade()
+                        lm.map.money -= c.UPGRADE_COST
 
     # Drawing Groups
     le.enemy_group.draw(screen)
@@ -85,21 +93,22 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:    
-            # mouse click
-            mouse_pos = pygame.mouse.get_pos()
-            #check if mouse is on the game area
-            if mouse_pos[0] < c.SCREEN_WIDTH and mouse_pos[1] < c.SCREEN_HEIGHT:
-                #clear selected turrets
-                selected_turret = None
-                lt.clear_selection()
-                if placing_turrets == True:
-                    #check if there is enough money
-                    if lm.map.money >= c.BUY_COST:
-                        lt.create_turret(mouse_pos)
-                else:
-                    selected_turret = lt.select_turret(mouse_pos)
-    
+        if not is_paused:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:    
+                # mouse click
+                mouse_pos = pygame.mouse.get_pos()
+                #check if mouse is on the game area
+                if mouse_pos[0] < c.SCREEN_WIDTH and mouse_pos[1] < c.SCREEN_HEIGHT:
+                    #clear selected turrets
+                    selected_turret = None
+                    lt.clear_selection()
+                    if placing_turrets == True:
+                        #check if there is enough money
+                        if lm.map.money >= c.BUY_COST:
+                            lt.create_turret(mouse_pos)
+                    else:
+                        selected_turret = lt.select_turret(mouse_pos)
+        
         # Press ESC to leave
         elif event.type == pygame.KEYDOWN:
             if event.type == pygame.K_ESCAPE:
