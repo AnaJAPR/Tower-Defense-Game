@@ -19,6 +19,15 @@ clock = pygame.time.Clock()
 # Setting the Screen Information
 screen = pygame.display.set_mode((c.SCREEN_WIDTH, c.SCREEN_HEIGHT + c.BOTTOM_PANEL))
 pygame.display.set_caption("Tower Defense Game")
+
+text_font = pygame.font.SysFont("Consolas", 24, bold = True)
+large_font = pygame.font.SysFont("Consolas", 36)
+
+#function to show text on screen
+def draw_text(text, font, text_col, x, y):
+    img = font.render(text, True, text_col)
+    screen.blit(img, (x, y))
+
 # Game Variable
 placing_turrets = False
 selected_turret = None
@@ -52,12 +61,17 @@ while running:
         #if turret can be upgraded, show upgrade button
         if selected_turret.upgrade_level < c.TURRET_LEVELS:
             if igb.upgrade_button.draw_button(screen):
-                selected_turret.upgrade()
+                if lm.map.money >= c.UPGRADE_COST:
+                    selected_turret.upgrade()
+                    lm.map.money -= c.UPGRADE_COST
 
     # Drawing Groups
     le.enemy_group.draw(screen)
     for turret in lt.turret_group:
         turret.draw(screen)
+
+    draw_text(str(lm.map.health), text_font, "grey100", 0, 0)
+    draw_text(str(lm.map.money), text_font, "grey100", 0, 30)
 
     # Drawing a tower that follows the mouse
     if placing_turrets:
@@ -80,7 +94,9 @@ while running:
                 selected_turret = None
                 lt.clear_selection()
                 if placing_turrets == True:
-                    lt.create_turret(mouse_pos)
+                    #check if there is enough money
+                    if lm.map.money >= c.BUY_COST:
+                        lt.create_turret(mouse_pos)
                 else:
                     selected_turret = lt.select_turret(mouse_pos)
     

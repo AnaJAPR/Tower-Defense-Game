@@ -3,6 +3,7 @@ sys.path.append('.')
 import pygame
 import constants as c
 from turret import Turret
+from game import load_maps as lm
 import math
 
 # Defining video mode
@@ -47,6 +48,8 @@ def create_turret(mouse_pos):
     if min_distance <= max_placement_distance:
         new_turret = Turret(turret_spritesheets, closest_base[0], closest_base[1])
         turret_group.add(new_turret)
+        #remove cost of turret
+        lm.map.money -= c.BUY_COST
 
 def select_turret(mouse_pos):
     for turret in turret_group:
