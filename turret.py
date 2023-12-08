@@ -6,7 +6,7 @@ from game import load_enemy as le
 import math
 
 class Turret(pygame.sprite.Sprite):
-    def __init__(self, sprite_sheet, tile_x, tile_y):
+    def __init__(self, sprite_sheet, pos_x, pos_y):
         pygame.sprite.Sprite.__init__(self)
         self.range = 90
         self.cooldown = 1500
@@ -14,11 +14,8 @@ class Turret(pygame.sprite.Sprite):
         self.selected = False
         self.target = None
         #position variables
-        self.tile_x = tile_x
-        self.tile_y = tile_y
-        #calculate center coordinates
-        self.x = (self.tile_x + 0.5) * c.TILE_SIZE
-        self.y = (self.tile_y + 0.5) * c.TILE_SIZE
+        self.pos_x = pos_x
+        self.pos_y = pos_y
         
         #animation variables
         self.sprite_sheet = sprite_sheet
@@ -31,7 +28,7 @@ class Turret(pygame.sprite.Sprite):
         self.original_image = self.animation_list[self.frame_index]
         self.image = pygame.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect()
-        self.rect.center = (self.x, self.y)
+        self.rect.center = (self.pos_x, self.pos_y)
 
         #create range radius
         self.range_image = pygame.Surface((self.range * 2, self.range * 2))
@@ -66,8 +63,8 @@ class Turret(pygame.sprite.Sprite):
         y_dist = 0
         #check distance to each enemy to see if it is in range
         for enemy in le.enemy_group:
-            x_dist = enemy.position[0] - self.x
-            y_dist = enemy.position[1] - self.y
+            x_dist = enemy.position[0] - self.pos_x
+            y_dist = enemy.position[1] - self.pos_y
             dist = math.sqrt(x_dist ** 2 + y_dist ** 2)
             if dist < self.range:
                 self.target = enemy
@@ -90,7 +87,7 @@ class Turret(pygame.sprite.Sprite):
     def draw(self, surface):
         self.image = pygame.transform.rotate(self.original_image, self.angle - 90)
         self.rect = self.image.get_rect()
-        self.rect.center = (self.x, self.y)
+        self.rect.center = (self.pos_x, self.pos_y)
         surface.blit(self.image, self.rect)
         if self.selected:
             surface.blit(self.range_image, self.range_rect)
