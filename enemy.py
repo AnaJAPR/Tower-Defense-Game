@@ -15,7 +15,7 @@ class Enemy(pygame.sprite.Sprite):
         self._position = Vector2(self.__waypoints[0])
         self.__angle = 0
         self._original_image = image
-        self._image= pygame.transform.rotate(self._original_image, self.__angle)
+        self._image = pygame.transform.rotate(self._original_image, self.__angle)
         self.rect = self._image.get_rect()
         self.rect.center = self._position
     
@@ -56,7 +56,7 @@ class Enemy(pygame.sprite.Sprite):
         # Defining the target and the movement
         if self.__target_wp < len(self.__waypoints):
             self.__target = Vector2(self.__waypoints[self.__target_wp])
-            self.__movement = self.__target - self.position
+            self.__movement = self.__target - self._position
         # If there are no more waypoints to go, the enemy disappears
         else:
             self.kill()
@@ -72,14 +72,14 @@ class Enemy(pygame.sprite.Sprite):
             # Once the distance gets to 0, the next waypoint becomes into the new target
             self.__target_wp += 1
 
-        self.rect.center = self.position
+        self.rect.center = self._position
     
     def rotate(self):
         #calculate distance to next waypoint
-        dist = self.__target - self.position
+        dist = self.__target - self._position
         #use distance to calculate angle
         self.__angle = math.degrees(math.atan2(-dist[1], dist[0]))
         #rotate image and update rectangle
-        self.image= pygame.transform.rotate(self._original_image, self.__angle)
+        self.image = pygame.transform.rotate(self._original_image, self.__angle)
         self.rect = self._image.get_rect()
-        self.rect.center = self.position
+        self.rect.center = self._position
