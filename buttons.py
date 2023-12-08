@@ -2,6 +2,8 @@ import pygame
 
 class Button():
     def __init__(self, x, y, image_path):
+        self.x = x
+        self.y = y
         self.image = pygame.image.load(image_path).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
@@ -9,6 +11,8 @@ class Button():
 
     def transform_image_proportions(self, width:int, height:int):
         self.image = pygame.transform.scale(self.image, (width, height))
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (self.x, self.y)
 
     def draw_button(self, surface):
         action = False
