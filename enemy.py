@@ -3,10 +3,11 @@ import math
 from pygame.math import Vector2
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, waypoints, image, speed):
+    def __init__(self, waypoints, image, speed, health):
         pygame.sprite.Sprite.__init__(self)
         self._speed = speed
-        self._health = 1
+        self._health = health
+        self._initial_health = health
         self._xp = 1
 
         self.__waypoints = waypoints
@@ -47,10 +48,30 @@ class Enemy(pygame.sprite.Sprite):
     def xp(self, xp):
         self._xp = xp
 
-    def update(self):
+    def draw_health_bar(self, surface):
+        bar_width = 25
+        bar_height = 5
+
+        # Calculates current life as a percentage of total life
+        pct = self._health / self._initial_health
+
+        # Normalizing
+        if pct > 1: 
+            pct = 1
+
+        # Set the health bar position
+        pos_x = self._position[0] - bar_width / 2
+        pos_y = self._position[1] - 30
+
+        # Draw the life bar
+        pygame.draw.rect(surface, (255, 0, 0), pygame.Rect(pos_x, pos_y, bar_width, bar_height))
+        pygame.draw.rect(surface, (0, 255, 0), pygame.Rect(pos_x, pos_y, bar_width * pct, bar_height))
+
+    def update(self, surface):
         self.move()
         self.rotate()
         self.check_alive()
+        self.draw_health_bar(surface)
 
     # Method to make the enemy move
     def move(self):

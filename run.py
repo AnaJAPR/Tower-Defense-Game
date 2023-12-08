@@ -45,7 +45,7 @@ while running:
     lm.map.draw_map(screen)
 
     # Update groups
-    le.enemy_group.update()
+    le.enemy_group.update(screen)
     lt.turret_group.update(le.enemy_group)
 
     # Highlight selected turret
