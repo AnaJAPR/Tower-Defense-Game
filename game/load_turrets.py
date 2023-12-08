@@ -39,8 +39,11 @@ def create_turret(mouse_pos):
 
 def select_turret(mouse_pos):
     for turret in turret_group:
-        if (mouse_pos[0], mouse_pos[1]) == (turret.pos_x, turret.pos_y):
+        distance = math.sqrt((mouse_pos[0] - turret.pos_x)**2 + (mouse_pos[1] - turret.pos_y)**2)
+        max_selection_distance = 50
+        if distance <= max_selection_distance:
             return turret
+    return None
         
 def clear_selection():
    for turret in turret_group:

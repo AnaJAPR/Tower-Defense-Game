@@ -62,7 +62,6 @@ while running:
                 selected_turret = None
                 lt.clear_selection()
                 if placing_turrets == True:
-                    print("tap 2")
                     lt.create_turret(mouse_pos)
                 else:
                     selected_turret = lt.select_turret(mouse_pos)
