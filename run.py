@@ -28,6 +28,9 @@ running = True
 while running:
 
     clock.tick(c.FPS)
+    
+    # Menu Area
+    screen.fill((126, 52, 0))
 
     # Inserting the map on the screen
     lm.map.draw_map(screen)
@@ -40,18 +43,29 @@ while running:
     if selected_turret:
         selected_turret.selected = True
 
+    # Creating the button to add turrets and cancel the action
     if igb.turret_button.draw_button(screen):
-        placing_turrets = True
+        placing_turrets = not placing_turrets
 
-    if placing_turrets == True:
-        if igb.cancel_button.draw_button(screen):
-            print("aaaaa")
-            placing_turrets = False
+    #if turret is selected, show upgrade button
+    if selected_turret:
+        #if turret can be upgraded, show upgrade button
+        if selected_turret.upgrade_level < c.TURRET_LEVELS:
+            if igb.upgrade_button.draw_button(screen):
+                selected_turret.upgrade()
 
     # Drawing Groups
     le.enemy_group.draw(screen)
     for turret in lt.turret_group:
         turret.draw(screen)
+
+    # Drawing a tower that follows the mouse
+    if placing_turrets:
+        cursor_rect = lt.cursor_turret.get_rect()
+        cursor_pos = pygame.mouse.get_pos()
+        cursor_rect.center = cursor_pos
+        if cursor_pos[1] <= c.SCREEN_HEIGHT:
+            screen.blit(lt.cursor_turret, cursor_rect)
 
     # Quit Event
     for event in pygame.event.get():
@@ -66,7 +80,6 @@ while running:
                 selected_turret = None
                 lt.clear_selection()
                 if placing_turrets == True:
-                    print("tap 2")
                     lt.create_turret(mouse_pos)
                 else:
                     selected_turret = lt.select_turret(mouse_pos)
