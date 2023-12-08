@@ -44,6 +44,13 @@ while running:
     if igb.turret_button.draw_button(screen):
         placing_turrets = not placing_turrets
 
+    #if turret is selected, show upgrade button
+    if selected_turret:
+        #if turret can be upgraded, show upgrade button
+        if selected_turret.upgrade_level < c.TURRET_LEVELS:
+            if igb.upgrade_button.draw_button(screen):
+                selected_turret.upgrade()
+
     # Drawing Groups
     le.enemy_group.draw(screen)
     for turret in lt.turret_group:
