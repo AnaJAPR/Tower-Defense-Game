@@ -30,14 +30,19 @@ class Button:
         screen.blit(text_surface, text_rect)
 
 class Menu:
-    def __init__(self, screen):
+    def __init__(self, screen_width, screen_height):
         # Initialize the menu with its associated screen and an empty list of buttons
-        self.screen = screen
+        self.screen_width = screen_width
+        self.screen_height = screen_height
+        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height), pygame.RESIZABLE)
         self.buttons = []
         self.current_level = None
         self.original_background = pygame.image.load("menu_image.jpeg")
         self.background = self.original_background.copy()
         self.background_rect = self.background.get_rect()
+        self.running = True   # add the control variable
+        self.level_buttons_shown = False
+        self.selected_level = None
 
     def add_button(self, button):
         # Add a button to the list of buttons in the menu
@@ -50,22 +55,31 @@ class Menu:
                 pygame.quit()
                 sys.exit()
 
+            '''
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     print("Tecla Escape pressionada")
                     return 
+            '''
 
             if event.type == pygame.VIDEORESIZE:
                 self.handle_resize(event)
 
             for button in self.buttons:
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and button.rect.collidepoint(event.pos) and not button.action_triggered:
+                if (event.type == pygame.MOUSEBUTTONDOWN
+                    and event.button == 1 
+                    and button.rect.collidepoint(event.pos) 
+                    and not button.action_triggered):
+                    
                     if button.text == "Start":
                         self.show_level_buttons() 
                     else:
                         button.action()
                         button.action_triggered = True
-        
+
+            for button in self.buttons:
+                button.action_triggered = False
+            
             # Update the position and size of the background image
             self.background_rect = self.background.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
 
@@ -85,7 +99,7 @@ class Menu:
         
     # Main loop for handling events and updating the screen
     def run(self):
-        while True:
+        while self.running:
             self.handle_events()
             self.screen.blit(self.background, self.background_rect)  # Draw the image
     
@@ -94,22 +108,27 @@ class Menu:
 
             pygame.display.flip()
             
+            '''
             if self.current_level:
                 self.start_game()
                 self.current_level = None
+            '''
     
     def show_level_buttons(self):
-        self.buttons.clear()
+        if not self.level_buttons_shown: # checks if the buttons are already displayed
+            self.buttons.clear()
         
-        easy_button = Button("Easy", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 75, 200, 50, self.level_easy)
-        medium_button = Button("Medium", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 25, 200, 50, self.level_medium)
-        hard_button = Button("Hard", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 25, 200, 50, self.level_hard)
-        come_back_button = Button("Come Back", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 75, 200, 50, self.show_main_menu)
+            easy_button = Button("Easy", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 75, 200, 50, self.level_easy)
+            medium_button = Button("Medium", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 25, 200, 50, self.level_medium)
+            hard_button = Button("Hard", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 25, 200, 50, self.level_hard)
+            come_back_button = Button("Come Back", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 75, 200, 50, self.show_main_menu)
 
-        menu.add_button(easy_button)
-        menu.add_button(medium_button)
-        menu.add_button(hard_button)
-        menu.add_button(come_back_button)
+            menu.add_button(easy_button)
+            menu.add_button(medium_button)
+            menu.add_button(hard_button)
+            menu.add_button(come_back_button)
+            
+            self.level_buttons_shown = True    # Updates the control variable
         
     def create_main_menu_buttons(self):
         start_button = Button("Start", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 75, 200, 50, self.show_level_buttons)
@@ -127,7 +146,9 @@ class Menu:
     def show_main_menu(self):
         self.buttons.clear()
         self.create_main_menu_buttons()
-        self.run()
+        
+        for button in self.buttons:
+            button.action_triggered = False
 
     def start_game(self):
         print("Starting the game...")
@@ -138,16 +159,12 @@ class Menu:
             
             # Start the game in a new process
             subprocess.Popen([python_command, script_path])
-        
-            # Close the menu window
-            pygame.quit()
-            sys.exit()
+
+            # Reset the menu state after the game ends
+            self.show_main_menu()
             
-            # Reset the menu after the game ends
-            pygame.init()
-            self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
-            pygame.display.set_caption("Tower Defense Menu")
-            self.create_main_menu_buttons()
+            # Reset the control variable
+            self.level_buttons_shown = False
 
     def toggle_sound(self):
         print("Toggling sound...")
@@ -189,7 +206,7 @@ def main():
     pygame.display.set_caption("Tower Defense Menu")
 
     global menu 
-    menu = Menu(screen)
+    menu = Menu(SCREEN_WIDTH, SCREEN_HEIGHT)
 
     # Create buttons and add them to the menu
     menu.create_main_menu_buttons()
