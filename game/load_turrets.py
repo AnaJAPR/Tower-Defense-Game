@@ -50,6 +50,8 @@ def create_turret(mouse_pos):
         turret_group.add(new_turret)
         #remove cost of turret
         lm.map.money -= c.BUY_COST
+    
+    return False
 
 def select_turret(mouse_pos):
     for turret in turret_group:

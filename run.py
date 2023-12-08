@@ -105,7 +105,7 @@ while running:
                     if placing_turrets == True:
                         #check if there is enough money
                         if lm.map.money >= c.BUY_COST:
-                            lt.create_turret(mouse_pos)
+                            placing_turrets = lt.create_turret(mouse_pos)
                     else:
                         selected_turret = lt.select_turret(mouse_pos)
         
