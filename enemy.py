@@ -1,14 +1,15 @@
 import pygame
 import math
 from pygame.math import Vector2
+from game import load_maps as lm
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, waypoints, image, speed, health):
+    def __init__(self, waypoints, image, speed, health, xp):
         pygame.sprite.Sprite.__init__(self)
         self._speed = speed
         self._health = health
-        self._initial_health = health
-        self._xp = 1
+        self.__initial_health = health
+        self._xp = xp
 
         self.__waypoints = waypoints
         self.__target_wp = 1
@@ -53,7 +54,7 @@ class Enemy(pygame.sprite.Sprite):
         bar_height = 5
 
         # Calculates current life as a percentage of total life
-        pct = self._health / self._initial_health
+        pct = self._health / self.__initial_health
 
         # Normalizing
         if pct > 1: 
@@ -109,3 +110,4 @@ class Enemy(pygame.sprite.Sprite):
     def check_alive(self):
         if self._health <= 0:
             self.kill()
+            lm.map.money += self._xp
