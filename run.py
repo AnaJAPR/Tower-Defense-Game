@@ -34,6 +34,8 @@ def draw_text(text, font, text_col, x, y):
 # Game Moments
 is_paused = True
 is_starting = True
+on_going = True
+
 # Adding and Removing Turrets
 placing_turrets = False
 removing_turrets = False
@@ -49,84 +51,92 @@ running = True
 while running:
 
     clock.tick(c.FPS)
-    
-    # Menu Area
-    screen.fill((126, 52, 0))
+        
+    if on_going:
+        # Menu Area
+        screen.fill((126, 52, 0))
 
-    # Inserting the map on the screen
-    ll.level.draw_map(screen)
+        # Inserting the map on the screen
+        ll.level.draw_map(screen)
 
-    # UPDATE GROUPS
-    # Updating Turrets
-    if is_paused == False or is_starting == True:
-        lt.turret_group.update(enemy_group)
-    
-    # Updating Enemies
-    if is_paused == False:
-        enemy_group.update(screen)
+        # UPDATE GROUPS
+        # Updating Turrets
+        if is_paused == False or is_starting == True:
+            lt.turret_group.update(enemy_group)
+        
+        # Updating Enemies
+        if is_paused == False:
+            enemy_group.update(screen)
 
-    # Highlight selected turret
-    if selected_turret:
-        selected_turret.selected = True
-    
-    # Creating the button to add turrets and cancel the action
-    if igb.turret_button.draw_button(screen):
-        placing_turrets = not placing_turrets
-        removing_turrets = False
+        # Highlight selected turret
+        if selected_turret:
+            selected_turret.selected = True
+        
+        # Creating the button to add turrets and cancel the action
+        if igb.turret_button.draw_button(screen):
+            placing_turrets = not placing_turrets
+            removing_turrets = False
 
-    # Creating the button to remove turrets and cancel the action
-    if igb.rm_turret_button.draw_button(screen):
-        removing_turrets = not removing_turrets
-        placing_turrets = False
+        # Creating the button to remove turrets and cancel the action
+        if igb.rm_turret_button.draw_button(screen):
+            removing_turrets = not removing_turrets
+            placing_turrets = False
 
-    # Creating the pause button
-    if igb.pause_button.draw_button(screen):
-        is_paused = not is_paused
-        is_starting = False
+        # Creating the pause button
+        if igb.pause_button.draw_button(screen):
+            is_paused = not is_paused
+            is_starting = False
 
-    # Restart the game
-    if igb.restart_button.draw_button(screen):
-        igb.pause_button.status = True
+        # Restart the game
+        if igb.restart_button.draw_button(screen):
+            igb.pause_button.status = True
+            is_starting = True
+            is_paused = True
+            for enemy in enemy_group:
+                enemy.kill()
+            for turret in lt.turret_group:
+                turret.kill()
+            ll.level.clear_level_data()
+            last_enemy_spawn = pygame.time.get_ticks()
+            ll.level.spawn_enemies()
+
+        if igb.exit_button.draw_button(screen):
+            python_command = "python"
+            script_path = "menu.py"
+                
+            # Start the game in a new process
+            subprocess.Popen([python_command, script_path])
+            sys.exit()
+
+        #if turret is selected, show upgrade button
+        if selected_turret:
+            #if turret can be upgraded, show upgrade button
+            if selected_turret.upgrade_level < c.TURRET_LEVELS:
+                if igb.upgrade_button.draw_button(screen):
+                    if ll.level.money >= selected_turret.upgrade_price:
+                        selected_turret.upgrade()
+                        ll.level.money -= selected_turret.upgrade_price
+        if not is_paused:
+            # Spawning enemies
+            if pygame.time.get_ticks() - last_enemy_spawn > c.SPAWN_COOLDOWN:
+                if level.spawned_enemies < len(level.enemy_list):
+                    enemy_type = level.enemy_list[level.spawned_enemies]
+                    enemy_image = ENEMY_IMAGES.get(enemy_type)
+                    enemy = Enemy(wp.lvl1_waypoints, enemy_image, enemy_type)
+                    enemy_group.add(enemy)
+                    level.spawned_enemies += 1
+                    last_enemy_spawn = pygame.time.get_ticks()
+                else:
+                    if not level.killed_enemies < level.spawned_enemies:
+                        print("You Win!")
+                        break
+        
+    # Lose game
+    if ll.level.health <= 0:
         is_starting = True
         is_paused = True
-        for enemy in enemy_group:
-            enemy.kill()
-        for turret in lt.turret_group:
-            turret.kill()
-        ll.level.clear_level_data()
-        last_enemy_spawn = pygame.time.get_ticks()
-        ll.level.spawn_enemies()
-
-    if igb.exit_button.draw_button(screen):
-        python_command = "python"
-        script_path = "menu.py"
-            
-        # Start the game in a new process
-        subprocess.Popen([python_command, script_path])
-        sys.exit()
-
-    #if turret is selected, show upgrade button
-    if selected_turret:
-        #if turret can be upgraded, show upgrade button
-        if selected_turret.upgrade_level < c.TURRET_LEVELS:
-            if igb.upgrade_button.draw_button(screen):
-                if ll.level.money >= selected_turret.upgrade_price:
-                    selected_turret.upgrade()
-                    ll.level.money -= selected_turret.upgrade_price
-    if not is_paused:
-        # Spawning enemies
-        if pygame.time.get_ticks() - last_enemy_spawn > c.SPAWN_COOLDOWN:
-            if level.spawned_enemies < len(level.enemy_list):
-                enemy_type = level.enemy_list[level.spawned_enemies]
-                enemy_image = ENEMY_IMAGES.get(enemy_type)
-                enemy = Enemy(wp.lvl1_waypoints, enemy_image, enemy_type)
-                enemy_group.add(enemy)
-                level.spawned_enemies += 1
-                last_enemy_spawn = pygame.time.get_ticks()
-            else:
-                if not level.killed_enemies < level.spawned_enemies:
-                    print("You Win!")
-                    break
+        on_going = False
+        ll.level.end_game(screen, enemy_group, lt.turret_group, "defeat")
 
     # Drawing Groups
     enemy_group.draw(screen)
