@@ -36,6 +36,7 @@ class Menu:
         self.screen_height = screen_height
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height), pygame.RESIZABLE)
         self.buttons = []
+        self.original_buttons = []  # Store original buttons to preserve references
         self.current_level = None
         self.original_background = pygame.image.load("menu_image.jpeg")
         self.background = self.original_background.copy()
@@ -47,6 +48,7 @@ class Menu:
     def add_button(self, button):
         # Add a button to the list of buttons in the menu
         self.buttons.append(button)
+        self.original_buttons.append(button)
 
     def handle_events(self):
         # Handle various events including quitting, key presses, and mouse clicks
@@ -68,20 +70,19 @@ class Menu:
             for button in self.buttons:
                 if (event.type == pygame.MOUSEBUTTONDOWN
                     and event.button == 1 
-                    and button.rect.collidepoint(event.pos) 
+                    and button.rect.collidepoint(event.pos)
                     and not button.action_triggered):
-                    
                     if button.text == "Start":
-                        self.show_level_buttons() 
+                        self.show_level_buttons()
                     else:
                         button.action()
                         button.action_triggered = True
 
-            for button in self.buttons:
-                button.action_triggered = False
+        # for button in self.buttons:
+        #     button.action_triggered = False
             
-            # Update the position and size of the background image
-            self.background_rect = self.background.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+        # Update the position and size of the background image
+        self.background_rect = self.background.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
 
     def handle_resize(self, event):
         # Resize the screen and update button positions to remain centered
@@ -99,7 +100,7 @@ class Menu:
         
     # Main loop for handling events and updating the screen
     def run(self):
-        while self.running:
+        while True:
             self.handle_events()
             self.screen.blit(self.background, self.background_rect)  # Draw the image
     
@@ -108,11 +109,11 @@ class Menu:
 
             pygame.display.flip()
             
-            '''
+            
             if self.current_level:
                 self.start_game()
                 self.current_level = None
-            '''
+            
     
     def show_level_buttons(self):
         if not self.level_buttons_shown: # checks if the buttons are already displayed
@@ -146,6 +147,7 @@ class Menu:
     def show_main_menu(self):
         self.buttons.clear()
         self.create_main_menu_buttons()
+        # self.run()
         
         for button in self.buttons:
             button.action_triggered = False
@@ -158,10 +160,10 @@ class Menu:
             script_path = "run.py"
             
             # Start the game in a new process
-            subprocess.Popen([python_command, script_path])
+            subprocess.run([python_command, script_path])
 
             # Reset the menu state after the game ends
-            self.show_main_menu()
+            # self.show_main_menu()
             
             # Reset the control variable
             self.level_buttons_shown = False
