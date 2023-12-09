@@ -12,6 +12,7 @@ class Level():
         self._health = HEALTH
         self._money =  MONEY
         self.__waypoints = waypoints
+        self.killed_enemies = 0
 
     def transform_image_proportions(self, width:int, height:int):
         self.__map_image = pygame.transform.scale(self.__map_image, (width, height))
@@ -43,3 +44,7 @@ class Level():
                 self.enemy_list.append(enemy_type)
         #now randomize the list to shuffle the enemies
         random.shuffle(self.enemy_list)
+
+    def loose_game(self):
+        if self._health <= 0:
+            pass

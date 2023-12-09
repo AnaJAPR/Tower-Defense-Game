@@ -88,6 +88,10 @@ while running:
                 enemy_group.add(enemy)
                 level.spawned_enemies += 1
                 last_enemy_spawn = pygame.time.get_ticks()
+            else:
+                if not level.killed_enemies < level.spawned_enemies:
+                    print("You Win!")
+                    break
 
 
     # Drawing Groups
