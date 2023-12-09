@@ -4,12 +4,13 @@ import subprocess
 import os
 import constants as c
 from enemy import Enemy
-from turret import Turret
+from turret import ArtilleryTurret, LaserTurret
 from game import load_levels as ll
 from game import load_turrets as lt
 from game.load_levels import *
 from game import in_game_buttons as igb
 from game import load_others as lo
+from game import load_sounds as ls
 
 # Starting Pygame
 pygame.init()
@@ -20,12 +21,13 @@ clock = pygame.time.Clock()
 # Setting the Screen Information
 screen = pygame.display.set_mode((c.SCREEN_WIDTH, c.SCREEN_HEIGHT + c.BOTTOM_PANEL))
 pygame.display.set_caption("Tower Defense Game")
+ls.game_music.play(-1)
 
 # Font of the Information on the screen
-text_font = pygame.font.SysFont("Consolas", 24, bold = True)
+text_font = pygame.font.SysFont("Consolas", 24, bold=True)
 large_font = pygame.font.SysFont("Consolas", 36)
 
-#function to show text on screen
+# function to show text on screen
 def draw_text(text, font, text_col, x, y):
     img = font.render(text, True, text_col)
     screen.blit(img, (x, y))
@@ -43,7 +45,7 @@ selected_turret = None
 # Spawning Enemies
 last_enemy_spawn = pygame.time.get_ticks()
 
-# Initializing spawn enemies proccess
+# Initializing spawn enemies process
 ll.level.spawn_enemies()
 
 # Loop
@@ -51,7 +53,7 @@ running = True
 while running:
 
     clock.tick(c.FPS)
-        
+
     if on_going:
         # Menu Area
         screen.fill((126, 52, 0))
@@ -63,7 +65,7 @@ while running:
         # Updating Turrets
         if is_paused == False or is_starting == True:
             lt.turret_group.update(enemy_group)
-        
+
         # Updating Enemies
         if is_paused == False:
             enemy_group.update(screen)
@@ -71,11 +73,18 @@ while running:
         # Highlight selected turret
         if selected_turret:
             selected_turret.selected = True
-        
-        # Creating the button to add turrets and cancel the action
-        if igb.turret_button.draw_button(screen):
+
+        # Creating the button to add artillery turrets and cancel the action
+        if igb.artillery_button.draw_button(screen):
             placing_turrets = not placing_turrets
             removing_turrets = False
+            selected_turret_type = 'artillery'
+
+        # Creating the button to add laser turrets and cancel the action
+        if igb.laser_button.draw_button(screen):
+            placing_turrets = not placing_turrets
+            removing_turrets = False
+            selected_turret_type = 'laser'
 
         # Creating the button to remove turrets and cancel the action
         if igb.rm_turret_button.draw_button(screen):
@@ -103,14 +112,14 @@ while running:
         if igb.exit_button.draw_button(screen):
             python_command = "python"
             script_path = "menu.py"
-                
+
             # Start the game in a new process
             subprocess.Popen([python_command, script_path])
             sys.exit()
 
-        #if turret is selected, show upgrade button
+        # if turret is selected, show upgrade button
         if selected_turret:
-            #if turret can be upgraded, show upgrade button
+            # if turret can be upgraded, show upgrade button
             if selected_turret.upgrade_level < c.TURRET_LEVELS:
                 if igb.upgrade_button.draw_button(screen):
                     if ll.level.money >= selected_turret.upgrade_price:
@@ -130,13 +139,13 @@ while running:
                     if not level.killed_enemies < level.spawned_enemies:
                         print("You Win!")
                         break
-        
+    
     # Lose game
-    if ll.level.health <= 0:
-        is_starting = True
-        is_paused = True
-        on_going = False
-        ll.level.end_game(screen, enemy_group, lt.turret_group, "defeat")
+        if ll.level.health <= 0:
+            is_starting = True
+            is_paused = True
+            on_going = False
+            ll.level.end_game(screen, enemy_group, lt.turret_group, "defeat")
 
     # Drawing Groups
     enemy_group.draw(screen)
@@ -150,11 +159,20 @@ while running:
 
     # Drawing a tower that follows the mouse
     if placing_turrets == True and removing_turrets == False:
-        cursor_rect = lt.cursor_turret.get_rect()
-        cursor_pos = pygame.mouse.get_pos()
-        cursor_rect.center = cursor_pos
-        if cursor_pos[1] <= c.SCREEN_HEIGHT:
-            screen.blit(lt.cursor_turret, cursor_rect)
+        if selected_turret_type == 'artillery':
+            cursor_turret = lt.cursor_artillery
+            cursor_rect = cursor_turret.get_rect()
+            cursor_pos = pygame.mouse.get_pos()
+            cursor_rect.center = cursor_pos
+            if cursor_pos[1] <= c.SCREEN_HEIGHT:
+                screen.blit(cursor_turret, cursor_rect)
+        elif selected_turret_type == 'laser':
+            cursor_turret = lt.cursor_laser
+            cursor_rect = cursor_turret.get_rect()
+            cursor_pos = pygame.mouse.get_pos()
+            cursor_rect.center = cursor_pos
+            if cursor_pos[1] <= c.SCREEN_HEIGHT:
+                screen.blit(cursor_turret, cursor_rect)
 
     # Drawing a X that follows the mouse
     if removing_turrets == True and placing_turrets == False:
@@ -166,32 +184,32 @@ while running:
 
     for event in pygame.event.get():
         if is_paused == False or is_starting == True:
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:    
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 # mouse click
                 mouse_pos = pygame.mouse.get_pos()
-                #check if mouse is on the game area
+                # check if mouse is on the game area
                 if mouse_pos[0] < c.SCREEN_WIDTH and mouse_pos[1] < c.SCREEN_HEIGHT:
-                    #clear selected turrets
+                    # clear selected turrets
                     selected_turret = None
                     lt.clear_selection()
-                    # Check wether the placing turrets button is pressed or not
+                    # Check whether the placing turrets button is pressed or not
                     if placing_turrets == True and removing_turrets == False:
-                        #check if there is enough money
-                        if ll.level.money >= c.BUY_COST: 
+                        # check if there is enough money
+                        if ll.level.money >= c.BUY_COST:
                             # Put the turret
-                            placing_turrets = lt.create_turret(mouse_pos)
-                    # Check wether the removing turrets button is pressed or not
+                            placing_turrets = lt.create_turret(mouse_pos, selected_turret_type)
+                    # Check whether the removing turrets button is pressed or not
                     elif removing_turrets == True and placing_turrets == False:
                         for turret in lt.turret_group:
                             # Remove the turret
-                            turret.sell() 
+                            turret.sell()
                     else:
                         selected_turret = lt.select_turret(mouse_pos)
 
-        # Quit Event    
+        # Quit Event
         if event.type == pygame.QUIT:
             running = False
-        
+
         # Press ESC to leave
         elif event.type == pygame.KEYDOWN:
             if event.type == pygame.K_ESCAPE:
