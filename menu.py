@@ -111,6 +111,38 @@ class Menu:
                         self.main_menu()
 
             pygame.display.update()
+            
+    def confirm_quit(self):
+        while True:
+            self.SCREEN.fill((0, 0, 0))
+
+            CONFIRM_TEXT = pygame.font.Font(None, 36).render("Você tem certeza que deseja sair?", True, "White")
+            CONFIRM_RECT = CONFIRM_TEXT.get_rect(center=(self.SCREEN.get_width() // 2, self.SCREEN.get_height() // 2 - 50))
+            self.SCREEN.blit(CONFIRM_TEXT, CONFIRM_RECT)
+
+            YES_BUTTON = Button(image=None, pos=(self.SCREEN.get_width() // 2 - 100, self.SCREEN.get_height() // 2 + 50),
+                                text_input="SIM", base_color="LightGreen", hovering_color="White")
+            NO_BUTTON = Button(image=None, pos=(self.SCREEN.get_width() // 2 + 100, self.SCREEN.get_height() // 2 + 50),
+                               text_input="NÃO", base_color="LightGreen", hovering_color="White")
+
+            YES_BUTTON.changeColor(pygame.mouse.get_pos())
+            YES_BUTTON.update(self.SCREEN)
+
+            NO_BUTTON.changeColor(pygame.mouse.get_pos())
+            NO_BUTTON.update(self.SCREEN)
+
+            pygame.display.update()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if YES_BUTTON.checkForInput(pygame.mouse.get_pos()):
+                        pygame.quit()
+                        sys.exit()
+                    elif NO_BUTTON.checkForInput(pygame.mouse.get_pos()):
+                        return
 
     def start_game(self):
         print("Starting the game...")
@@ -149,8 +181,7 @@ class Menu:
                     elif OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
                         self.options()
                     elif QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
-                        pygame.quit()
-                        sys.exit()
+                        self.confirm_quit()
                     elif self.SOUND_TOGGLE.checkForInput(MENU_MOUSE_POS):
                         self.toggle_sound()
 
