@@ -120,7 +120,7 @@ class Turret(pygame.sprite.Sprite):
         if self.selected:
             surface.blit(self.range_image, self.range_rect)
 
-    def clicked(self):
+    def sell(self):
         position = pygame.mouse.get_pos()
         if self.rect.collidepoint(position):
             if pygame.mouse.get_pressed()[0] == 1:

@@ -7,6 +7,7 @@ from game import load_levels as ll
 from game import load_turrets as lt
 from game.load_levels import *
 from game import in_game_buttons as igb
+from game import load_others as lo
 
 # Starting Pygame
 pygame.init()
@@ -29,7 +30,7 @@ def draw_text(text, font, text_col, x, y):
 # Game Variable
 placing_turrets = False
 selected_turret = None
-is_paused = False
+is_paused = True
 last_enemy_spawn = pygame.time.get_ticks()
 removing_turrets = False
 
@@ -98,12 +99,19 @@ while running:
     draw_text(str(ll.level.money), text_font, "grey100", 0, 30)
 
     # Drawing a tower that follows the mouse
-    if placing_turrets:
+    if placing_turrets == True and removing_turrets == False:
         cursor_rect = lt.cursor_turret.get_rect()
         cursor_pos = pygame.mouse.get_pos()
         cursor_rect.center = cursor_pos
         if cursor_pos[1] <= c.SCREEN_HEIGHT:
             screen.blit(lt.cursor_turret, cursor_rect)
+
+    if removing_turrets == True and placing_turrets == False:
+        cursor_rect = lo.pointer_x.get_rect()
+        cursor_pos = pygame.mouse.get_pos()
+        cursor_rect.center = cursor_pos
+        if cursor_pos[1] <= c.SCREEN_HEIGHT:
+            screen.blit(lo.pointer_x, cursor_rect)
 
     for event in pygame.event.get():
 
@@ -119,10 +127,12 @@ while running:
                     if placing_turrets == True:
                         #check if there is enough money
                         if ll.level.money >= c.BUY_COST:
-                            placing_turrets = lt.create_turret(mouse_pos)
+                            if not removing_turrets: 
+                                placing_turrets = lt.create_turret(mouse_pos)
                     elif removing_turrets == True:
-                        for turret in lt.turret_group:
-                            turret.clicked() 
+                        if not placing_turrets:
+                            for turret in lt.turret_group:
+                                turret.sell() 
                     else:
                         selected_turret = lt.select_turret(mouse_pos)
 

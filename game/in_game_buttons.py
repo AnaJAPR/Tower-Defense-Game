@@ -13,7 +13,7 @@ upgrade_button = Button(220, c.SCREEN_HEIGHT + 30, "assets/buttons/up.png")
 upgrade_button.transform_image_proportions(69, 43)
 
 # Pause Menu Buttons
-pause_button = TwoActionButton(726, 5, "assets/buttons/pause.png", "assets/buttons/continue.png")
+pause_button = TwoActionButton(726, 5, "assets/buttons/continue.png", "assets/buttons/pause.png")
 pause_button.transform_image_proportions(69, 43)
 
 # Restart Button
