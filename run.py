@@ -1,5 +1,4 @@
 import pygame
-# from constants import SCREEN_HEIGHT, SCREEN_WIDTH, FPS
 import constants as c
 from enemy import Enemy
 from turret import Turret
@@ -19,6 +18,7 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode((c.SCREEN_WIDTH, c.SCREEN_HEIGHT + c.BOTTOM_PANEL))
 pygame.display.set_caption("Tower Defense Game")
 
+# Font of the Information on the screen
 text_font = pygame.font.SysFont("Consolas", 24, bold = True)
 large_font = pygame.font.SysFont("Consolas", 36)
 
@@ -38,7 +38,6 @@ selected_turret = None
 # Spawning Enemies
 last_enemy_spawn = pygame.time.get_ticks()
 
-
 # Initializing spawn enemies proccess
 ll.level.spawn_enemies()
 
@@ -54,15 +53,14 @@ while running:
     # Inserting the map on the screen
     ll.level.draw_map(screen)
 
-    # Update groups
+    # UPDATE GROUPS
+    # Updating Turrets
     if is_paused == False or is_starting == True:
         lt.turret_group.update(enemy_group)
     
+    # Updating Enemies
     if is_paused == False:
         enemy_group.update(screen)
-
-    if is_paused:
-        pass
 
     # Highlight selected turret
     if selected_turret:
@@ -73,10 +71,12 @@ while running:
         placing_turrets = not placing_turrets
         removing_turrets = False
 
+    # Creating the button to remove turrets and cancel the action
     if igb.rm_turret_button.draw_button(screen):
         removing_turrets = not removing_turrets
         placing_turrets = False
 
+    # Creating the pause button
     if igb.pause_button.draw_button(screen):
         is_paused = not is_paused
         is_starting = False
@@ -89,7 +89,8 @@ while running:
                 if ll.level.money >= selected_turret.upgrade_price:
                     selected_turret.upgrade()
                     ll.level.money -= selected_turret.upgrade_price
-
+    if not is_paused:
+        # Spawning enemies
         if pygame.time.get_ticks() - last_enemy_spawn > c.SPAWN_COOLDOWN:
             if level.spawned_enemies < len(level.enemy_list):
                 enemy_type = level.enemy_list[level.spawned_enemies]
@@ -103,12 +104,13 @@ while running:
                     print("You Win!")
                     break
 
-
     # Drawing Groups
     enemy_group.draw(screen)
+
     for turret in lt.turret_group:
         turret.draw(screen)
 
+    # Drawing Text
     draw_text(str(ll.level.health), text_font, "grey100", 0, 0)
     draw_text(str(ll.level.money), text_font, "grey100", 0, 30)
 
@@ -129,7 +131,6 @@ while running:
             screen.blit(lo.pointer_x, cursor_rect)
 
     for event in pygame.event.get():
-
         if is_paused == False or is_starting == True:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:    
                 # mouse click
@@ -139,12 +140,16 @@ while running:
                     #clear selected turrets
                     selected_turret = None
                     lt.clear_selection()
+                    # Check wether the placing turrets button is pressed or not
                     if placing_turrets == True and removing_turrets == False:
                         #check if there is enough money
                         if ll.level.money >= c.BUY_COST: 
+                            # Put the turret
                             placing_turrets = lt.create_turret(mouse_pos)
+                    # Check wether the removing turrets button is pressed or not
                     elif removing_turrets == True and placing_turrets == False:
                         for turret in lt.turret_group:
+                            # Remove the turret
                             turret.sell() 
                     else:
                         selected_turret = lt.select_turret(mouse_pos)
