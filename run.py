@@ -81,6 +81,20 @@ while running:
         is_paused = not is_paused
         is_starting = False
 
+    # Restart the game
+    if igb.restart_button.draw_button(screen):
+        igb.pause_button.status = True
+        is_starting = True
+        is_paused = True
+        for enemy in enemy_group:
+            enemy.kill()
+        for turret in lt.turret_group:
+            turret.kill()
+        ll.level.money = c.MONEY
+        ll.level.health = c.HEALTH
+        last_enemy_spawn = pygame.time.get_ticks()
+        ll.level.spawn_enemies()
+
     #if turret is selected, show upgrade button
     if selected_turret:
         #if turret can be upgraded, show upgrade button

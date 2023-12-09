@@ -10,6 +10,7 @@ class Level():
         self.enemy_list = []
         self.__map_image = pygame.image.load(map_image)
         self._health = HEALTH
+        self._initial_money = MONEY
         self._money =  MONEY
         self.__waypoints = waypoints
         self.killed_enemies = 0
