@@ -48,7 +48,7 @@ class Menu:
         self.BG = pygame.transform.scale(bg_image, (800, 600))
         self.SCREEN = pygame.display.set_mode(self.BG.get_rect().size)
         pygame.display.set_caption("Tower Defense Menu")
-        self.play_button = Button(image=pygame.image.load("assets/buttons/Play Rect.png"), pos=(640,250),
+        self.play_button = Button(image=pygame.image.load("assets/buttons/play_rect.png"), pos=(640,250),
                                   text_input="PLAY", base_color="LightGreen", hovering_color="White")
         self.start_game_button = Button(image=None, pos=(self.SCREEN.get_width() // 2, self.SCREEN.get_height() // 2 + 50),
                                   text_input="START GAME", base_color="White", hovering_color="Green")
@@ -128,11 +128,11 @@ class Menu:
 
             MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-            PLAY_BUTTON = Button(image=pygame.image.load("assets/buttons/Play Rect.png"), pos=(640, 250), 
+            PLAY_BUTTON = Button(image=pygame.image.load("assets/buttons/play_rect.png"), pos=(640, 250), 
                             text_input="PLAY", base_color="LightGreen", hovering_color="White")
-            OPTIONS_BUTTON = Button(image=pygame.image.load("assets/buttons/Options Rect.png"), pos=(640, 400), 
+            OPTIONS_BUTTON = Button(image=pygame.image.load("assets/buttons/options_rect.png"), pos=(640, 400), 
                             text_input="OPTIONS", base_color="LightGreen", hovering_color="White")
-            QUIT_BUTTON = Button(image=pygame.image.load("assets/buttons/Quit Rect.png"), pos=(640, 550), 
+            QUIT_BUTTON = Button(image=pygame.image.load("assets/buttons/quit_rect.png"), pos=(640, 550), 
                             text_input="QUIT", base_color="LightGreen", hovering_color="White")
 
             for button in [self.play_button, OPTIONS_BUTTON, QUIT_BUTTON]:
