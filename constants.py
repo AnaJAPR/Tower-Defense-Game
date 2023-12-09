@@ -16,8 +16,8 @@ ROWS = 15
 COLS = 15
 
 # Game Mechanics Constants
-HEALTH = 1
-MONEY = 1000
+HEALTH = 100
+MONEY = 650
 
 # Spawn enemy constants
 SPAWN_COOLDOWN = 4000
