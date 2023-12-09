@@ -3,7 +3,7 @@ sys.path.append('.')
 import pygame
 import constants as c
 from turret import Turret
-from game import load_maps as lm
+from game import load_levels as ll
 import math
 
 # Defining video mode
@@ -49,7 +49,7 @@ def create_turret(mouse_pos):
         new_turret = Turret(turret_spritesheets, closest_base[0], closest_base[1], 100)
         turret_group.add(new_turret)
         #remove cost of turret
-        lm.map.money -= new_turret.price
+        ll.level.money -= new_turret.price
     
     return False
 

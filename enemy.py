@@ -1,15 +1,17 @@
 import pygame
 import math
 from pygame.math import Vector2
-from game import load_maps as lm
+from game import load_levels as ll
+from game.load_enemy import ENEMY_DATA
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, waypoints, image, speed, health, xp):
+    def __init__(self, waypoints, image, enemy_type):
         pygame.sprite.Sprite.__init__(self)
-        self._speed = speed
-        self._health = health
-        self.__initial_health = health
-        self._xp = xp
+
+        self._speed = ENEMY_DATA.get(enemy_type)["speed"]
+        self._health = ENEMY_DATA.get(enemy_type)["health"]
+        self.__initial_health = ENEMY_DATA.get(enemy_type)["health"]
+        self._xp = ENEMY_DATA.get(enemy_type)["xp"]
 
         self.__waypoints = waypoints
         self.__target_wp = 1
@@ -17,8 +19,8 @@ class Enemy(pygame.sprite.Sprite):
         self._position = Vector2(self.__waypoints[0])
         self.__angle = 0
         self._original_image = image
-        self._image = pygame.transform.rotate(self._original_image, self.__angle)
-        self.rect = self._image.get_rect()
+        self.image = pygame.transform.rotate(self._original_image, self.__angle)
+        self.rect = self.image.get_rect()
         self.rect.center = self._position
     
     @property
@@ -75,7 +77,7 @@ class Enemy(pygame.sprite.Sprite):
         # If there are no more waypoints to go, the enemy disappears
         else:
             self.kill()
-            lm.map.health -= self.__initial_health
+            ll.level.health -= self.__initial_health
 
         distance = self.__movement.length()
         # If the distance to the next waypoint is greater than the enemy's speed, it will move at its natural speed
@@ -97,10 +99,10 @@ class Enemy(pygame.sprite.Sprite):
         self.__angle = math.degrees(math.atan2(-dist[1], dist[0]))
         #rotate image and update rectangle
         self.image = pygame.transform.rotate(self._original_image, self.__angle)
-        self.rect = self._image.get_rect()
+        self.rect = self.image.get_rect()
         self.rect.center = self._position
 
     def check_alive(self):
         if self._health <= 0:
             self.kill()
-            lm.map.money += self._xp
+            ll.level.money += self._xp

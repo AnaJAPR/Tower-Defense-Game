@@ -2,7 +2,7 @@ import sys
 sys.path.append('.')
 import pygame
 import constants as c
-from game import load_maps as lm
+from game import load_levels as ll
 from game import load_enemy as le
 from turret_data import TURRET_DATA
 import math
@@ -13,11 +13,12 @@ class Turret(pygame.sprite.Sprite):
         self.upgrade_level = 1
         self.range = TURRET_DATA[self.upgrade_level - 1].get("range")
         self.cooldown = TURRET_DATA[self.upgrade_level - 1].get("cooldown")
+        self.damage = TURRET_DATA[self.upgrade_level - 1].get("damage")
         self.last_shot = pygame.time.get_ticks()
         self.selected = False
         self.target = None
         self.price = price
-        self.upgrade_price = 0
+        self.upgrade_price = self.price + 10
 
         #position variables
         self.pos_x = pos_x
@@ -76,7 +77,7 @@ class Turret(pygame.sprite.Sprite):
                 self.target = enemy
                 self.angle = math.degrees(math.atan2(-y_dist, x_dist))
                 #deal damage to enemy
-                self.target.health -= c.DAMAGE
+                self.target.health -= self.damage
                 break
 
     def play_animation(self):
@@ -93,10 +94,11 @@ class Turret(pygame.sprite.Sprite):
                 self.last_shot = pygame.time.get_ticks()
                 self.target = None
     
-    def upgrade(self):
+    def upgrade(self):        
         self.upgrade_level += 1
         self.range = TURRET_DATA[self.upgrade_level - 1].get("range")
         self.cooldown = TURRET_DATA[self.upgrade_level - 1].get("cooldown")
+        self.damage = TURRET_DATA[self.upgrade_level - 1].get("damage")
         #upgrade turret image
         self.animation_list = self.load_images(self.sprite_sheets[self.upgrade_level - 1])
         self.original_image = self.animation_list[self.frame_index]
@@ -109,9 +111,6 @@ class Turret(pygame.sprite.Sprite):
         self.range_image.set_alpha(100)
         self.range_rect = self.range_image.get_rect()
         self.range_rect.center = self.rect.center
-        
-        self.upgrade_price += self.price + 10
-
 
     def draw(self, surface):
         self.image = pygame.transform.rotate(self.original_image, self.angle - 90)
@@ -124,4 +123,4 @@ class Turret(pygame.sprite.Sprite):
     @property
     def sell(self):
         self.kill()
-        lm.map.money += self.price + self.upgrade_price * (self.upgrade_level - 1)
+        ll.level.money += self.price + self.upgrade_price * (self.upgrade_level - 1)

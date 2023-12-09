@@ -19,6 +19,9 @@ COLS = 15
 HEALTH = 100
 MONEY = 1000
 
+# Spawn enemy constants
+SPAWN_COOLDOWN = 4000
+
 #turret constants
 TURRET_LEVELS = 4
 BUY_COST = 100
