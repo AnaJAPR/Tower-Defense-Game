@@ -2,12 +2,13 @@ import sys
 sys.path.append('.')
 import pygame
 import constants as c
+from game import load_maps as lm
 from game import load_enemy as le
 from turret_data import TURRET_DATA
 import math
 
 class Turret(pygame.sprite.Sprite):
-    def __init__(self, sprite_sheets, pos_x, pos_y):
+    def __init__(self, sprite_sheets, pos_x, pos_y, price):
         pygame.sprite.Sprite.__init__(self)
         self.upgrade_level = 1
         self.range = TURRET_DATA[self.upgrade_level - 1].get("range")
@@ -15,6 +16,9 @@ class Turret(pygame.sprite.Sprite):
         self.last_shot = pygame.time.get_ticks()
         self.selected = False
         self.target = None
+        self.price = price
+        self.upgrade_price = 0
+
         #position variables
         self.pos_x = pos_x
         self.pos_y = pos_y
@@ -75,7 +79,6 @@ class Turret(pygame.sprite.Sprite):
                 self.target.health -= c.DAMAGE
                 break
 
-
     def play_animation(self):
         #update image
         self.original_image = self.animation_list[self.frame_index]
@@ -106,6 +109,8 @@ class Turret(pygame.sprite.Sprite):
         self.range_image.set_alpha(100)
         self.range_rect = self.range_image.get_rect()
         self.range_rect.center = self.rect.center
+        
+        self.upgrade_price += self.price + 10
 
 
     def draw(self, surface):
@@ -115,3 +120,8 @@ class Turret(pygame.sprite.Sprite):
         surface.blit(self.image, self.rect)
         if self.selected:
             surface.blit(self.range_image, self.range_rect)
+
+    @property
+    def sell(self):
+        self.kill()
+        lm.map.money += self.price + self.upgrade_price * (self.upgrade_level - 1)

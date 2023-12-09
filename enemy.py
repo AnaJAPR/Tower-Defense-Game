@@ -26,14 +26,6 @@ class Enemy(pygame.sprite.Sprite):
         return self._position
 
     @property
-    def speed(self):
-        return self._speed
-    
-    @speed.setter
-    def speed(self, speed):
-        self._speed = speed
-
-    @property
     def health(self):
         return self._health
     

@@ -46,10 +46,10 @@ def create_turret(mouse_pos):
             return  # Do nothing if a turret already exists at the selected spot
 
     if min_distance <= max_placement_distance:
-        new_turret = Turret(turret_spritesheets, closest_base[0], closest_base[1])
+        new_turret = Turret(turret_spritesheets, closest_base[0], closest_base[1], 100)
         turret_group.add(new_turret)
         #remove cost of turret
-        lm.map.money -= c.BUY_COST
+        lm.map.money -= new_turret.price
     
     return False
 
