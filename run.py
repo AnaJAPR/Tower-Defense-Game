@@ -90,8 +90,7 @@ while running:
             enemy.kill()
         for turret in lt.turret_group:
             turret.kill()
-        ll.level.money = c.MONEY
-        ll.level.health = c.HEALTH
+        ll.level.clear_level_data()
         last_enemy_spawn = pygame.time.get_ticks()
         ll.level.spawn_enemies()
 
