@@ -31,6 +31,7 @@ placing_turrets = False
 selected_turret = None
 is_paused = False
 last_enemy_spawn = pygame.time.get_ticks()
+removing_turrets = False
 
 # Initializing spawn enemies proccess
 ll.level.spawn_enemies()
@@ -64,6 +65,9 @@ while running:
 
     if igb.pause_button.draw_button(screen):
         is_paused = not is_paused
+
+    if igb.rm_turret_button.draw_button(screen):
+        removing_turrets = not removing_turrets
 
     if not is_paused:
         #if turret is selected, show upgrade button
@@ -116,6 +120,9 @@ while running:
                         #check if there is enough money
                         if ll.level.money >= c.BUY_COST:
                             placing_turrets = lt.create_turret(mouse_pos)
+                    elif removing_turrets == True:
+                        for turret in lt.turret_group:
+                            turret.clicked() 
                     else:
                         selected_turret = lt.select_turret(mouse_pos)
 

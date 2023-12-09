@@ -120,7 +120,9 @@ class Turret(pygame.sprite.Sprite):
         if self.selected:
             surface.blit(self.range_image, self.range_rect)
 
-    @property
-    def sell(self):
-        self.kill()
-        ll.level.money += self.price + self.upgrade_price * (self.upgrade_level - 1)
+    def clicked(self):
+        position = pygame.mouse.get_pos()
+        if self.rect.collidepoint(position):
+            if pygame.mouse.get_pressed()[0] == 1:
+                self.kill()
+                ll.level.money += self.price + self.upgrade_price * (self.upgrade_level - 1)        
