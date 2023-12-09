@@ -83,6 +83,7 @@ class Enemy(pygame.sprite.Sprite):
         # If there are no more waypoints to go, the enemy disappears
         else:
             self.kill()
+            lm.map.health -= self.__initial_health
 
         distance = self.__movement.length()
         # If the distance to the next waypoint is greater than the enemy's speed, it will move at its natural speed
