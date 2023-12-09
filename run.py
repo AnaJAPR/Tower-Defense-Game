@@ -137,6 +137,23 @@ while running:
         is_paused = True
         on_going = False
         ll.level.end_game(screen, enemy_group, lt.turret_group, "defeat")
+    
+    # Add buttons to game over screens
+    if not on_going:
+        if igb.restart_game_over.draw_button(screen):
+            on_going = True
+            igb.pause_button.status = True
+            is_starting = True
+            is_paused = True
+            ll.level.clear_level_data()
+            last_enemy_spawn = pygame.time.get_ticks()
+            ll.level.spawn_enemies()
+
+        if igb.exit_game_over.draw_button(screen):
+            python_command = "python"
+            script_path = "menu.py"
+            subprocess.Popen([python_command, script_path])
+            sys.exit()
 
     # Drawing Groups
     enemy_group.draw(screen)
