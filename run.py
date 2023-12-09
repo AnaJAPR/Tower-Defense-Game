@@ -1,4 +1,7 @@
 import pygame
+import sys
+import subprocess
+import os
 import constants as c
 from enemy import Enemy
 from turret import Turret
@@ -93,6 +96,14 @@ while running:
         ll.level.clear_level_data()
         last_enemy_spawn = pygame.time.get_ticks()
         ll.level.spawn_enemies()
+
+    if igb.exit_button.draw_button(screen):
+        python_command = "python"
+        script_path = "menu.py"
+            
+        # Start the game in a new process
+        subprocess.Popen([python_command, script_path])
+        sys.exit()
 
     #if turret is selected, show upgrade button
     if selected_turret:
