@@ -1,6 +1,6 @@
 import pygame
 import random
-from constants import HEALTH, MONEY
+from constants import HEALTH, MONEY, SCREEN_WIDTH, SCREEN_HEIGHT
 from game.load_enemy import ENEMY_SPAWN_DATA
 
 class Level():
@@ -61,6 +61,7 @@ class Level():
         self._money =  self.__initial_money
         self.__waypoints = waypoints
         self.killed_enemies = 0
+        self.lose_game = False
 
     def transform_image_proportions(self, width:int, height:int):
         """
@@ -222,6 +223,23 @@ class Level():
         self._money =  self.__initial_money
         self.killed_enemies = 0
 
-    def lose_game(self):
-        if self._health <= 0:
-            pass
+    def end_game(self, screen, enemy_group, turret_group, result_game):
+        for enemy in enemy_group:
+            enemy.kill()
+        for turret in turret_group:
+            turret.kill()
+        self.clear_level_data()
+        pygame.draw.rect(screen, (255,255,255), pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT + 300))
+        image = pygame.image.load(f"assets\others\{result_game}.png").convert_alpha()
+        image = pygame.transform.scale(image, (800, 380))
+        screen.blit(image, (0, 0))
+        
+
+
+        # if result_game == "victory":
+
+        
+
+    # def lose_game(self, surface):
+    #     if self._health <= 0:
+    #         pygame.draw.rect(surface, (255,255,255), pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))

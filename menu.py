@@ -37,7 +37,7 @@ class Menu:
         pygame.init()
         pygame.mixer.init()
         pygame.mixer.music.load("assets/menu_audios_images/menu_audio.mp3")
-        pygame.mixer.music.set_volume(0.5)    # sets the volume
+        pygame.mixer.music.set_volume(1)    # sets the volume
         pygame.mixer.music.play(-1)    # Plays the song in an infinite loop (-1)
         self.SOUND_TOGGLE = Button(
             image=pygame.transform.scale(pygame.image.load("assets/buttons/sound.jpg"), (40, 40)),
@@ -86,28 +86,28 @@ class Menu:
                         
             pygame.display.update()
 
-    def options(self):
+    def sobre_o_jogo(self):
         while True:
-            OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
+            ABOUT_THE_GAME_MOUSE_POS = pygame.mouse.get_pos()
 
             self.SCREEN.fill((255,255,255))
 
-            OPTIONS_TEXT = pygame.font.Font(None, 36).render("This is the OPTIONS screen.", True, "Black")
-            OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(self.SCREEN.get_width() // 2, self.SCREEN.get_height() // 2))
-            self.SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)
+            ABOUT_THE_GAME_TEXT = pygame.font.Font(None, 36).render("This is the ABOUT THE GAME screen.", True, "Black")
+            ABOUT_THE_GAME_RECT = ABOUT_THE_GAME_TEXT.get_rect(center=(self.SCREEN.get_width() // 2, self.SCREEN.get_height() // 2))
+            self.SCREEN.blit(ABOUT_THE_GAME_TEXT, ABOUT_THE_GAME_RECT)
 
-            OPTIONS_BACK = Button(image=None, pos=(self.SCREEN.get_width() // 2, self.SCREEN.get_height() - 40), 
+            ABOUT_THE_GAME_BACK = Button(image=None, pos=(self.SCREEN.get_width() // 2, self.SCREEN.get_height() - 40), 
                             text_input="BACK", base_color="Black", hovering_color="Green")
 
-            OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
-            OPTIONS_BACK.update(self.SCREEN)
+            ABOUT_THE_GAME_BACK.changeColor(ABOUT_THE_GAME_MOUSE_POS)
+            ABOUT_THE_GAME_BACK.update(self.SCREEN)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
+                    if ABOUT_THE_GAME_BACK.checkForInput(ABOUT_THE_GAME_MOUSE_POS):
                         self.main_menu()
 
             pygame.display.update()
@@ -162,12 +162,12 @@ class Menu:
 
             PLAY_BUTTON = Button(image=pygame.image.load("assets/buttons/play_rect.png"), pos=(640, 250), 
                             text_input="PLAY", base_color="LightGreen", hovering_color="White")
-            OPTIONS_BUTTON = Button(image=pygame.image.load("assets/buttons/options_rect.png"), pos=(640, 400), 
-                            text_input="OPTIONS", base_color="LightGreen", hovering_color="White")
+            ABOUT_THE_GAME_BUTTON = Button(image=pygame.image.load("assets/buttons/about_the_game_rect.png"), pos=(640, 400), 
+                            text_input="ABOUT THE GAME", base_color="LightGreen", hovering_color="White")
             QUIT_BUTTON = Button(image=pygame.image.load("assets/buttons/quit_rect.png"), pos=(640, 550), 
                             text_input="QUIT", base_color="LightGreen", hovering_color="White")
 
-            for button in [self.play_button, OPTIONS_BUTTON, QUIT_BUTTON]:
+            for button in [self.play_button, ABOUT_THE_GAME_BUTTON, QUIT_BUTTON]:
                 button.changeColor(MENU_MOUSE_POS)
                 button.update(self.SCREEN)
         
@@ -178,8 +178,8 @@ class Menu:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.play_button.checkForInput(MENU_MOUSE_POS):
                         self.play()
-                    elif OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
-                        self.options()
+                    elif ABOUT_THE_GAME_BUTTON.checkForInput(MENU_MOUSE_POS):
+                        self.sobre_o_jogo()
                     elif QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
                         self.confirm_quit()
                     elif self.SOUND_TOGGLE.checkForInput(MENU_MOUSE_POS):

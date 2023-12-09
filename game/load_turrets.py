@@ -2,23 +2,29 @@ import sys
 sys.path.append('.')
 import pygame
 import constants as c
-from turret import Turret
+from turret import ArtilleryTurret, LaserTurret  # Assuming you have ArtilleryTurret and LaserTurret classes
 from game import load_levels as ll
+from game import load_sounds as ls
 import math
 
 # Defining video mode
 largura, altura = 800, 600
 tela = pygame.display.set_mode((largura, altura))
 
-#individual turret image for mouse cursor
-cursor_turret = pygame.image.load("assets/towers/cursor_turret.png").convert_alpha()
-#Turret spritesheets
-turret_spritesheets = []
-for x in range(1, c.TURRET_LEVELS + 1):
-    turret_sheet = pygame.image.load(f"assets/towers/turret_01_mk{x}.png").convert_alpha()
-    turret_spritesheets.append(turret_sheet)
+# Individual turret image for mouse cursor
+cursor_artillery = pygame.image.load("assets/towers/cursor_artillery.png").convert_alpha()
+cursor_laser = pygame.image.load("assets/towers/cursor_laser.png").convert_alpha()
 
-def create_turret(mouse_pos):
+# Turret spritesheets
+artillery_spritesheets = []
+laser_spritesheets = []
+for x in range(1, c.TURRET_LEVELS + 1):
+    artillery_sheet = pygame.image.load(f"assets/towers/artillery_{x}.png").convert_alpha()
+    laser_sheet = pygame.image.load(f"assets/towers/laser_{x}.png").convert_alpha()
+    artillery_spritesheets.append(artillery_sheet)
+    laser_spritesheets.append(laser_sheet)
+
+def create_turret(mouse_pos, turret_type):
     base_centers = [(392, 39),
                     (314, 185),
                     (472, 184),
@@ -46,9 +52,13 @@ def create_turret(mouse_pos):
             return  # Do nothing if a turret already exists at the selected spot
 
     if min_distance <= max_placement_distance:
-        new_turret = Turret(turret_spritesheets, closest_base[0], closest_base[1], 100)
+        if turret_type == 'artillery':
+            new_turret = ArtilleryTurret(artillery_spritesheets, closest_base[0], closest_base[1], 100, ls.artillery_sfx)
+        elif turret_type == 'laser':
+            new_turret = LaserTurret(laser_spritesheets, closest_base[0], closest_base[1], 80, ls.laser_sfx)
+            
         turret_group.add(new_turret)
-        #remove cost of turret
+        # Remove cost of turret
         ll.level.money -= new_turret.price
     
     return False
@@ -60,10 +70,10 @@ def select_turret(mouse_pos):
         if distance <= max_selection_distance:
             return turret
     return None
-        
+
 def clear_selection():
-   for turret in turret_group:
-      turret.selected = False
+    for turret in turret_group:
+        turret.selected = False
         
 # Creating turret group
 turret_group = pygame.sprite.Group()
