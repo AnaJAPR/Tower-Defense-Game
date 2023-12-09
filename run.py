@@ -135,12 +135,15 @@ while running:
                     enemy_group.add(enemy)
                     level.spawned_enemies += 1
                     last_enemy_spawn = pygame.time.get_ticks()
+                # Win Game
                 else:
                     if not level.killed_enemies < level.spawned_enemies:
-                        print("You Win!")
-                        break
+                        is_starting = True
+                        is_paused = True
+                        on_going = False
+                        ll.level.end_game(screen, enemy_group, lt.turret_group, "victory")
     
-    # Lose game
+        # Lose game
         if ll.level.health <= 0:
             is_starting = True
             is_paused = True
