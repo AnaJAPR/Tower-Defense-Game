@@ -4,7 +4,7 @@ import subprocess
 import os
 
 class Button:
-    def __init__(self, image, pos, text_input, base_color, hovering_color):
+    def __init__(self, image, pos, text_input, base_color, hovering_color, min_size=(100, 50)):
         # Initialize a Button object with its position, size, text, and associated action
         self.image = image
         self.x_pos = pos[0]
@@ -35,11 +35,20 @@ class Button:
 class Menu:
     def __init__(self):
         pygame.init()
-        bg_image = pygame.image.load("assets/background_menu/menu_image.jpeg")
+        pygame.mixer.init()
+        pygame.mixer.music.load("assets/menu_audios_images/menu_audio.mp3")
+        pygame.mixer.music.set_volume(0.5)    # sets the volume
+        pygame.mixer.music.play(-1)    # Plays the song in an infinite loop (-1)
+        self.SOUND_TOGGLE = Button(
+            image=pygame.transform.scale(pygame.image.load("assets/buttons/sound.jpg"), (40, 40)),
+            pos=(760, 25), text_input="", base_color="White", hovering_color="Green")
+        self.sound_enabled = True   # Indicates whether the sound is enabled or not
+        
+        bg_image = pygame.image.load("assets/menu_audios_images/menu_background.jpeg")
         self.BG = pygame.transform.scale(bg_image, (800, 600))
         self.SCREEN = pygame.display.set_mode(self.BG.get_rect().size)
         pygame.display.set_caption("Tower Defense Menu")
-        self.play_button = Button(image=pygame.image.load("assets/buttons_images/Play Rect.png"), pos=(640,250),
+        self.play_button = Button(image=pygame.image.load("assets/buttons/Play Rect.png"), pos=(640,250),
                                   text_input="PLAY", base_color="LightGreen", hovering_color="White")
         self.start_game_button = Button(image=None, pos=(self.SCREEN.get_width() // 2, self.SCREEN.get_height() // 2 + 50),
                                   text_input="START GAME", base_color="White", hovering_color="Green")
@@ -110,7 +119,8 @@ class Menu:
         script_path = "run.py"
             
         # Start the game in a new process
-        subprocess.run([python_command, script_path])
+        subprocess.Popen([python_command, script_path])
+        sys.exit()
 
     def main_menu(self):
         while True:
@@ -118,11 +128,11 @@ class Menu:
 
             MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-            PLAY_BUTTON = Button(image=pygame.image.load("assets/buttons_images/Play Rect.png"), pos=(640, 250), 
+            PLAY_BUTTON = Button(image=pygame.image.load("assets/buttons/Play Rect.png"), pos=(640, 250), 
                             text_input="PLAY", base_color="LightGreen", hovering_color="White")
-            OPTIONS_BUTTON = Button(image=pygame.image.load("assets/buttons_images/Options Rect.png"), pos=(640, 400), 
+            OPTIONS_BUTTON = Button(image=pygame.image.load("assets/buttons/Options Rect.png"), pos=(640, 400), 
                             text_input="OPTIONS", base_color="LightGreen", hovering_color="White")
-            QUIT_BUTTON = Button(image=pygame.image.load("assets/buttons_images/Quit Rect.png"), pos=(640, 550), 
+            QUIT_BUTTON = Button(image=pygame.image.load("assets/buttons/Quit Rect.png"), pos=(640, 550), 
                             text_input="QUIT", base_color="LightGreen", hovering_color="White")
 
             for button in [self.play_button, OPTIONS_BUTTON, QUIT_BUTTON]:
@@ -136,13 +146,26 @@ class Menu:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.play_button.checkForInput(MENU_MOUSE_POS):
                         self.play()
-                    if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    elif OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
                         self.options()
-                    if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    elif QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
                         pygame.quit()
                         sys.exit()
+                    elif self.SOUND_TOGGLE.checkForInput(MENU_MOUSE_POS):
+                        self.toggle_sound()
 
+            self.SOUND_TOGGLE.changeColor(MENU_MOUSE_POS)
+            self.SOUND_TOGGLE.update(self.SCREEN)
             pygame.display.update()
+            
+    def toggle_sound(self):
+        if self.sound_enabled:
+            pygame.mixer.music.pause()
+            self.SOUND_TOGGLE.image = pygame.transform.scale(pygame.image.load("assets/buttons/sound_off.jpg"), (40,40))
+        else:
+            pygame.mixer.music.unpause()
+            self.SOUND_TOGGLE.image = pygame.transform.scale(pygame.image.load("assets/buttons/sound.jpg"), (40,40))
+        self.sound_enabled = not self.sound_enabled
             
     def run(self):
         self.main_menu()
