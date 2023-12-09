@@ -27,12 +27,17 @@ def draw_text(text, font, text_col, x, y):
     img = font.render(text, True, text_col)
     screen.blit(img, (x, y))
 
-# Game Variable
-placing_turrets = False
-selected_turret = None
+# GAME VARIABLES
+# Game Moments
 is_paused = True
-last_enemy_spawn = pygame.time.get_ticks()
+is_starting = True
+# Adding and Removing Turrets
+placing_turrets = False
 removing_turrets = False
+selected_turret = None
+# Spawning Enemies
+last_enemy_spawn = pygame.time.get_ticks()
+
 
 # Initializing spawn enemies proccess
 ll.level.spawn_enemies()
@@ -50,9 +55,12 @@ while running:
     ll.level.draw_map(screen)
 
     # Update groups
-    if not is_paused:
-        enemy_group.update(screen)
+    if is_paused == False or is_starting == True:
         lt.turret_group.update(enemy_group)
+    
+    if is_paused == False:
+        enemy_group.update(screen)
+
     if is_paused:
         pass
 
@@ -63,22 +71,24 @@ while running:
     # Creating the button to add turrets and cancel the action
     if igb.turret_button.draw_button(screen):
         placing_turrets = not placing_turrets
-
-    if igb.pause_button.draw_button(screen):
-        is_paused = not is_paused
+        removing_turrets = False
 
     if igb.rm_turret_button.draw_button(screen):
         removing_turrets = not removing_turrets
+        placing_turrets = False
 
-    if not is_paused:
-        #if turret is selected, show upgrade button
-        if selected_turret:
-            #if turret can be upgraded, show upgrade button
-            if selected_turret.upgrade_level < c.TURRET_LEVELS:
-                if igb.upgrade_button.draw_button(screen):
-                    if ll.level.money >= selected_turret.upgrade_price:
-                        selected_turret.upgrade()
-                        ll.level.money -= selected_turret.upgrade_price
+    if igb.pause_button.draw_button(screen):
+        is_paused = not is_paused
+        is_starting = False
+
+    #if turret is selected, show upgrade button
+    if selected_turret:
+        #if turret can be upgraded, show upgrade button
+        if selected_turret.upgrade_level < c.TURRET_LEVELS:
+            if igb.upgrade_button.draw_button(screen):
+                if ll.level.money >= selected_turret.upgrade_price:
+                    selected_turret.upgrade()
+                    ll.level.money -= selected_turret.upgrade_price
 
         if pygame.time.get_ticks() - last_enemy_spawn > c.SPAWN_COOLDOWN:
             if level.spawned_enemies < len(level.enemy_list):
@@ -110,6 +120,7 @@ while running:
         if cursor_pos[1] <= c.SCREEN_HEIGHT:
             screen.blit(lt.cursor_turret, cursor_rect)
 
+    # Drawing a X that follows the mouse
     if removing_turrets == True and placing_turrets == False:
         cursor_rect = lo.pointer_x.get_rect()
         cursor_pos = pygame.mouse.get_pos()
@@ -119,7 +130,7 @@ while running:
 
     for event in pygame.event.get():
 
-        if not is_paused:
+        if is_paused == False or is_starting == True:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:    
                 # mouse click
                 mouse_pos = pygame.mouse.get_pos()
@@ -128,15 +139,13 @@ while running:
                     #clear selected turrets
                     selected_turret = None
                     lt.clear_selection()
-                    if placing_turrets == True:
+                    if placing_turrets == True and removing_turrets == False:
                         #check if there is enough money
-                        if ll.level.money >= c.BUY_COST:
-                            if not removing_turrets: 
-                                placing_turrets = lt.create_turret(mouse_pos)
-                    elif removing_turrets == True:
-                        if not placing_turrets:
-                            for turret in lt.turret_group:
-                                turret.sell() 
+                        if ll.level.money >= c.BUY_COST: 
+                            placing_turrets = lt.create_turret(mouse_pos)
+                    elif removing_turrets == True and placing_turrets == False:
+                        for turret in lt.turret_group:
+                            turret.sell() 
                     else:
                         selected_turret = lt.select_turret(mouse_pos)
 
