@@ -106,3 +106,4 @@ class Enemy(pygame.sprite.Sprite):
         if self._health <= 0:
             self.kill()
             ll.level.money += self._xp
+            ll.level.killed_enemies += 1

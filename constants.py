@@ -16,7 +16,7 @@ ROWS = 15
 COLS = 15
 
 # Game Mechanics Constants
-HEALTH = 100
+HEALTH = 1
 MONEY = 1000
 
 # Spawn enemy constants

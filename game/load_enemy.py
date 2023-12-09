@@ -17,7 +17,7 @@ ENEMY_IMAGES ={
 }
 
 ENEMY_SPAWN_DATA = [
-    {"enemy_1" : 15, "enemy_2" : 15, "enemy_3" : 10, "enemy_4" : 2}
+    {"enemy_1" : 1, "enemy_2" : 0, "enemy_3" : 0, "enemy_4" : 2}
 ]
 ENEMY_DATA = {
     "enemy_1" : {"speed" : 2, "health": 7, "xp" : 40},
