@@ -10,7 +10,8 @@ class Level():
         self.enemy_list = []
         self.__map_image = pygame.image.load(map_image)
         self._health = HEALTH
-        self._money =  MONEY
+        self.__initial_money = MONEY
+        self._money =  self.__initial_money
         self.__waypoints = waypoints
         self.killed_enemies = 0
 
@@ -20,6 +21,10 @@ class Level():
     def draw_map(self, surface):
         surface.blit(self.__map_image, (0, 0))
 
+    @property
+    def initial_money(self):
+        return self.__initial_money
+    
     @property
     def money(self):
         return self._money
@@ -44,6 +49,13 @@ class Level():
                 self.enemy_list.append(enemy_type)
         #now randomize the list to shuffle the enemies
         random.shuffle(self.enemy_list)
+
+    def clear_level_data(self):
+        self.spawned_enemies = 0
+        self.enemy_list = []
+        self._health = HEALTH
+        self._money =  self.__initial_money
+        self.killed_enemies = 0
 
     def loose_game(self):
         if self._health <= 0:
