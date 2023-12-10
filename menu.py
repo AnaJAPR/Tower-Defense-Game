@@ -127,6 +127,13 @@ class Button:
         else:
             self.text = self.font.render(self.text_input, True, self.base_color)
 
+# function to place texts with line breaks on the rendered screen
+def draw_multiline_text(screen, font, text_lines, text_col, x, y, line_height):
+    for i, line in enumerate(text_lines):
+        img = font.render(line, True, text_col)
+        screen.blit(img, (x, y + i * line_height))
+        
+
 class Menu:
     """
     Represents a graphical interface for the game menu.
@@ -189,28 +196,52 @@ class Menu:
         while True:
             PLAY_MOUSE_POS = pygame.mouse.get_pos()
 
+            # Setting the screen background
             self.SCREEN.fill((254,217,139))
-
-            PLAY_TEXT = pygame.font.Font(None, 36).render("Starting the game...", True, (94, 88, 49))
-            PLAY_RECT = PLAY_TEXT.get_rect(center=(self.SCREEN.get_width() // 2, self.SCREEN.get_height() // 2))
-            self.SCREEN.blit(PLAY_TEXT, PLAY_RECT)
             
+            start_game_text_lines = [
+            "The year is 1999, and the world has fallen in chaos after World War Three.",
+            "Cities have fallen, countries have been nuked,",
+            "and few bastions of humanity remain. You, an engineer,",
+            "are tasked to defend one of the last holds of your motherland",
+            "from the air raids of your enemies, and for that, you have your turrets.", 
+            "Build them in strategic points, push back the attack, protect your home!",
+            "Do you have what it takes to protect the last front against decimation?"
+            ]
+            
+            x = self.SCREEN.get_width() // 15
+            y = self.SCREEN.get_height() // 3
+
+            # Calculates the total height of rendered text
+            line_height = 30
+            total_height = len(start_game_text_lines) * line_height
+
+            # Adjusts the starting position (y) to center the text vertically
+            y -= total_height // 2
+
+            draw_multiline_text(self.SCREEN, pygame.font.Font(None, 30), start_game_text_lines, (94, 88, 49), x, y, line_height)
+            
+            # defining a button using the Button class
             START_GAME_BUTTON = Button(image=None, pos=(self.SCREEN.get_width() // 2, self.SCREEN.get_height() // 2 + 50),
                                   text_input="START GAME", base_color=(94, 88, 49), hovering_color=(207, 126, 18))
             
             START_GAME_BUTTON.changeColor(PLAY_MOUSE_POS)
             START_GAME_BUTTON.update(self.SCREEN)
 
+            # defining a button using the Button class
             PLAY_BACK = Button(image=None, pos=(self.SCREEN.get_width() // 2, self.SCREEN.get_height() - 40), 
                             text_input="BACK", base_color=(94, 88, 49), hovering_color=(207, 126, 18))
 
+            # buttons change color when you position the mouse over them
             PLAY_BACK.changeColor(PLAY_MOUSE_POS)
             PLAY_BACK.update(self.SCREEN)
 
             for event in pygame.event.get():
+                # if close the window exit the program
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                # If you click on start and then on start game the game starts, if you click on back it runs the initial menu again
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if START_GAME_BUTTON.checkForInput(PLAY_MOUSE_POS) and not self.game_running:
                         self.start_game()
@@ -231,17 +262,40 @@ class Menu:
         while True:
             ABOUT_THE_GAME_MOUSE_POS = pygame.mouse.get_pos()
 
+            # Setting the screen background
             self.SCREEN.fill((254,217,139))
 
-            about_the_game_text = ("How to play?")
-            
-            ABOUT_THE_GAME_TEXT = pygame.font.Font(None, 36).render(about_the_game_text, True, (94, 88, 49))
-            ABOUT_THE_GAME_RECT = ABOUT_THE_GAME_TEXT.get_rect(center=(self.SCREEN.get_width() // 2, self.SCREEN.get_height() // 2))
-            self.SCREEN.blit(ABOUT_THE_GAME_TEXT, ABOUT_THE_GAME_RECT)
+            about_the_game_text_lines = [
+            "How to play?",
+            "",
+            "The game starts pausedThis tower defense game starts",
+            "paused and the player has a pre-established amount of",
+            "money and lives. Before starting the game, you have",
+            "the opportunity to purchase machine gun turrets and",
+            "place them in some of the base positions indicated",
+            "on the map. During the game it is also possible to",
+            "delete and buy more towers. The game basically consists",
+            "of adding towers by clicking on the icons with drawings",
+            "of each type of tower and thus killing enemies before",
+            "they reach the end of the path, you need to protect arrival."
+            ]
+
+            x = self.SCREEN.get_width() // 15
+            y = self.SCREEN.get_height() // 3
+
+            # Calculates the total height of rendered text
+            line_height = 30
+            total_height = len(about_the_game_text_lines) * line_height
+
+            # Adjust starting position (y) to center text vertically
+            y -= total_height // 2
+
+            draw_multiline_text(self.SCREEN, pygame.font.Font(None, 36), about_the_game_text_lines, (94, 88, 49), x, y, line_height)
 
             ABOUT_THE_GAME_BACK = Button(image=None, pos=(self.SCREEN.get_width() // 2, self.SCREEN.get_height() - 40), 
                             text_input="BACK", base_color=(94, 88, 49), hovering_color=(207, 126, 18))
 
+            # buttons change color when you position the mouse over them
             ABOUT_THE_GAME_BACK.changeColor(ABOUT_THE_GAME_MOUSE_POS)
             ABOUT_THE_GAME_BACK.update(self.SCREEN)
 
@@ -265,17 +319,20 @@ class Menu:
         """
         
         while True:
+            # Setting the screen background
             self.SCREEN.fill((254,217,139))
 
             CONFIRM_TEXT = pygame.font.Font(None, 36).render("Você tem certeza que deseja sair?", True, (94, 88, 49))
             CONFIRM_RECT = CONFIRM_TEXT.get_rect(center=(self.SCREEN.get_width() // 2, self.SCREEN.get_height() // 2 - 50))
             self.SCREEN.blit(CONFIRM_TEXT, CONFIRM_RECT)
 
+            # defining buttons using the Button class
             YES_BUTTON = Button(image=None, pos=(self.SCREEN.get_width() // 2 - 100, self.SCREEN.get_height() // 2 + 50),
                                 text_input="SIM", base_color=(94, 88, 49), hovering_color=(207, 126, 18))
             NO_BUTTON = Button(image=None, pos=(self.SCREEN.get_width() // 2 + 100, self.SCREEN.get_height() // 2 + 50),
                                text_input="NÃO", base_color=(94, 88, 49), hovering_color=(207, 126, 18))
 
+            # buttons change color when you position the mouse over them
             YES_BUTTON.changeColor(pygame.mouse.get_pos())
             YES_BUTTON.update(self.SCREEN)
 
@@ -327,6 +384,7 @@ class Menu:
 
             MENU_MOUSE_POS = pygame.mouse.get_pos()
 
+            # defining buttons using the Button class
             PLAY_BUTTON = Button(image=pygame.image.load("assets/buttons/play_rect.png"), pos=(640,250),
                                 text_input="PLAY", base_color=(254,217,139), hovering_color="White")
             ABOUT_THE_GAME_BUTTON = Button(image=pygame.image.load("assets/buttons/about_the_game_rect.png"), pos=(640, 400), 
@@ -334,10 +392,12 @@ class Menu:
             QUIT_BUTTON = Button(image=pygame.image.load("assets/buttons/quit_rect.png"), pos=(640, 550), 
                                 text_input="QUIT", base_color=(254,217,139), hovering_color="White")
 
+            # buttons change color when you position the mouse over them
             for button in [PLAY_BUTTON, ABOUT_THE_GAME_BUTTON, QUIT_BUTTON]:
                 button.changeColor(MENU_MOUSE_POS)
                 button.update(self.SCREEN)
-        
+
+            # handles events relating to each home menu button
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -352,6 +412,7 @@ class Menu:
                     elif self.SOUND_TOGGLE.checkForInput(MENU_MOUSE_POS):
                         self.toggle_sound()
 
+            # button changes color when you position the mouse over them
             self.SOUND_TOGGLE.changeColor(MENU_MOUSE_POS)
             self.SOUND_TOGGLE.update(self.SCREEN)
             pygame.display.update()
