@@ -51,7 +51,7 @@ class Enemy(pygame.sprite.Sprite):
     -------
     enemy = Enemy([(0, 0), (10, 10, (20, 20))], "assets\enemies\enemy_1.png", "enemy_1")
     """
-    def __init__(self, waypoints, image, enemy_type):
+    def __init__(self, waypoints:list, image:pygame.surface.Surface, enemy_type:str):
         """
         Initialize a new instance of the Enemy class.
 
@@ -151,7 +151,7 @@ class Enemy(pygame.sprite.Sprite):
         return self._reward
     
     @reward.setter
-    def reward(self, reward):
+    def reward(self, reward:int):
         """
         Set the amount of money the player will earn killing the enemy.
 
@@ -167,7 +167,7 @@ class Enemy(pygame.sprite.Sprite):
         """
         self._reward = reward
 
-    def draw_health_bar(self, surface):
+    def draw_health_bar(self, surface:pygame.surface.Surface):
         """
         Draw the health bar on the specified surface.
 
@@ -265,10 +265,15 @@ class Enemy(pygame.sprite.Sprite):
             ll.level.money += self._reward
             ll.level.killed_enemies += 1
 
-    def update(self, surface):
+    def update(self, surface:pygame.surface.Surface):
         """
         Updates the enemy, making it move and rotate, checking if it's still alive and
         drawing its health bar.
+
+        Parameters
+        ----------
+        surface : pygame.surface.Surface
+            Surface where the enemies are being updated.
 
         Example
         -------

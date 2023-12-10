@@ -50,17 +50,17 @@
 <section id="attributes">
 <h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">¶</a></h2>
 <dl class="simple">
-<dt>x<span class="classifier">int</span></dt><dd><p>x coordinate of the top-left corner of the button.</p>
+<dt>_x<span class="classifier">int</span></dt><dd><p>x coordinate of the top-left corner of the button.</p>
 </dd>
-<dt>y<span class="classifier">int</span></dt><dd><p>y coordinate of the top-left corner of the button.</p>
+<dt>_y<span class="classifier">int</span></dt><dd><p>y coordinate of the top-left corner of the button.</p>
 </dd>
-<dt>image<span class="classifier">pygame.surface.Surface</span></dt><dd><p>An image of the button loaded using pygame.</p>
+<dt>_image<span class="classifier">pygame.surface.Surface</span></dt><dd><p>An image of the button loaded using pygame.</p>
 </dd>
-<dt>rect<span class="classifier">pygame.rect.Rect</span></dt><dd><p>Rect where the image is drawn.</p>
+<dt>_rect<span class="classifier">pygame.rect.Rect</span></dt><dd><p>Rect where the image is drawn.</p>
 </dd>
-<dt>rect.topleft<span class="classifier">tuple </span></dt><dd><p>Coordinates x and y for the topleft of the rect.</p>
+<dt>_rect.topleft<span class="classifier">tuple </span></dt><dd><p>Coordinates x and y for the topleft of the rect.</p>
 </dd>
-<dt>clicked<span class="classifier">bool</span></dt><dd><p>Represents whether the button is currently being clicked (True) or not (False).</p>
+<dt>_clicked<span class="classifier">bool</span></dt><dd><p>Represents whether the button is currently being clicked (True) or not (False).</p>
 </dd>
 </dl>
 </section>
@@ -138,25 +138,25 @@ button.transform_image_proportions(69, 42)</p>
 <section id="id6">
 <h2>Attributes<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
 <dl class="simple">
-<dt>x<span class="classifier">int</span></dt><dd><p>x coordinate of the top-left corner of the button.</p>
+<dt>_x<span class="classifier">int</span></dt><dd><p>x coordinate of the top-left corner of the button.</p>
 </dd>
-<dt>y<span class="classifier">int</span></dt><dd><p>y coordinate of the top-left corner of the button.</p>
+<dt>_y<span class="classifier">int</span></dt><dd><p>y coordinate of the top-left corner of the button.</p>
 </dd>
-<dt>image<span class="classifier">pygame.surface.Surface</span></dt><dd><p>An image of the first stage of the button loaded using pygame.</p>
+<dt>_image<span class="classifier">pygame.surface.Surface</span></dt><dd><p>An image of the first stage of the button loaded using pygame.</p>
 </dd>
-<dt>rect<span class="classifier">pygame.rect.Rect</span></dt><dd><p>Rect where the image is drawn.</p>
+<dt>_rect<span class="classifier">pygame.rect.Rect</span></dt><dd><p>Rect where the image is drawn.</p>
 </dd>
-<dt>rect.topleft<span class="classifier">tuple </span></dt><dd><p>Coordinates x and y for the topleft of the rect.</p>
+<dt>_rect.topleft<span class="classifier">tuple </span></dt><dd><p>Coordinates x and y for the topleft of the rect.</p>
 </dd>
-<dt>second_image<span class="classifier">pygame.surface.Surface</span></dt><dd><p>An image of the second stage of the button loaded using pygame.</p>
+<dt>_second_image<span class="classifier">pygame.surface.Surface</span></dt><dd><p>An image of the second stage of the button loaded using pygame.</p>
 </dd>
-<dt>second_rect<span class="classifier">pygame.rect.Rect</span></dt><dd><p>Rect where the second image is drawn.</p>
+<dt>_second_rect<span class="classifier">pygame.rect.Rect</span></dt><dd><p>Rect where the second image is drawn.</p>
 </dd>
-<dt>second_rect.topleft<span class="classifier">tuple</span></dt><dd><p>Coordinates x and y for the topleft of the second image rect.</p>
+<dt>_second_rect.topleft<span class="classifier">tuple</span></dt><dd><p>Coordinates x and y for the topleft of the second image rect.</p>
 </dd>
-<dt>clicked<span class="classifier">bool</span></dt><dd><p>Represents whether the button is currently being clicked (True) or not (False).</p>
+<dt>_clicked<span class="classifier">bool</span></dt><dd><p>Represents whether the button is currently being clicked (True) or not (False).</p>
 </dd>
-<dt>status<span class="classifier">bool</span></dt><dd><p>Represents using True or False if the button is on the first or second stage.</p>
+<dt>_status<span class="classifier">bool</span></dt><dd><p>Represents using True or False if the button is on the first or second stage.</p>
 </dd>
 </dl>
 </section>
@@ -189,13 +189,31 @@ two_action_button.draw_button(screen)</p>
 </section>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="buttons.TwoActionButton.status">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">status</span></span><a class="headerlink" href="#buttons.TwoActionButton.status" title="Link to this definition">¶</a></dt>
+<dd><p>Get the current status of the button.</p>
+<section id="id11">
+<h3>Returns<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>bool</dt><dd><p>Boolean that represents the current status of the button.</p>
+</dd>
+</dl>
+</section>
+<section id="id12">
+<h3>Example<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
+<p>two_action_button = TwoActionButton(500, 500, “assets/buttons/continue.png”, “assets/buttons/pause.png”)
+two_action_buttons.status</p>
+</section>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="buttons.TwoActionButton.transform_image_proportions">
 <span class="sig-name descname"><span class="pre">transform_image_proportions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#buttons.TwoActionButton.transform_image_proportions" title="Link to this definition">¶</a></dt>
 <dd><p>Transform the images proportions to a specified width and height using Pygame’s
 transform.scale function.</p>
-<section id="id11">
-<h3>Parameters<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
+<section id="id13">
+<h3>Parameters<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>width: int</dt><dd><p>The desired width of the image.</p>
 </dd>
@@ -203,8 +221,8 @@ transform.scale function.</p>
 </dd>
 </dl>
 </section>
-<section id="id12">
-<h3>Example<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
+<section id="id14">
+<h3>Example<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h3>
 <p>two_action_button = TwoActionButton(500, 500, “assets/buttons/continue.png”, “assets/buttons/pause.png”)
 two_action_button.transform_image_proportions(69, 42)</p>
 </section>
