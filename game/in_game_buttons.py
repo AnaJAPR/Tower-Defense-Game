@@ -13,11 +13,11 @@ restart_button = Button(745, 65, "assets/buttons/restart.png")
 restart_button.transform_image_proportions(50, 50)
 
 # Game Over Restart Button
-restart_game_over = Button(250, 400, "assets/buttons/newgame.png")
+restart_game_over = Button(250, 475, "assets/buttons/newgame.png")
 restart_game_over.transform_image_proportions(300, 100)
 
 # Game Exit Restart Button
-exit_game_over = Button(250, 550, "assets/buttons/menu.png")
+exit_game_over = Button(250, 575, "assets/buttons/menu.png")
 exit_game_over.transform_image_proportions(300, 100)
 
 # Exit Button

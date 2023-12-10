@@ -20,7 +20,7 @@ HEALTH = 100
 MONEY = 650
 
 # Spawn enemy constants
-SPAWN_COOLDOWN = 4000
+SPAWN_COOLDOWN = 500
 
 #turret constants
 TURRET_LEVELS = 4

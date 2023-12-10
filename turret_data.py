@@ -2,26 +2,26 @@ TURRET_DATA = {
     'artillery': [
         {
             # Level 1
-            "range": 120,
+            "range": 150,
             "cooldown": 2000,
-            "damage": 3
+            "damage": 2
         },
         {
             # Level 2
-            "range": 180,
-            "cooldown": 1800,
-            "damage": 4.5
+            "range": 200,
+            "cooldown": 1750,
+            "damage": 4
         },
         {
             # Level 3
-            "range": 240,
-            "cooldown": 1600,
+            "range": 250,
+            "cooldown": 1500,
             "damage": 6
         },
         {
             # Level 4
             "range": 300,
-            "cooldown": 1400,
+            "cooldown": 1250,
             "damage": 8
         }
     ],
@@ -30,25 +30,25 @@ TURRET_DATA = {
             # Level 1
             "range": 90,
             "cooldown": 800,
-            "damage": 0.5
+            "damage": 1
         },
         {
             # Level 2
-            "range": 100,
+            "range": 110,
             "cooldown": 700,
-            "damage": 0.8
+            "damage": 2
         },
         {
             # Level 3
-            "range": 110,
+            "range": 130,
             "cooldown": 600,
-            "damage": 1.2
+            "damage": 3
         },
         {
             # Level 4
-            "range": 120,
+            "range": 150,
             "cooldown": 500,
-            "damage": 1.5
+            "damage": 4
         }
     ]
 }

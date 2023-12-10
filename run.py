@@ -11,6 +11,7 @@ from game.load_levels import *
 from game import in_game_buttons as igb
 from game import load_others as lo
 from game import load_sounds as ls
+from menu import Menu
 
 # Starting Pygame
 pygame.init()
@@ -42,6 +43,7 @@ on_going = True
 placing_turrets = False
 removing_turrets = False
 selected_turret = None
+
 # Spawning Enemies
 last_enemy_spawn = pygame.time.get_ticks()
 
@@ -110,11 +112,8 @@ while running:
             ll.level.spawn_enemies()
 
         if igb.exit_button.draw_button(screen):
-            python_command = "python"
-            script_path = "menu.py"
+            Menu()
 
-            # Start the game in a new process
-            subprocess.Popen([python_command, script_path])
             sys.exit()
 
         # if turret is selected, show upgrade button
@@ -142,7 +141,7 @@ while running:
                             is_starting = True
                             is_paused = True
                             on_going = False
-                            ll.level.end_game(screen, enemy_group, lt.turret_group, "victory")
+                            ll.level.game_over(screen, enemy_group, lt.turret_group, "victory")
                         else:
                             ll.level.level += 1
                             ll.level.spawn_enemies()
@@ -152,7 +151,7 @@ while running:
             is_starting = True
             is_paused = True
             on_going = False
-            ll.level.end_game(screen, enemy_group, lt.turret_group, "defeat")
+            ll.level.game_over(screen, enemy_group, lt.turret_group, "defeat")
     
     # Add buttons to game over screens
     if not on_going:
@@ -166,9 +165,7 @@ while running:
             ll.level.spawn_enemies()
 
         if igb.exit_game_over.draw_button(screen):
-            python_command = "python"
-            script_path = "menu.py"
-            subprocess.Popen([python_command, script_path])
+            Menu()
             sys.exit()
 
     # Drawing Groups
@@ -227,7 +224,7 @@ while running:
                     elif removing_turrets == True and placing_turrets == False:
                         for turret in lt.turret_group:
                             # Remove the turret
-                            turret.sell()
+                            removing_turrets = turret.sell()
                     else:
                         selected_turret = lt.select_turret(mouse_pos)
 
