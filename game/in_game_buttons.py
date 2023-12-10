@@ -26,19 +26,19 @@ exit_button.transform_image_proportions(50, 50)
 
 # Add Turret Buttons
 laser_button = Button(20, c.SCREEN_HEIGHT + 15, "assets/buttons/laser.png")
-laser_button.transform_image_proportions(60, 60)
+laser_button.transform_image_proportions(50, 50)
 
 artillery_button = Button(120, c.SCREEN_HEIGHT + 15, 'assets/buttons/artillery.png')
-artillery_button.transform_image_proportions(60, 60)
+artillery_button.transform_image_proportions(50, 50)
 
 # Remove Turret Button
 rm_turret_button = Button(220, c.SCREEN_HEIGHT + 15, 'assets/buttons/remove.png')
-rm_turret_button.transform_image_proportions(60, 60)
+rm_turret_button.transform_image_proportions(50, 50)
 
 # Upgrade Turret Button
 upgrade_button = Button(320, c.SCREEN_HEIGHT + 15, "assets/buttons/up.png")
-upgrade_button.transform_image_proportions(60, 60)
+upgrade_button.transform_image_proportions(50, 50)
 
 # Fast Forward Button
 fast_forward_button = TwoActionButton(420, c.SCREEN_HEIGHT + 15, "assets/buttons/fast_forward.png", "assets/buttons/fast_forward_active.png")
-fast_forward_button.transform_image_proportions(60, 60)
+fast_forward_button.transform_image_proportions(50, 50)

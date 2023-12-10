@@ -124,10 +124,13 @@ while running:
         if selected_turret:
             # if turret can be upgraded, show upgrade button
             if selected_turret.upgrade_level < c.TURRET_LEVELS:
+                screen.blit(lo.coin_image, (315, c.SCREEN_HEIGHT + 75))
+                draw_text(str(selected_turret.upgrade_price), text_font, "grey100", 335, c.SCREEN_HEIGHT + 73)
                 if igb.upgrade_button.draw_button(screen):
                     if level.money >= selected_turret.upgrade_price:
                         level.money -= selected_turret.upgrade_price
-                        
+                        screen.blit(lo.coin_image, (315, c.SCREEN_HEIGHT + 75))
+                        draw_text(str(selected_turret.upgrade_price), text_font, "grey100", 335, c.SCREEN_HEIGHT + 73)
                         selected_turret.upgrade()
         if not is_paused:
             # Fast Forward Option
@@ -187,6 +190,11 @@ while running:
         turret.draw(screen)
 
     display_data()
+
+    screen.blit(lo.coin_image, (15, c.SCREEN_HEIGHT + 75))
+    draw_text(str(180), text_font, "grey100", 35, c.SCREEN_HEIGHT + 73)
+    screen.blit(lo.coin_image, (115, c.SCREEN_HEIGHT + 75))
+    draw_text(str(200), text_font, "grey100", 135, c.SCREEN_HEIGHT + 73)
 
     # Drawing a tower that follows the mouse
     if placing_turrets == True and removing_turrets == False:
