@@ -40,8 +40,8 @@ ENEMY_SPAWN_DATA = [
 ]
 
 ENEMY_DATA = {
-    "cadet"   : {"speed" : 1, "health": 5, "reward" : 10},
-    "officer" : {"speed" : 2, "health": 10, "reward" : 10},
-    "captain" : {"speed" : 4, "health": 15, "reward" : 10},
-    "general" : {"speed" : 8, "health": 20, "reward" : 10}
+    "cadet"   : {"speed" : 1, "health": 7, "reward" : 7},
+    "officer" : {"speed" : 2, "health": 14, "reward" : 10},
+    "captain" : {"speed" : 4, "health": 21, "reward" : 13},
+    "general" : {"speed" : 8, "health": 30, "reward" : 16}
 }
