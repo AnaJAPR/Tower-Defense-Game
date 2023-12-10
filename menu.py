@@ -166,7 +166,7 @@ class Menu:
         pygame.mixer.music.set_volume(1)    # sets the volume
         pygame.mixer.music.play(-1)    # Plays the song in an infinite loop (-1)
         self.SOUND_TOGGLE = Button(
-            image=pygame.transform.scale(pygame.image.load("assets/buttons/sound.jpg"), (40, 40)),
+            image=pygame.transform.scale(pygame.image.load("assets/buttons/sound.png"), (40, 40)),
             pos=(760, 25), text_input="", base_color="White", hovering_color="Green")
         self.sound_enabled = True   # Indicates whether the sound is enabled or not
         
@@ -365,10 +365,10 @@ class Menu:
         
         if self.sound_enabled:
             pygame.mixer.music.pause()
-            self.SOUND_TOGGLE.image = pygame.transform.scale(pygame.image.load("assets/buttons/sound_off.jpg"), (40,40))
+            self.SOUND_TOGGLE.image = pygame.transform.scale(pygame.image.load("assets/buttons/sound_off.png"), (40,40))
         else:
             pygame.mixer.music.unpause()
-            self.SOUND_TOGGLE.image = pygame.transform.scale(pygame.image.load("assets/buttons/sound.jpg"), (40,40))
+            self.SOUND_TOGGLE.image = pygame.transform.scale(pygame.image.load("assets/buttons/sound.png"), (40,40))
         self.sound_enabled = not self.sound_enabled
             
     def run(self):
