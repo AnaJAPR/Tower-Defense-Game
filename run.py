@@ -11,6 +11,7 @@ from game.load_levels import *
 from game import in_game_buttons as igb
 from game import load_others as lo
 from game import load_sounds as ls
+from menu import Menu
 
 # Starting Pygame
 pygame.init()
@@ -111,11 +112,8 @@ while running:
             ll.level.spawn_enemies()
 
         if igb.exit_button.draw_button(screen):
-            python_command = "python"
-            script_path = "menu.py"
+            Menu()
 
-            # Start the game in a new process
-            subprocess.Popen([python_command, script_path])
             sys.exit()
 
         # if turret is selected, show upgrade button
@@ -167,9 +165,7 @@ while running:
             ll.level.spawn_enemies()
 
         if igb.exit_game_over.draw_button(screen):
-            python_command = "python"
-            script_path = "menu.py"
-            subprocess.Popen([python_command, script_path])
+            Menu()
             sys.exit()
 
     # Drawing Groups
