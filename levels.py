@@ -19,7 +19,7 @@ class Level():
     ----------
     level : int
         The current level of the game.
-    game_speed : int
+    game_speed : float
         The current speed the game is going at
     spawned_enemies : int
         Amount of enemies that have been spawned.
@@ -104,42 +104,172 @@ class Level():
     
     @property
     def level(self):
+        """
+        Get the current level of the game.
+        
+        Returns
+        -------
+        int
+            Returns an integer that represents the current game level.
+        
+        Example
+        -------
+        level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
+        a = level.level
+        """
         return self._level
     
     @level.setter
     def level(self, level):
+        """
+        Set the game level to another value.
+
+        Parameters
+        ----------
+        level : int
+            Update the game level status according to the given value.
+
+        Example
+        -------
+        level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
+        level.level = 1
+        """
         self._level = level
         
     @property
     def game_speed(self):
+        """
+        Get the current game speed of the level.
+        
+        Returns
+        -------
+        float
+            Returns a float that represents the current game speed.
+        
+        Example
+        -------
+        level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
+        a = level.speed
+        """
         return self._game_speed
     
     @game_speed.setter
     def game_speed(self, game_speed):
+        """
+        Set the game speed to another value.
+
+        Parameters
+        ----------
+        game_speed : float
+            Update the game speed status according to the given value.
+
+        Example
+        -------
+        level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
+        level.game_speed = 0.5
+        """
         self._game_speed = game_speed
 
     @property
     def killed_enemies(self):
+        """
+        Get the current amount of the enemies defeated.
+        
+        Returns
+        -------
+        int
+            Returns an integer that represents the current amount of enemies defeated.
+        
+        Example
+        -------
+        level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
+        a = level.killed_enemies
+        """
         return self._killed_enemies
 
     @killed_enemies.setter
     def killed_enemies(self, killed_enemies):
+        """
+        Set the amount of killed enemies to another value.
+
+        Parameters
+        ----------
+        killed_enemies : int
+            Update the amount of killed enemies to the given value.
+
+        Example
+        -------
+        level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
+        level.killed_enemies += 1
+        """
         self._killed_enemies = killed_enemies     
 
     @property
     def spawned_enemies(self):
+        """
+        Get the current amount of spawned enemies.
+        
+        Returns
+        -------
+        int
+            Returns an integer that represents the current amount of spawned enemies.
+        
+        Example
+        -------
+        level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
+        a = level.spawned_enemies
+        """
         return self._spawned_enemies
     
     @spawned_enemies.setter
     def spawned_enemies(self,spawned_enemies):
+        """
+        Set the amount of spawned enemies to another value.
+
+        Parameters
+        ----------
+        spawned_enemies : int
+            Update the amount of spawned enemies to the given value.
+
+        Example
+        -------
+        level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
+        level.spawned_enemies += 1
+        """
         self._spawned_enemies = spawned_enemies
              
     @property
     def enemy_list(self):
+        """
+        Get the list of enemies that will be spawned
+
+        Returns
+        ----------
+        list
+            The list of enemies that will be spawned.
+
+        Example
+        -------
+        level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
+        a = level.enemy_list
+        """
         return self._enemy_list
     
     @property
     def n_waves(self):
+        """
+        Get the number of waver that will happen during the level.
+
+        Returns
+        ----------
+        int
+            Number of waves that will happen during the level
+
+        Example
+        -------
+        level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
+        a = level.n_waves
+        """
         return self._n_waves
     
     @property

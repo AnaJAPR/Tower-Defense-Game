@@ -15,17 +15,17 @@ class Button():
     
     Attributes
     ----------
-    x : int
+    _x : int
         x coordinate of the top-left corner of the button.
-    y : int
+    _y : int
         y coordinate of the top-left corner of the button.
-    image : pygame.surface.Surface
+    _image : pygame.surface.Surface
         An image of the button loaded using pygame.
-    rect : pygame.rect.Rect
+    _rect : pygame.rect.Rect
         Rect where the image is drawn.
-    rect.topleft : tuple 
+    _rect.topleft : tuple 
         Coordinates x and y for the topleft of the rect.
-    clicked : bool
+    _clicked : bool
         Represents whether the button is currently being clicked (True) or not (False).
 
     Example
@@ -45,12 +45,12 @@ class Button():
         image_path : str
             A string containing the path to the image of the button.
         """
-        self.x = x
-        self.y = y
-        self.image = pygame.image.load(image_path).convert_alpha()
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
-        self.clicked = False
+        self._x = x
+        self._y = y
+        self._image = pygame.image.load(image_path).convert_alpha()
+        self._rect = self._image.get_rect()
+        self._rect.topleft = (x, y)
+        self._clicked = False
 
     def transform_image_proportions(self, width:int, height:int):
         """
@@ -69,9 +69,9 @@ class Button():
         button = Button(500, 500, "assets/buttons/exit.png")
         button.transform_image_proportions(69, 42)
         """
-        self.image = pygame.transform.scale(self.image, (width, height))
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (self.x, self.y)
+        self._image = pygame.transform.scale(self._image, (width, height))
+        self._rect = self._image.get_rect()
+        self._rect.topleft = (self._x, self._y)
 
     def draw_button(self, surface:pygame.surface.Surface):
         """
@@ -97,16 +97,16 @@ class Button():
         position = pygame.mouse.get_pos()
 
         # Checking whether or not the button is being pressed
-        if self.rect.collidepoint(position):
-            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
+        if self._rect.collidepoint(position):
+            if pygame.mouse.get_pressed()[0] == 1 and self._clicked == False:
                 action = True
-                self.clicked = True
+                self._clicked = True
 
         if pygame.mouse.get_pressed()[0] == 0:
-            self.clicked = False
+            self._clicked = False
 
         # Drawing the button on the screen
-        surface.blit(self.image, self.rect)
+        surface.blit(self._image, self._rect)
         return action
     
 class TwoActionButton(Button):
@@ -126,25 +126,25 @@ class TwoActionButton(Button):
     
     Attributes
     ----------
-    x : int
+    _x : int
         x coordinate of the top-left corner of the button.
-    y : int
+    _y : int
         y coordinate of the top-left corner of the button.
-    image : pygame.surface.Surface
+    _image : pygame.surface.Surface
         An image of the first stage of the button loaded using pygame.
-    rect : pygame.rect.Rect
+    _rect : pygame.rect.Rect
         Rect where the image is drawn.
-    rect.topleft : tuple 
+    _rect.topleft : tuple 
         Coordinates x and y for the topleft of the rect.
-    second_image : pygame.surface.Surface
+    _second_image : pygame.surface.Surface
         An image of the second stage of the button loaded using pygame.
-    second_rect : pygame.rect.Rect
+    _second_rect : pygame.rect.Rect
         Rect where the second image is drawn.
-    second_rect.topleft : tuple
+    _second_rect.topleft : tuple
         Coordinates x and y for the topleft of the second image rect.
-    clicked : bool
+    _clicked : bool
         Represents whether the button is currently being clicked (True) or not (False).
-    status : bool
+    _status : bool
         Represents using True or False if the button is on the first or second stage.
 
     Example
@@ -167,12 +167,12 @@ class TwoActionButton(Button):
             A string containing the path to the second stage image of the button.
         """
         super().__init__(x, y, image_path)
-        self.second_image = pygame.image.load(second_image_path).convert_alpha()
-        self.second_rect = self.second_image.get_rect()
-        self.second_rect.topleft = (x, y)
-        self.status = True
+        self._second_image = pygame.image.load(second_image_path).convert_alpha()
+        self._second_rect = self._second_image.get_rect()
+        self._second_rect.topleft = (x, y)
+        self._status = True
 
-    def transform_image_proportions(self, width: int, height: int):
+    def transform_image_proportions(self, width:int, height:int):
         """
         Transform the images proportions to a specified width and height using Pygame's
         transform.scale function.
@@ -189,9 +189,9 @@ class TwoActionButton(Button):
         two_action_button = TwoActionButton(500, 500, "assets/buttons/continue.png", "assets/buttons/pause.png")
         two_action_button.transform_image_proportions(69, 42)
         """    
-        self.second_image = pygame.transform.scale(self.second_image, (width, height))
-        self.second_rect = self.second_image.get_rect()
-        self.second_rect.topleft = (self.x, self.y)
+        self._second_image = pygame.transform.scale(self._second_image, (width, height))
+        self._second_rect = self._second_image.get_rect()
+        self._second_rect.topleft = (self._x, self._y)
         super().transform_image_proportions(width, height)
          
     def draw_button(self, surface):
@@ -218,19 +218,52 @@ class TwoActionButton(Button):
         position = pygame.mouse.get_pos()
 
         # Checking whether or not the button is being pressed
-        if self.rect.collidepoint(position):
-            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
+        if self._rect.collidepoint(position):
+            if pygame.mouse.get_pressed()[0] == 1 and self._clicked == False:
                 action = True
-                self.clicked = True
-                self.status = not self.status
+                self._clicked = True
+                self._status = not self._status
 
         if pygame.mouse.get_pressed()[0] == 0:
-            self.clicked = False
+            self._clicked = False
 
         # Drawing the button on the screen
-        if self.status == True:
-            surface.blit(self.image, self.rect)
-        if self.status == False:
-            surface.blit(self.second_image, self.second_rect)
-    
+        if self._status == True:
+            surface.blit(self._image, self._rect)
+        if self._status == False:
+            surface.blit(self._second_image, self._second_rect)
         return action
+
+    @property
+    def status(self):
+        """
+        Get the current status of the button.
+        
+        Returns
+        -------
+        bool
+            Boolean that represents the current status of the button.
+        
+        Example
+        -------
+        two_action_button = TwoActionButton(500, 500, "assets/buttons/continue.png", "assets/buttons/pause.png")
+        two_action_buttons.status
+        """
+        status = self._status
+
+    @status.setter
+    def status(self, value:bool):
+        """
+        Set the status of the button to another value.
+
+        Parameters
+        ----------
+        value : bool
+            Update the button status according to a boolean.
+
+        Example
+        -------
+        two_action_button = TwoActionButton(500, 500, "assets/buttons/continue.png", "assets/buttons/pause.png")
+        two_action_buttons.status = False
+        """
+        self._status = value

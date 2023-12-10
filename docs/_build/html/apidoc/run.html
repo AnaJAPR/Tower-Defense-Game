@@ -32,9 +32,39 @@
   <section id="run-module">
 <h1>run module<a class="headerlink" href="#run-module" title="Link to this heading">¶</a></h1>
 <dl class="py function" id="module-run">
+<dt class="sig sig-object py" id="run.display_data">
+<span class="sig-prename descclassname"><span class="pre">run.</span></span><span class="sig-name descname"><span class="pre">display_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#run.display_data" title="Link to this definition">¶</a></dt>
+<dd><p>Display the game data on the screen</p>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
+<p>display_data()</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="run.draw_text">
 <span class="sig-prename descclassname"><span class="pre">run.</span></span><span class="sig-name descname"><span class="pre">draw_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#run.draw_text" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Draw text on the screen.</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>text<span class="classifier">str</span></dt><dd><p>Text that will be written.</p>
+</dd>
+<dt>font<span class="classifier">pygame.font.Font</span></dt><dd><p>Font used to write the text.</p>
+</dd>
+<dt>text_col<span class="classifier">str</span></dt><dd><p>String containing the color used to write the text.</p>
+</dd>
+<dt>x<span class="classifier">int</span></dt><dd><p>The x coordinate where the text will be written.</p>
+</dd>
+<dt>y<span class="classifier">int</span></dt><dd><p>The y coordinate where the text will be written.</p>
+</dd>
+</dl>
+</section>
+<section id="id1">
+<h2>Example<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p>draw_text(“LEVEL: ” + str(level.level) + “/15”, text_font, “grey100”, 0, 0)</p>
+</section>
+</dd></dl>
 
 </section>
 
