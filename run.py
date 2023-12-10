@@ -35,6 +35,10 @@ def display_data():
     draw_text(str(level.health), text_font, "grey100", 45, 30)
     screen.blit(lo.coin_image, (5, 60))
     draw_text(str(level.money), text_font, "grey100", 45, 60)
+    screen.blit(lo.coin_image, (15, c.SCREEN_HEIGHT + 75))
+    draw_text(str(180), text_font, "grey100", 35, c.SCREEN_HEIGHT + 73)
+    screen.blit(lo.coin_image, (115, c.SCREEN_HEIGHT + 75))
+    draw_text(str(200), text_font, "grey100", 135, c.SCREEN_HEIGHT + 73)
 
 
 # GAME VARIABLES
@@ -66,6 +70,9 @@ while running:
 
         # Inserting the map on the screen
         level.draw_map(screen)
+
+        # Inserting the icons on the screen
+        display_data()
 
         # UPDATE GROUPS
         # Updating Turrets
@@ -188,13 +195,6 @@ while running:
 
     for turret in lt.turret_group:
         turret.draw(screen)
-
-    display_data()
-
-    screen.blit(lo.coin_image, (15, c.SCREEN_HEIGHT + 75))
-    draw_text(str(180), text_font, "grey100", 35, c.SCREEN_HEIGHT + 73)
-    screen.blit(lo.coin_image, (115, c.SCREEN_HEIGHT + 75))
-    draw_text(str(200), text_font, "grey100", 135, c.SCREEN_HEIGHT + 73)
 
     # Drawing a tower that follows the mouse
     if placing_turrets == True and removing_turrets == False:
