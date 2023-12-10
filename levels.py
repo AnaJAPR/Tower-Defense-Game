@@ -1,7 +1,8 @@
 import pygame
 import random
-from constants import HEALTH, MONEY, SCREEN_WIDTH, SCREEN_HEIGHT
-from game.load_enemy import ENEMY_SPAWN_DATA
+from constants import HEALTH, MONEY, SCREEN_WIDTH, SCREEN_HEIGHT, SPAWN_COOLDOWN
+from game.load_enemy import ENEMY_SPAWN_DATA, ENEMY_IMAGES
+from game import waypoints as wp
 
 class Level():
     """
@@ -62,6 +63,8 @@ class Level():
         self.__waypoints = waypoints
         self.killed_enemies = 0
         self.lose_game = False
+        self.last_wave_spawn = pygame.time.get_ticks()
+        self.n_waves = len(ENEMY_SPAWN_DATA)
 
     def transform_image_proportions(self, width:int, height:int):
         """
@@ -196,13 +199,14 @@ class Level():
         level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
         level.spawn_enemies()
         """
-        enemies = ENEMY_SPAWN_DATA[self.level - 1]
-        for enemy_type in enemies:
-            enemies_to_spawn = enemies[enemy_type]
-            for enemy in range(enemies_to_spawn):
-                self.enemy_list.append(enemy_type)
-        #now randomize the list to shuffle the enemies
-        random.shuffle(self.enemy_list)
+        if self.level < self.n_waves:
+            enemies = ENEMY_SPAWN_DATA[self.level - 1]
+            for enemy_type in enemies:
+                enemies_to_spawn = enemies[enemy_type]
+                for enemy in range(enemies_to_spawn):
+                    self.enemy_list.append(enemy_type)
+            #now randomize the list to shuffle the enemies
+            random.shuffle(self.enemy_list)
 
     def clear_level_data(self):
         """
@@ -222,6 +226,7 @@ class Level():
         self._health = HEALTH
         self._money =  self.__initial_money
         self.killed_enemies = 0
+        self.level = 1
 
     def end_game(self, screen, enemy_group, turret_group, result_game):
         for enemy in enemy_group:
@@ -234,12 +239,14 @@ class Level():
         image = pygame.transform.scale(image, (800, 380))
         screen.blit(image, (0, 0))
         
-
-
         # if result_game == "victory":
 
-        
+# class SpawnEnemies(Level):
+#     def __init__(self, map_image: str, waypoints: list):
+#         super().__init__(map_image, waypoints)
+    def spawn_waves(self):
+        for wave in range(self.n_waves):
+            self.spawn_enemies()
+            self.level += 1
+            self.last_wave_spawn = pygame.time.get_ticks()
 
-    # def lose_game(self, surface):
-    #     if self._health <= 0:
-    #         pygame.draw.rect(surface, (255,255,255), pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
