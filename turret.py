@@ -1,10 +1,7 @@
-import sys
-sys.path.append('.')
 import pygame
 import constants as c
 from game import load_levels as ll
 from game import load_enemy as le
-from game import load_sounds as ls
 from turret_data import TURRET_DATA
 import math
 
@@ -261,7 +258,7 @@ class BaseTurret(pygame.sprite.Sprite):
 
         self.upgrade_level += 1
         if self.upgrade_level > 2:
-            self.upgrade_price += 50
+            self.upgrade_price += self.upgrade_price // 2
         self.range = TURRET_DATA[self.turret_type][self.upgrade_level - 1].get("range")
         self.cooldown = TURRET_DATA[self.turret_type][self.upgrade_level - 1].get("cooldown")
         self.damage = TURRET_DATA[self.turret_type][self.upgrade_level - 1].get("damage")
@@ -334,7 +331,7 @@ class ArtilleryTurret(BaseTurret):
     sfx : pygame.mixer.Sound
         Sound effects of the turret.
     turret_type : str
-        The turret type, defined as 'artillery'.
+        The turret type, defined as "artillery".
     
     Attributes
     ----------
@@ -410,9 +407,9 @@ class ArtilleryTurret(BaseTurret):
         sfx : pygame.mixer.Sound
             Sound effects of the turret.
         turret_type : str
-            The turret type, defined as 'artillery'.
+            The turret type, defined as "artillery".
         """
-        super().__init__(sprite_sheets, pos_x, pos_y, price, sfx, turret_type='artillery')
+        super().__init__(sprite_sheets, pos_x, pos_y, price, sfx, turret_type="artillery")
 
 # Laser Turret
 class LaserTurret(BaseTurret):
@@ -432,7 +429,7 @@ class LaserTurret(BaseTurret):
     sfx : pygame.mixer.Sound
         Sound effects of the turret.
     turret_type : str
-        The turret type, defined as 'laser'.
+        The turret type, defined as "laser".
     
     Attributes
     ----------
@@ -508,6 +505,6 @@ class LaserTurret(BaseTurret):
         sfx : pygame.mixer.Sound
             Sound effects of the turret.
         turret_type : str
-            The turret type, defined as 'laser'.
+            The turret type, defined as "laser".
         """
-        super().__init__(sprite_sheets, pos_x, pos_y, price, sfx, turret_type='laser')
+        super().__init__(sprite_sheets, pos_x, pos_y, price, sfx, turret_type="laser")

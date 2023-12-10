@@ -1,11 +1,7 @@
 import pygame
 import sys
-import subprocess
-import os
 import constants as c
 from enemy import Enemy
-from turret import ArtilleryTurret, LaserTurret
-from game import load_levels as ll
 from game import load_turrets as lt
 from game.load_levels import *
 from game import in_game_buttons as igb
@@ -88,13 +84,13 @@ while running:
         if igb.artillery_button.draw_button(screen):
             placing_turrets = not placing_turrets
             removing_turrets = False
-            selected_turret_type = 'artillery'
+            selected_turret_type = "artillery"
 
         # Creating the button to add laser turrets and cancel the action
         if igb.laser_button.draw_button(screen):
             placing_turrets = not placing_turrets
             removing_turrets = False
-            selected_turret_type = 'laser'
+            selected_turret_type = "laser"
 
         # Creating the button to remove turrets and cancel the action
         if igb.rm_turret_button.draw_button(screen):
@@ -130,8 +126,9 @@ while running:
             if selected_turret.upgrade_level < c.TURRET_LEVELS:
                 if igb.upgrade_button.draw_button(screen):
                     if level.money >= selected_turret.upgrade_price:
-                        selected_turret.upgrade()
                         level.money -= selected_turret.upgrade_price
+                        
+                        selected_turret.upgrade()
         if not is_paused:
             # Fast Forward Option
             level.game_speed = 1
@@ -193,7 +190,7 @@ while running:
 
     # Drawing a tower that follows the mouse
     if placing_turrets == True and removing_turrets == False:
-        if selected_turret_type == 'artillery':
+        if selected_turret_type == "artillery":
             cursor_turret = lt.cursor_artillery
             cursor_rect = cursor_turret.get_rect()
             cursor_pos = pygame.mouse.get_pos()
@@ -201,7 +198,7 @@ while running:
             if cursor_pos[1] <= c.SCREEN_HEIGHT:
                 screen.blit(cursor_turret, cursor_rect)
                 
-        elif selected_turret_type == 'laser':
+        elif selected_turret_type == "laser":
             cursor_turret = lt.cursor_laser
             cursor_rect = cursor_turret.get_rect()
             cursor_pos = pygame.mouse.get_pos()
