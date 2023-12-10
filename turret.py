@@ -58,7 +58,7 @@ class BaseTurret(pygame.sprite.Sprite):
     sprite_sheets :  list
         A list containing turret images.
     animation_list : list
-        A list conatining the images in order to animate them.
+        A list containing the images in order to animate them.
     frame_index : int
         Index of the frame of the animation.
     update_time : int
@@ -297,16 +297,23 @@ class BaseTurret(pygame.sprite.Sprite):
         """
         Sell the turret, making it disappear and earning the respective money.
 
+        Returns
+        -------
+        bool
+            Returns False to set variables to False while running.
+            
         Example
         -------
             turret = Turret(image_list, 500, 500, 100, song, "artillery")
             turret.sell(screen)
         """
+        removing = False
         position = pygame.mouse.get_pos()
         if self.rect.collidepoint(position):
             if pygame.mouse.get_pressed()[0] == 1:
                 self.kill()
                 ll.level.money += self.price + self.upgrade_price * (self.upgrade_level - 1)
+        return removing
 
 # Artillery Turret
 class ArtilleryTurret(BaseTurret):
@@ -356,10 +363,10 @@ class ArtilleryTurret(BaseTurret):
         The y coordinate of the turret.
     sfx : pygame.mixer.Sound
         Sound effects of the turret.
-    sprite_sheets :  list
+    sprite_sheets : list
         A list containing turret images.
     animation_list : list
-        A list conatining the images in order to animate them.
+        A list containing the images in order to animate them.
     frame_index : int
         Index of the frame of the animation.
     update_time : int
@@ -457,7 +464,7 @@ class LaserTurret(BaseTurret):
     sprite_sheets :  list
         A list containing turret images.
     animation_list : list
-        A list conatining the images in order to animate them.
+        A list containing the images in order to animate them.
     frame_index : int
         Index of the frame of the animation.
     update_time : int

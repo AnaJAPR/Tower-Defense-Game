@@ -228,7 +228,7 @@ while running:
                     elif removing_turrets == True and placing_turrets == False:
                         for turret in lt.turret_group:
                             # Remove the turret
-                            turret.sell()
+                            removing_turrets = turret.sell()
                     else:
                         selected_turret = lt.select_turret(mouse_pos)
 
