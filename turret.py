@@ -260,6 +260,8 @@ class BaseTurret(pygame.sprite.Sprite):
         """
 
         self.upgrade_level += 1
+        if self.upgrade_level > 2:
+            self.upgrade_price += 50
         self.range = TURRET_DATA[self.turret_type][self.upgrade_level - 1].get("range")
         self.cooldown = TURRET_DATA[self.turret_type][self.upgrade_level - 1].get("cooldown")
         self.damage = TURRET_DATA[self.turret_type][self.upgrade_level - 1].get("damage")

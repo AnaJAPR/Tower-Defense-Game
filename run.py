@@ -155,6 +155,7 @@ while running:
                             is_paused = True
                             on_going = False
                             level.game_over(screen, enemy_group, lt.turret_group, "victory")
+                            level.clear_level_data()
                         else:
                             level.level += 1
                             level.spawn_enemies()
@@ -165,6 +166,7 @@ while running:
             is_paused = True
             on_going = False
             level.game_over(screen, enemy_group, lt.turret_group, "defeat")
+            level.clear_level_data()
     
     # Add buttons to game over screens
     if not on_going:
