@@ -33,7 +33,7 @@
 <h1>enemy module<a class="headerlink" href="#enemy-module" title="Link to this heading">¶</a></h1>
 <dl class="py class" id="module-enemy">
 <dt class="sig sig-object py" id="enemy.Enemy">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">enemy.</span></span><span class="sig-name descname"><span class="pre">Enemy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">waypoints</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enemy_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#enemy.Enemy" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">enemy.</span></span><span class="sig-name descname"><span class="pre">Enemy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">waypoints</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enemy_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#enemy.Enemy" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Sprite</span></code></p>
 <p>Represents the enemy and its mechanics.</p>
 <section id="parameters">
@@ -65,7 +65,7 @@ must walk through.</p>
 </dd>
 <dt>_target_wp<span class="classifier">int</span></dt><dd><p>Index of the waypoints list that the enemy is currently going to.</p>
 </dd>
-<dt>_position<span class="classifier">pygame.math.Vector2</span></dt><dd><p>Current position of the enemy.</p>
+<dt>__position<span class="classifier">pygame.math.Vector2</span></dt><dd><p>Current position of the enemy.</p>
 </dd>
 <dt>__angle<span class="classifier">int</span></dt><dd><p>Angle that the enemy must turn while walking</p>
 </dd>
@@ -95,7 +95,7 @@ enemy.check_alive()</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="enemy.Enemy.draw_health_bar">
-<span class="sig-name descname"><span class="pre">draw_health_bar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#enemy.Enemy.draw_health_bar" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">draw_health_bar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Surface</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#enemy.Enemy.draw_health_bar" title="Link to this definition">¶</a></dt>
 <dd><p>Draw the health bar on the specified surface.</p>
 <section id="id2">
 <h3>Parameters<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
@@ -190,11 +190,18 @@ enemy.rotate()</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="enemy.Enemy.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#enemy.Enemy.update" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Surface</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#enemy.Enemy.update" title="Link to this definition">¶</a></dt>
 <dd><p>Updates the enemy, making it move and rotate, checking if it’s still alive and
 drawing its health bar.</p>
 <section id="id11">
-<h3>Example<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
+<h3>Parameters<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>surface<span class="classifier">pygame.surface.Surface</span></dt><dd><p>Surface where the enemies are being updated.</p>
+</dd>
+</dl>
+</section>
+<section id="id12">
+<h3>Example<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
 <p>enemy = Enemy([(0, 0), (10, 10, (20, 20))], “assetsenemiesenemy_1.png”, “enemy_1”)
 enemy.rotate()</p>
 </section>

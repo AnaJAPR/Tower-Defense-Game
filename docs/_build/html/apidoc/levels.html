@@ -51,7 +51,7 @@ must walk through.</p>
 <dl class="simple">
 <dt>level<span class="classifier">int</span></dt><dd><p>The current level of the game.</p>
 </dd>
-<dt>game_speed<span class="classifier">int</span></dt><dd><p>The current speed the game is going at</p>
+<dt>game_speed<span class="classifier">float</span></dt><dd><p>The current speed the game is going at</p>
 </dd>
 <dt>spawned_enemies<span class="classifier">int</span></dt><dd><p>Amount of enemies that have been spawned.</p>
 </dd>
@@ -107,12 +107,30 @@ level.draw_map(screen)</p>
 </section>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="levels.Level.enemy_list">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">enemy_list</span></span><a class="headerlink" href="#levels.Level.enemy_list" title="Link to this definition">¶</a></dt>
+<dd><p>Get the list of enemies that will be spawned</p>
+<section id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>list</dt><dd><p>The list of enemies that will be spawned.</p>
+</dd>
+</dl>
+</section>
+<section id="id5">
+<h3>Example<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
+a = level.enemy_list</p>
+</section>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="levels.Level.game_over">
 <span class="sig-name descname"><span class="pre">game_over</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enemy_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turret_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_game</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#levels.Level.game_over" title="Link to this definition">¶</a></dt>
 <dd><p>All the game objects are removed and shows a victory or defeat screen.</p>
-<section id="id5">
-<h3>Parameters<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<section id="id6">
+<h3>Parameters<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>screen<span class="classifier">pygame.surface.Surface</span></dt><dd><p>The screen where the game over screen is drawn.</p>
 </dd>
@@ -124,10 +142,28 @@ level.draw_map(screen)</p>
 </dd>
 </dl>
 </section>
-<section id="id6">
-<h3>Example<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<section id="id7">
+<h3>Example<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
 <p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
 level.game_over()</p>
+</section>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="levels.Level.game_speed">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">game_speed</span></span><a class="headerlink" href="#levels.Level.game_speed" title="Link to this definition">¶</a></dt>
+<dd><p>Get the current game speed of the level.</p>
+<section id="id8">
+<h3>Returns<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>float</dt><dd><p>Returns a float that represents the current game speed.</p>
+</dd>
+</dl>
+</section>
+<section id="id9">
+<h3>Example<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
+<p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
+a = level.speed</p>
 </section>
 </dd></dl>
 
@@ -135,15 +171,15 @@ level.game_over()</p>
 <dt class="sig sig-object py" id="levels.Level.health">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">health</span></span><a class="headerlink" href="#levels.Level.health" title="Link to this definition">¶</a></dt>
 <dd><p>Get the current health the player has.</p>
-<section id="returns">
-<h3>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h3>
+<section id="id10">
+<h3>Returns<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>int</dt><dd><p>The current health the player has</p>
 </dd>
 </dl>
 </section>
-<section id="id7">
-<h3>Example<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<section id="id11">
+<h3>Example<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
 <p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
 health = level.health</p>
 </section>
@@ -153,15 +189,15 @@ health = level.health</p>
 <dt class="sig sig-object py" id="levels.Level.initial_health">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">initial_health</span></span><a class="headerlink" href="#levels.Level.initial_health" title="Link to this definition">¶</a></dt>
 <dd><p>Get the initial health the player has.</p>
-<section id="id8">
-<h3>Returns<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<section id="id12">
+<h3>Returns<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>int</dt><dd><p>The initial health the player has</p>
 </dd>
 </dl>
 </section>
-<section id="id9">
-<h3>Example<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
+<section id="id13">
+<h3>Example<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h3>
 <p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
 initial_health = level.initial_health</p>
 </section>
@@ -171,17 +207,53 @@ initial_health = level.initial_health</p>
 <dt class="sig sig-object py" id="levels.Level.initial_money">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">initial_money</span></span><a class="headerlink" href="#levels.Level.initial_money" title="Link to this definition">¶</a></dt>
 <dd><p>Get the initial amount of money the player has.</p>
-<section id="id10">
-<h3>Returns<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
+<section id="id14">
+<h3>Returns<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>int</dt><dd><p>The initial amount of money the player has</p>
 </dd>
 </dl>
 </section>
-<section id="id11">
-<h3>Example<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
+<section id="id15">
+<h3>Example<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h3>
 <p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
 initial_money = level.initial_money</p>
+</section>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="levels.Level.killed_enemies">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">killed_enemies</span></span><a class="headerlink" href="#levels.Level.killed_enemies" title="Link to this definition">¶</a></dt>
+<dd><p>Get the current amount of the enemies defeated.</p>
+<section id="id16">
+<h3>Returns<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>int</dt><dd><p>Returns an integer that represents the current amount of enemies defeated.</p>
+</dd>
+</dl>
+</section>
+<section id="id17">
+<h3>Example<a class="headerlink" href="#id17" title="Link to this heading">¶</a></h3>
+<p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
+a = level.killed_enemies</p>
+</section>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="levels.Level.level">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">level</span></span><a class="headerlink" href="#levels.Level.level" title="Link to this definition">¶</a></dt>
+<dd><p>Get the current level of the game.</p>
+<section id="id18">
+<h3>Returns<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>int</dt><dd><p>Returns an integer that represents the current game level.</p>
+</dd>
+</dl>
+</section>
+<section id="id19">
+<h3>Example<a class="headerlink" href="#id19" title="Link to this heading">¶</a></h3>
+<p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
+a = level.level</p>
 </section>
 </dd></dl>
 
@@ -189,17 +261,35 @@ initial_money = level.initial_money</p>
 <dt class="sig sig-object py" id="levels.Level.money">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">money</span></span><a class="headerlink" href="#levels.Level.money" title="Link to this definition">¶</a></dt>
 <dd><p>Get the current amount of money the player has.</p>
-<section id="id12">
-<h3>Returns<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
+<section id="id20">
+<h3>Returns<a class="headerlink" href="#id20" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>int</dt><dd><p>The current amount of money the player has</p>
 </dd>
 </dl>
 </section>
-<section id="id13">
-<h3>Example<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h3>
+<section id="id21">
+<h3>Example<a class="headerlink" href="#id21" title="Link to this heading">¶</a></h3>
 <p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
 initial_money = level.money</p>
+</section>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="levels.Level.n_waves">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_waves</span></span><a class="headerlink" href="#levels.Level.n_waves" title="Link to this definition">¶</a></dt>
+<dd><p>Get the number of waver that will happen during the level.</p>
+<section id="id22">
+<h3>Returns<a class="headerlink" href="#id22" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>int</dt><dd><p>Number of waves that will happen during the level</p>
+</dd>
+</dl>
+</section>
+<section id="id23">
+<h3>Example<a class="headerlink" href="#id23" title="Link to this heading">¶</a></h3>
+<p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
+a = level.n_waves</p>
 </section>
 </dd></dl>
 
@@ -207,14 +297,32 @@ initial_money = level.money</p>
 <dt class="sig sig-object py" id="levels.Level.spawn_enemies">
 <span class="sig-name descname"><span class="pre">spawn_enemies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#levels.Level.spawn_enemies" title="Link to this definition">¶</a></dt>
 <dd><p>Spawn enemies on the map according to some level attributes.</p>
-<section id="id14">
-<h3>Parameters<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h3>
+<section id="id24">
+<h3>Parameters<a class="headerlink" href="#id24" title="Link to this heading">¶</a></h3>
 <p>None</p>
 </section>
-<section id="id15">
-<h3>Example<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h3>
+<section id="id25">
+<h3>Example<a class="headerlink" href="#id25" title="Link to this heading">¶</a></h3>
 <p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
 level.spawn_enemies()</p>
+</section>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="levels.Level.spawned_enemies">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">spawned_enemies</span></span><a class="headerlink" href="#levels.Level.spawned_enemies" title="Link to this definition">¶</a></dt>
+<dd><p>Get the current amount of spawned enemies.</p>
+<section id="id26">
+<h3>Returns<a class="headerlink" href="#id26" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>int</dt><dd><p>Returns an integer that represents the current amount of spawned enemies.</p>
+</dd>
+</dl>
+</section>
+<section id="id27">
+<h3>Example<a class="headerlink" href="#id27" title="Link to this heading">¶</a></h3>
+<p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
+a = level.spawned_enemies</p>
 </section>
 </dd></dl>
 
@@ -223,8 +331,8 @@ level.spawn_enemies()</p>
 <span class="sig-name descname"><span class="pre">transform_image_proportions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#levels.Level.transform_image_proportions" title="Link to this definition">¶</a></dt>
 <dd><p>Transform the image proportions to a specified width and height using Pygame’s
 transform.scale function.</p>
-<section id="id16">
-<h3>Parameters<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h3>
+<section id="id28">
+<h3>Parameters<a class="headerlink" href="#id28" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>width: int</dt><dd><p>The desired width of the image.</p>
 </dd>
@@ -232,8 +340,8 @@ transform.scale function.</p>
 </dd>
 </dl>
 </section>
-<section id="id17">
-<h3>Example<a class="headerlink" href="#id17" title="Link to this heading">¶</a></h3>
+<section id="id29">
+<h3>Example<a class="headerlink" href="#id29" title="Link to this heading">¶</a></h3>
 <p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
 level.transform_image_proportions(69, 42)</p>
 </section>
