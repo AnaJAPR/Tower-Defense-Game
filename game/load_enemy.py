@@ -28,20 +28,20 @@ ENEMY_SPAWN_DATA = [
     #5
     {"cadet" : 20, "officer" : 20, "captain" : 5, "general" : 0},
     #6
-    {"cadet" : 10, "officer" : 20, "captain" : 14, "general" : 0},
+    {"cadet" : 10, "officer" : 20, "captain" : 14, "general" : 1},
     #7
-    {"cadet" : 1, "officer" : 102, "captain" : 0, "general" : 0},
+    {"cadet" : 1, "officer" : 102, "captain" : 0, "general" : 8},
     #8
     {"cadet" : 0, "officer" : 15, "captain" : 10, "general" : 5},
     #9
-    {"cadet" : 0, "officer" : 50, "captain" : 23, "general" : 0},
+    {"cadet" : 0, "officer" : 50, "captain" : 23, "general" : 3},
     #10
     {"cadet" : 29, "officer" : 25, "captain" : 10, "general" : 9},
 ]
 
 ENEMY_DATA = {
-    "cadet"   : {"speed" : 1, "health": 5, "reward" : 10},
-    "officer" : {"speed" : 2, "health": 10, "reward" : 10},
-    "captain" : {"speed" : 4, "health": 15, "reward" : 10},
-    "general" : {"speed" : 8, "health": 20, "reward" : 10}
+    "cadet"   : {"speed" : 1, "health": 5, "reward" : 5},
+    "officer" : {"speed" : 2, "health": 10, "reward" : 5},
+    "captain" : {"speed" : 4, "health": 15, "reward" : 5},
+    "general" : {"speed" : 8, "health": 20, "reward" : 5}
 }
