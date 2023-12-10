@@ -42,6 +42,7 @@ on_going = True
 placing_turrets = False
 removing_turrets = False
 selected_turret = None
+
 # Spawning Enemies
 last_enemy_spawn = pygame.time.get_ticks()
 
@@ -142,7 +143,7 @@ while running:
                             is_starting = True
                             is_paused = True
                             on_going = False
-                            ll.level.end_game(screen, enemy_group, lt.turret_group, "victory")
+                            ll.level.game_over(screen, enemy_group, lt.turret_group, "victory")
                         else:
                             ll.level.level += 1
                             ll.level.spawn_enemies()
@@ -152,7 +153,7 @@ while running:
             is_starting = True
             is_paused = True
             on_going = False
-            ll.level.end_game(screen, enemy_group, lt.turret_group, "defeat")
+            ll.level.game_over(screen, enemy_group, lt.turret_group, "defeat")
     
     # Add buttons to game over screens
     if not on_going:
@@ -227,7 +228,7 @@ while running:
                     elif removing_turrets == True and placing_turrets == False:
                         for turret in lt.turret_group:
                             # Remove the turret
-                            turret.sell()
+                            removing_turrets = turret.sell()
                     else:
                         selected_turret = lt.select_turret(mouse_pos)
 

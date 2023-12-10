@@ -10,18 +10,48 @@ enemy_4_image = pygame.image.load("assets/enemies/enemy_4.png")
 enemy_group = pygame.sprite.Group()
 
 ENEMY_IMAGES ={
-    "enemy_1" : enemy_1_image,
-    "enemy_2" : enemy_2_image,
-    "enemy_3" : enemy_3_image,
-    "enemy_4" : enemy_4_image
+    "cadet"   : enemy_1_image,
+    "officer" : enemy_2_image,
+    "captain" : enemy_3_image,
+    "general" : enemy_4_image
 }
 
 ENEMY_SPAWN_DATA = [
-    {"enemy_1" : 1, "enemy_2" : 0, "enemy_3" : 0, "enemy_4" : 2}
+    #1
+    {"cadet" : 10, "officer" : 0, "captain" : 0, "general" : 0},
+    #2
+    {"cadet" : 20, "officer" : 0, "captain" : 0, "general" : 0},
+    #3
+    {"cadet" : 35, "officer" : 0, "captain" : 0, "general" : 0},
+    #4
+    {"cadet" : 25, "officer" : 5, "captain" : 0, "general" : 0},
+    #5
+    {"cadet" : 35, "officer" : 18, "captain" : 0, "general" : 0},
+    #6
+    {"cadet" : 5, "officer" : 27, "captain" : 0, "general" : 0},
+    #7
+    {"cadet" : 15, "officer" : 15, "captain" : 4, "general" : 0},
+    #8
+    {"cadet" : 20, "officer" : 20, "captain" : 5, "general" : 0},
+    #9
+    {"cadet" : 10, "officer" : 20, "captain" : 14, "general" : 0},
+    #10
+    {"cadet" : 0, "officer" : 0, "captain" : 30, "general" : 0},
+    #11
+    {"cadet" : 1, "officer" : 102, "captain" : 0, "general" : 0},
+    #12
+    {"cadet" : 10, "officer" : 10, "captain" : 12, "general" : 3},
+    #13
+    {"cadet" : 0, "officer" : 15, "captain" : 10, "general" : 5},
+    #14
+    {"cadet" : 0, "officer" : 50, "captain" : 23, "general" : 0},
+    #15
+    {"cadet" : 49, "officer" : 15, "captain" : 10, "general" : 9},
 ]
+
 ENEMY_DATA = {
-    "enemy_1" : {"speed" : 2, "health": 7, "xp" : 40},
-    "enemy_2" : {"speed" : 3, "health": 5, "xp" : 60},
-    "enemy_3" : {"speed" : 1, "health": 10, "xp" : 30},
-    "enemy_4" : {"speed" : 5, "health": 1, "xp" : 20}
+    "cadet"   : {"speed" : 1, "health": 5, "reward" : 10},
+    "officer" : {"speed" : 2, "health": 10, "reward" : 20},
+    "captain" : {"speed" : 4, "health": 15, "reward" : 30},
+    "general" : {"speed" : 8, "health": 20, "reward" : 40}
 }

@@ -233,7 +233,9 @@ class Menu:
 
             self.SCREEN.fill((254,217,139))
 
-            ABOUT_THE_GAME_TEXT = pygame.font.Font(None, 36).render("This is the ABOUT THE GAME screen.", True, (94, 88, 49))
+            about_the_game_text = ("How to play?")
+            
+            ABOUT_THE_GAME_TEXT = pygame.font.Font(None, 36).render(about_the_game_text, True, (94, 88, 49))
             ABOUT_THE_GAME_RECT = ABOUT_THE_GAME_TEXT.get_rect(center=(self.SCREEN.get_width() // 2, self.SCREEN.get_height() // 2))
             self.SCREEN.blit(ABOUT_THE_GAME_TEXT, ABOUT_THE_GAME_RECT)
 
@@ -382,5 +384,3 @@ class Menu:
 
         self.main_menu()
 
-if __name__ == "__main__":
-    menu = Menu()
