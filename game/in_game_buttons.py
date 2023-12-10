@@ -1,4 +1,3 @@
-import pygame
 from buttons import Button, TwoActionButton
 import constants as c
 
@@ -26,11 +25,11 @@ exit_button.transform_image_proportions(50, 50)
 laser_button = Button(20, c.SCREEN_HEIGHT + 15, "assets/buttons/laser.png")
 laser_button.transform_image_proportions(50, 50)
 
-artillery_button = Button(120, c.SCREEN_HEIGHT + 15, 'assets/buttons/artillery.png')
+artillery_button = Button(120, c.SCREEN_HEIGHT + 15, "assets/buttons/artillery.png")
 artillery_button.transform_image_proportions(50, 50)
 
 # Remove Turret Button
-rm_turret_button = Button(220, c.SCREEN_HEIGHT + 15, 'assets/buttons/remove.png')
+rm_turret_button = Button(220, c.SCREEN_HEIGHT + 15, "assets/buttons/remove.png")
 rm_turret_button.transform_image_proportions(50, 50)
 
 # Upgrade Turret Button

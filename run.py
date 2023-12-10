@@ -57,7 +57,7 @@ def display_data():
     -------
     display_data()
     """
-    draw_text("LEVEL: " + str(level.level) + "/10", text_font, "grey100", 0, 0)
+    draw_text("LEVEL: " + str(level.level) + "/8", text_font, "grey100", 0, 0)
     screen.blit(lo.heart_image, (5, 30))
     draw_text(str(level.health), text_font, "grey100", 45, 30)
     screen.blit(lo.coin_image, (5, 60))
@@ -285,11 +285,6 @@ while running:
         # Quit Event
         if event.type == pygame.QUIT:
             running = False
-
-        # Press ESC to leave
-        elif event.type == pygame.KEYDOWN:
-            if event.type == pygame.K_ESCAPE:
-                running = False
 
     # Display Update
     pygame.display.flip()

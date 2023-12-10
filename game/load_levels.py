@@ -1,4 +1,3 @@
-import pygame
 from game.load_enemy import *
 from game import waypoints as wp
 from constants import SCREEN_HEIGHT, SCREEN_WIDTH

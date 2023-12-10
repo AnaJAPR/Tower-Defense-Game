@@ -170,7 +170,7 @@ class TwoActionButton(Button):
         self._second_image = pygame.image.load(second_image_path).convert_alpha()
         self._second_rect = self._second_image.get_rect()
         self._second_rect.topleft = (x, y)
-        self._status = True
+        self.status = True
 
     def transform_image_proportions(self, width:int, height:int):
         """
@@ -249,7 +249,7 @@ class TwoActionButton(Button):
         two_action_button = TwoActionButton(500, 500, "assets/buttons/continue.png", "assets/buttons/pause.png")
         two_action_buttons.status
         """
-        status = self._status
+        return self._status
 
     @status.setter
     def status(self, value:bool):
