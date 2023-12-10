@@ -25,6 +25,25 @@ for x in range(1, c.TURRET_LEVELS + 1):
     laser_spritesheets.append(laser_sheet)
 
 def create_turret(mouse_pos, turret_type):
+    """
+    Create a turret at a determined position.
+
+    Parameters
+    ---------- 
+    mouse_pos : tuple
+        A tuple containing the x and y coordinates of the mouse
+    turret_type : str
+        The type of the turret: "artillery" or "laser".
+
+    Returns
+    -------
+    bool
+        The function always returns False
+
+    Example
+    -------
+    create_turrets((20, 20), "artillery")
+    """
     base_centers = [(392, 39),
                     (314, 185),
                     (472, 184),
@@ -64,6 +83,24 @@ def create_turret(mouse_pos, turret_type):
     return False
 
 def select_turret(mouse_pos):
+    """
+    Select a turret using the mouse
+
+    Parameters
+    ---------- 
+    mouse_pos : tuple
+        A tuple containing the x and y coordinates of the mouse
+
+    Returns
+    -------
+    None
+        The function doesn't return anything.
+
+    Example
+    -------
+    sekect_turret((50, 40))
+    """
+
     for turret in turret_group:
         distance = math.sqrt((mouse_pos[0] - turret.pos_x)**2 + (mouse_pos[1] - turret.pos_y)**2)
         max_selection_distance = 50
@@ -72,6 +109,13 @@ def select_turret(mouse_pos):
     return None
 
 def clear_selection():
+    """
+    Clear the towers selections.
+
+    Example
+    -------
+    clear_selection()
+    """
     for turret in turret_group:
         turret.selected = False
         

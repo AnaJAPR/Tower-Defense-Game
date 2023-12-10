@@ -250,6 +250,25 @@ class Level():
         self.level = 1
 
     def game_over(self, screen, enemy_group, turret_group, result_game):
+        """
+        All the game objects are removed and shows a victory or defeat screen.
+
+        Parameters
+        ---------- 
+        screen : pygame.surface.Surface
+            The screen where the game over screen is drawn.
+        enemy_group : pygame.sprite.Group
+            Group of enemies that will be removed from the level.
+        turret_group : pygame.sprite.Group
+            Group of turrets that will be removed from the level.
+        result_game : string
+            String "victory" or "defeat"
+        
+        Example
+        -------
+        level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
+        level.game_over()
+        """
         for enemy in enemy_group:
             enemy.kill()
         for turret in turret_group:
