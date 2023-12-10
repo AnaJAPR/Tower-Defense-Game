@@ -217,6 +217,7 @@ class Enemy(pygame.sprite.Sprite):
         else:
             self.kill()
             ll.level.health -= self.__initial_health
+            ll.level.killed_enemies += 1
 
         distance = self.__movement.length()
         # If the distance to the next waypoint is greater than the enemy's speed, it will move at its natural speed
