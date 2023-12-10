@@ -1,5 +1,3 @@
-import sys
-sys.path.append('.')
 import pygame
 from buttons import Button, TwoActionButton
 import constants as c
@@ -40,5 +38,5 @@ upgrade_button = Button(320, c.SCREEN_HEIGHT + 15, "assets/buttons/up.png")
 upgrade_button.transform_image_proportions(50, 50)
 
 # Fast Forward Button
-fast_forward_button = TwoActionButton(420, c.SCREEN_HEIGHT + 15, "assets/buttons/fast_forward.png", "assets/buttons/fast_forward_active.png")
+fast_forward_button = TwoActionButton(745, c.SCREEN_HEIGHT + 15, "assets/buttons/fast_forward.png", "assets/buttons/fast_forward_active.png")
 fast_forward_button.transform_image_proportions(50, 50)

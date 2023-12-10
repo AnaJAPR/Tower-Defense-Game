@@ -1,31 +1,31 @@
 TURRET_DATA = {
-    'artillery': [
+    "artillery": [
         {
             # Level 1
-            "range": 150,
+            "range": 130,
             "cooldown": 2000,
             "damage": 2
         },
         {
             # Level 2
-            "range": 200,
+            "range": 160,
             "cooldown": 1750,
-            "damage": 4
+            "damage": 3
         },
         {
             # Level 3
-            "range": 250,
+            "range": 190,
             "cooldown": 1500,
-            "damage": 6
+            "damage": 3
         },
         {
             # Level 4
-            "range": 300,
+            "range": 220,
             "cooldown": 1250,
-            "damage": 8
+            "damage": 4
         }
     ],
-    'laser': [
+    "laser": [
         {
             # Level 1
             "range": 90,
@@ -48,7 +48,7 @@ TURRET_DATA = {
             # Level 4
             "range": 150,
             "cooldown": 500,
-            "damage": 4
+            "damage": 3
         }
     ]
 }

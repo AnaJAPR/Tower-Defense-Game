@@ -30,15 +30,15 @@ def draw_text(text, font, text_col, x, y):
     screen.blit(img, (x, y))
 
 def display_data():
-    draw_text("LEVEL: " + str(level.level) + "/15", text_font, "grey100", 0, 0)
+    draw_text("LEVEL: " + str(level.level) + "/10", text_font, "grey100", 0, 0)
     screen.blit(lo.heart_image, (5, 30))
     draw_text(str(level.health), text_font, "grey100", 45, 30)
     screen.blit(lo.coin_image, (5, 60))
     draw_text(str(level.money), text_font, "grey100", 45, 60)
     screen.blit(lo.coin_image, (15, c.SCREEN_HEIGHT + 75))
-    draw_text(str(180), text_font, "grey100", 35, c.SCREEN_HEIGHT + 73)
+    draw_text(str(c.PRICE_LASER), text_font, "grey100", 35, c.SCREEN_HEIGHT + 73)
     screen.blit(lo.coin_image, (115, c.SCREEN_HEIGHT + 75))
-    draw_text(str(200), text_font, "grey100", 135, c.SCREEN_HEIGHT + 73)
+    draw_text(str(c.PRICE_ARTILLERY), text_font, "grey100", 135, c.SCREEN_HEIGHT + 73)
 
 
 # GAME VARIABLES
@@ -205,6 +205,7 @@ while running:
             cursor_rect.center = cursor_pos
             if cursor_pos[1] <= c.SCREEN_HEIGHT:
                 screen.blit(cursor_turret, cursor_rect)
+            price = c.PRICE_ARTILLERY
                 
         elif selected_turret_type == "laser":
             cursor_turret = lt.cursor_laser
@@ -213,6 +214,7 @@ while running:
             cursor_rect.center = cursor_pos
             if cursor_pos[1] <= c.SCREEN_HEIGHT:
                 screen.blit(cursor_turret, cursor_rect)
+            price = c.PRICE_LASER
 
     # Drawing a X that follows the mouse
     if removing_turrets == True and placing_turrets == False:
@@ -235,7 +237,7 @@ while running:
                     # Check whether the placing turrets button is pressed or not
                     if placing_turrets == True and removing_turrets == False:
                         # check if there is enough money
-                        if level.money >= c.BUY_COST:
+                        if level.money >= price:
                             # Put the turret
                             placing_turrets = lt.create_turret(mouse_pos, selected_turret_type)
                     # Check whether the removing turrets button is pressed or not

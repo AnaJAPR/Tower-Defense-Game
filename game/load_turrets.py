@@ -1,8 +1,6 @@
-import sys
-sys.path.append('.')
 import pygame
 import constants as c
-from turret import ArtilleryTurret, LaserTurret  # Assuming you have ArtilleryTurret and LaserTurret classes
+from turret import ArtilleryTurret, LaserTurret
 from game import load_levels as ll
 from game import load_sounds as ls
 import math
@@ -35,7 +33,7 @@ def create_turret(mouse_pos, turret_type):
                     (303, 482)]
     
     closest_base = None
-    min_distance = float('inf')
+    min_distance = float("inf")
 
     for base_center in base_centers:
         distance = math.sqrt((mouse_pos[0] - base_center[0])**2 + (mouse_pos[1] - base_center[1])**2)
@@ -52,10 +50,10 @@ def create_turret(mouse_pos, turret_type):
             return  # Do nothing if a turret already exists at the selected spot
 
     if min_distance <= max_placement_distance:
-        if turret_type == 'artillery':
-            new_turret = ArtilleryTurret(artillery_spritesheets, closest_base[0], closest_base[1], 200, ls.artillery_sfx)
-        elif turret_type == 'laser':
-            new_turret = LaserTurret(laser_spritesheets, closest_base[0], closest_base[1], 180, ls.laser_sfx)
+        if turret_type == "artillery":
+            new_turret = ArtilleryTurret(artillery_spritesheets, closest_base[0], closest_base[1], 150, ls.artillery_sfx)
+        elif turret_type == "laser":
+            new_turret = LaserTurret(laser_spritesheets, closest_base[0], closest_base[1], 80, ls.laser_sfx)
             
         turret_group.add(new_turret)
         # Remove cost of turret
