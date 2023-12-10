@@ -1,8 +1,7 @@
 import pygame
 import random
-from constants import HEALTH, MONEY, SCREEN_WIDTH, SCREEN_HEIGHT, SPAWN_COOLDOWN
-from game.load_enemy import ENEMY_SPAWN_DATA, ENEMY_IMAGES
-from game import waypoints as wp
+from constants import HEALTH, MONEY, SCREEN_WIDTH, SCREEN_HEIGHT
+from game.load_enemy import ENEMY_SPAWN_DATA
 
 class Level():
     """
@@ -57,7 +56,8 @@ class Level():
         self.spawned_enemies = 0
         self.enemy_list = []
         self.__map_image = pygame.image.load(map_image)
-        self._health = HEALTH
+        self.__initial_health = HEALTH
+        self._health = self.__initial_health 
         self.__initial_money = MONEY
         self._money =  self.__initial_money
         self.__waypoints = waypoints
@@ -100,6 +100,23 @@ class Level():
         level.draw_map(screen)
         """
         surface.blit(self.__map_image, (0, 0))
+
+    @property
+    def initial_health(self):
+        """
+        Get the initial health the player has.
+        
+        Returns
+        -------
+        int
+            The initial health the player has
+        
+        Example
+        -------
+        level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
+        initial_health = level.initial_health
+        """
+        return self.__initial_health   
 
     @property
     def initial_money(self):
@@ -199,14 +216,13 @@ class Level():
         level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
         level.spawn_enemies()
         """
-        if self.level < self.n_waves:
-            enemies = ENEMY_SPAWN_DATA[self.level - 1]
-            for enemy_type in enemies:
-                enemies_to_spawn = enemies[enemy_type]
-                for enemy in range(enemies_to_spawn):
-                    self.enemy_list.append(enemy_type)
-            #now randomize the list to shuffle the enemies
-            random.shuffle(self.enemy_list)
+        enemies = ENEMY_SPAWN_DATA[self.level - 1]
+        for enemy_type in enemies:
+            enemies_to_spawn = enemies[enemy_type]
+            for enemy in range(enemies_to_spawn):
+                self.enemy_list.append(enemy_type)
+        #now randomize the list to shuffle the enemies
+        random.shuffle(self.enemy_list)
 
     def clear_level_data(self):
         """
@@ -228,18 +244,35 @@ class Level():
         self.killed_enemies = 0
         self.level = 1
 
-    def end_game(self, screen, enemy_group, turret_group, result_game):
+    def game_over(self, screen, enemy_group, turret_group, result_game):
         for enemy in enemy_group:
             enemy.kill()
         for turret in turret_group:
             turret.kill()
-        self.clear_level_data()
+
         pygame.draw.rect(screen, (255,255,255), pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT + 300))
         image = pygame.image.load(f"assets\others\{result_game}.png").convert_alpha()
         image = pygame.transform.scale(image, (800, 380))
         screen.blit(image, (0, 0))
         
-        # if result_game == "victory":
+        if result_game == "victory":
+            if self._health == self.__initial_health:
+                star = pygame.image.load("assets\others\star.png").convert_alpha()
+                star = pygame.transform.scale(star, (150, 150))
+                screen.blit(star, (175, 325))
+                screen.blit(star, (475, 325))
+                screen.blit(star, (325, 325))
+
+            if self._health >= self.__initial_health / 2 and self._health < self.__initial_health:
+                star = pygame.image.load("assets\others\star.png").convert_alpha()
+                star = pygame.transform.scale(star, (150, 150))
+                screen.blit(star, (250, 325))
+                screen.blit(star, (400, 325))
+            
+            if self._health < self.__initial_health / 2 :
+                star = pygame.image.load("assets\others\star.png").convert_alpha()
+                star = pygame.transform.scale(star, (150, 150))
+                screen.blit(star, (325, 325))
 
 # class SpawnEnemies(Level):
 #     def __init__(self, map_image: str, waypoints: list):
