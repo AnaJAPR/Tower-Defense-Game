@@ -239,14 +239,11 @@ class Level():
         image = pygame.transform.scale(image, (800, 380))
         screen.blit(image, (0, 0))
         
-        # if result_game == "victory":
-
-# class SpawnEnemies(Level):
-#     def __init__(self, map_image: str, waypoints: list):
-#         super().__init__(map_image, waypoints)
-    def spawn_waves(self):
-        for wave in range(self.n_waves):
-            self.spawn_enemies()
-            self.level += 1
-            self.last_wave_spawn = pygame.time.get_ticks()
-
+    def process_enemies(self):
+        enemies = ENEMY_SPAWN_DATA[self.level - 1]
+        for enemy_type in enemies:
+            enemies_to_spawn = enemies[enemy_type]
+            for enemy in range(enemies_to_spawn):
+                self.enemy_list.append(enemy_type)
+        #now rando the list to shuffle enemies
+        random.shuffle(self.enemy_list)

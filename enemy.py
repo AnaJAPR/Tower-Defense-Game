@@ -26,7 +26,7 @@ class Enemy(pygame.sprite.Sprite):
         Enemy's health obtained from the ENEMY_DATA dictionary.
     __initial_health : int
         Enemy's initial health obtained from the ENEMY_DATA dictionary.
-    _xp : int
+    _reward : int
         Amount of money earned by the player when an enemy is killed. Obtained from the
         ENEMY_DATA dictionary.
     _waypoints : list
@@ -70,7 +70,7 @@ class Enemy(pygame.sprite.Sprite):
         self._speed = ENEMY_DATA.get(enemy_type)["speed"]
         self._health = ENEMY_DATA.get(enemy_type)["health"]
         self.__initial_health = ENEMY_DATA.get(enemy_type)["health"]
-        self._xp = ENEMY_DATA.get(enemy_type)["xp"]
+        self._reward = ENEMY_DATA.get(enemy_type)["reward"]
 
         self.__waypoints = waypoints
         self.__target_wp = 1
@@ -134,7 +134,7 @@ class Enemy(pygame.sprite.Sprite):
         self._health = health
 
     @property
-    def xp(self):
+    def reward(self):
         """
         Get how much money the player will earn if the enemy get killed.
         
@@ -146,12 +146,12 @@ class Enemy(pygame.sprite.Sprite):
         Example
         -------
         enemy = Enemy([(0, 0), (10, 10, (20, 20))], "assets\enemies\enemy_1.png", "enemy_1")
-        enemy.xp
+        enemy.reward
         """
-        return self._xp
+        return self._reward
     
-    @xp.setter
-    def xp(self, xp):
+    @reward.setter
+    def reward(self, reward):
         """
         Set the amount of money the player will earn killing the enemy.
 
@@ -163,9 +163,9 @@ class Enemy(pygame.sprite.Sprite):
         Example
         -------
         enemy = Enemy([(0, 0), (10, 10, (20, 20))], "assets\enemies\enemy_1.png", "enemy_1")
-        enemy.xp = 20
+        enemy.reward = 20
         """
-        self._xp = xp
+        self._reward = reward
 
     def draw_health_bar(self, surface):
         """
@@ -261,7 +261,7 @@ class Enemy(pygame.sprite.Sprite):
         """
         if self._health <= 0:
             self.kill()
-            ll.level.money += self._xp
+            ll.level.money += self._reward
             ll.level.killed_enemies += 1
 
     def update(self, surface):

@@ -42,6 +42,7 @@ on_going = True
 placing_turrets = False
 removing_turrets = False
 selected_turret = None
+
 # Spawning Enemies
 last_enemy_spawn = pygame.time.get_ticks()
 
