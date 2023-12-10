@@ -232,7 +232,6 @@ class Menu:
             PLAY_BACK = Button(image=None, pos=(self.SCREEN.get_width() // 2, self.SCREEN.get_height() - 40), 
                             text_input="BACK", base_color=(94, 88, 49), hovering_color=(207, 126, 18))
 
-            # buttons change color when you position the mouse over them
             PLAY_BACK.changeColor(PLAY_MOUSE_POS)
             PLAY_BACK.update(self.SCREEN)
 
@@ -268,20 +267,24 @@ class Menu:
             about_the_game_text_lines = [
             "How to play?",
             "",
-            "The game starts pausedThis tower defense game starts",
-            "paused and the player has a pre-established amount of",
-            "money and lives. Before starting the game, you have",
-            "the opportunity to purchase machine gun turrets and",
-            "place them in some of the base positions indicated",
-            "on the map. During the game it is also possible to",
-            "delete and buy more towers. The game basically consists",
-            "of adding towers by clicking on the icons with drawings",
-            "of each type of tower and thus killing enemies before",
-            "they reach the end of the path, you need to protect arrival."
+            "When you click on 'start game' the game starts, with pause activated.",
+            "There are buttons at the bottom of the game screen, two of which",
+            "you must click to buy an artillery or laser turret",
+            "and select the base of the map where it will be located."
+            "After positioning the towers in the desired locations, you must start",
+            "the game by activating the unpause button in the upper right corner.",
+            "Enemies begin to pass through the map and towers shoot causing",
+            "damage. If you let enemies reach the end of the route, your life,",
+            "which is in the upper left corner along with your money, reduces.",
+            "Whenever an enemy loses all health, you gain more money.",
+            "You can add and remove towers during the game. If you run out",
+            "of life before the enemies run out, you lose. Otherwise your",
+            "game gets stars from 1 to 3, so 1 means you won, 2 means you won",
+            "with at least half your life and 3 that you won without losing life",
             ]
 
-            x = self.SCREEN.get_width() // 15
-            y = self.SCREEN.get_height() // 3
+            x = self.SCREEN.get_width() // 35
+            y = self.SCREEN.get_height() // 2
 
             # Calculates the total height of rendered text
             line_height = 30
@@ -290,12 +293,11 @@ class Menu:
             # Adjust starting position (y) to center text vertically
             y -= total_height // 2
 
-            draw_multiline_text(self.SCREEN, pygame.font.Font(None, 36), about_the_game_text_lines, (94, 88, 49), x, y, line_height)
+            draw_multiline_text(self.SCREEN, pygame.font.Font(None, 28), about_the_game_text_lines, (94, 88, 49), x, y, line_height)
 
             ABOUT_THE_GAME_BACK = Button(image=None, pos=(self.SCREEN.get_width() // 2, self.SCREEN.get_height() - 40), 
                             text_input="BACK", base_color=(94, 88, 49), hovering_color=(207, 126, 18))
 
-            # buttons change color when you position the mouse over them
             ABOUT_THE_GAME_BACK.changeColor(ABOUT_THE_GAME_MOUSE_POS)
             ABOUT_THE_GAME_BACK.update(self.SCREEN)
 

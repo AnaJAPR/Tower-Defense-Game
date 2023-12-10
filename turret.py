@@ -293,7 +293,8 @@ class BaseTurret(pygame.sprite.Sprite):
 
     def sell(self):
         """
-        Sell the turret, making it disappear and earning the respective money.
+        Sell the turret, making it disappear and earning the respective money 
+        added to the value of your last upgrade.
 
         Returns
         -------
@@ -310,7 +311,7 @@ class BaseTurret(pygame.sprite.Sprite):
         if self.rect.collidepoint(position):
             if pygame.mouse.get_pressed()[0] == 1:
                 self.kill()
-                ll.level.money += self.price + self.upgrade_price * (self.upgrade_level - 1)
+                ll.level.money += self.price + self.upgrade_price
         return removing
 
 # Artillery Turret
