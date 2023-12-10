@@ -54,20 +54,18 @@ class Level():
             A list of tuples representing the x and y coordinates of the points the enemies
             must walk through.
         """
-        self.level = 1
-        self.game_speed = 1
-        self.spawned_enemies = 0
-        self.enemy_list = []
+        self._level = 1
+        self._game_speed = 1
+        self._spawned_enemies = 0
+        self._enemy_list = []
         self.__map_image = pygame.image.load(map_image)
         self.__initial_health = HEALTH
         self._health = self.__initial_health 
         self.__initial_money = MONEY
         self._money =  self.__initial_money
         self.__waypoints = waypoints
-        self.killed_enemies = 0
-        self.lose_game = False
-        self.last_wave_spawn = pygame.time.get_ticks()
-        self.n_waves = len(ENEMY_SPAWN_DATA)
+        self._killed_enemies = 0
+        self._n_waves = len(ENEMY_SPAWN_DATA)
 
     def transform_image_proportions(self, width:int, height:int):
         """
@@ -103,7 +101,43 @@ class Level():
         level.draw_map(screen)
         """
         surface.blit(self.__map_image, (0, 0))
-
+    
+    @property
+    def level(self):
+        return self._level
+    
+    @level.setter
+    def level(self, level):
+        return self._level
+        
+    @property
+    def game_speed(self):
+        return self._game_speed
+    
+    @game_speed.setter
+    def game_speed(self, game_speed):
+        return self._game_speed
+           
+    @property
+    def spawned_enemies(self):
+        return self._spawned_enemies
+    
+    @spawned_enemies.setter
+    def spawned_enemies(self,spawned_enemies):
+        return self._spawned_enemies
+             
+    @property
+    def enemy_list(self):
+        return self._enemy_list
+                 
+    @property
+    def killed_enemies(self):
+        return self._killed_enemies
+    
+    @property
+    def n_waves(self):
+        return self._n_waves
+    
     @property
     def initial_health(self):
         """
@@ -153,8 +187,6 @@ class Level():
         level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
         initial_money = level.money
         """
-        if self._money < 0:
-            self._money = 0
         return self._money
 
     @money.setter
@@ -221,13 +253,13 @@ class Level():
         level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
         level.spawn_enemies()
         """
-        enemies = ENEMY_SPAWN_DATA[self.level - 1]
+        enemies = ENEMY_SPAWN_DATA[self._level - 1]
         for enemy_type in enemies:
             enemies_to_spawn = enemies[enemy_type]
             for enemy in range(enemies_to_spawn):
-                self.enemy_list.append(enemy_type)
+                self._enemy_list.append(enemy_type)
         #now randomize the list to shuffle the enemies
-        random.shuffle(self.enemy_list)
+        random.shuffle(self._enemy_list)
 
     def clear_level_data(self):
         """
@@ -242,12 +274,12 @@ class Level():
         level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
         level.clear_level_data()
         """
-        self.spawned_enemies = 0
-        self.enemy_list = []
+        self._spawned_enemies = 0
+        self._enemy_list = []
         self._health = HEALTH
         self._money =  self.__initial_money
-        self.killed_enemies = 0
-        self.level = 1
+        self._killed_enemies = 0
+        self._level = 1
 
     def game_over(self, screen, enemy_group, turret_group, result_game):
         """

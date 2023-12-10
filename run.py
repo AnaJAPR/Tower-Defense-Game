@@ -8,7 +8,6 @@ from game.load_levels import *
 from game import in_game_buttons as igb
 from game import load_others as lo
 from game import load_sounds as ls
-from menu import Menu
 
 # Starting Pygame
 pygame.init()

@@ -34,7 +34,7 @@ class Enemy(pygame.sprite.Sprite):
         must walk through.
     _target_wp : int
         Index of the waypoints list that the enemy is currently going to.
-    _position : pygame.math.Vector2
+    __position : pygame.math.Vector2
         Current position of the enemy.
     __angle : int
         Angle that the enemy must turn while walking
@@ -75,13 +75,13 @@ class Enemy(pygame.sprite.Sprite):
         self.__waypoints = waypoints
         self.__target_wp = 1
 
-        self._position = Vector2(self.__waypoints[0])
+        self.__position = Vector2(self.__waypoints[0])
         self.__angle = 0
         self._original_image = image
         self.image = pygame.transform.rotate(self._original_image, self.__angle)
         self.rect = self.image.get_rect()
-        self.rect.center = self._position
-    
+        self.rect.center = self.__position
+
     @property
     def position(self):
         """
@@ -97,7 +97,7 @@ class Enemy(pygame.sprite.Sprite):
         enemy = Enemy([(0, 0), (10, 10, (20, 20))], "assets\enemies\enemy_1.png", "enemy_1")
         enemy.position
         """
-        return self._position
+        return self.__position
 
     @property
     def health(self):
@@ -192,8 +192,8 @@ class Enemy(pygame.sprite.Sprite):
             pct = 1
 
         # Set the health bar position
-        pos_x = self._position[0] - bar_width / 2
-        pos_y = self._position[1] - 30
+        pos_x = self.__position[0] - bar_width / 2
+        pos_y = self.__position[1] - 30
 
         # Draw the life bar
         pygame.draw.rect(surface, (255, 0, 0), pygame.Rect(pos_x, pos_y, bar_width, bar_height))
@@ -212,7 +212,7 @@ class Enemy(pygame.sprite.Sprite):
         # Defining the target and the movement
         if self.__target_wp < len(self.__waypoints):
             self.__target = Vector2(self.__waypoints[self.__target_wp])
-            self.__movement = self.__target - self._position
+            self.__movement = self.__target - self.__position
         # If there are no more waypoints to go, the enemy disappears
         else:
             self.kill()
@@ -222,15 +222,15 @@ class Enemy(pygame.sprite.Sprite):
         distance = self.__movement.length()
         # If the distance to the next waypoint is greater than the enemy's speed, it will move at its natural speed
         if distance >= (self._speed * ll.level.game_speed):
-            self._position += self.__movement.normalize() * (self._speed * ll.level.game_speed)
+            self.__position += self.__movement.normalize() * (self._speed * ll.level.game_speed)
         else:
             # While the distance is less than the enemy speed, the movement speed is equal to the distance
             if distance != 0:
-                self._position += self.__movement.normalize() * distance
+                self.__position += self.__movement.normalize() * distance
             # Once the distance gets to 0, the next waypoint becomes into the new target
             self.__target_wp += 1
 
-        self.rect.center = self._position
+        self.rect.center = self.__position
     
     def rotate(self):
         """
@@ -243,13 +243,13 @@ class Enemy(pygame.sprite.Sprite):
         enemy.rotate()
         """
         #calculate distance to next waypoint
-        dist = self.__target - self._position
+        dist = self.__target - self.__position
         #use distance to calculate angle
         self.__angle = math.degrees(math.atan2(-dist[1], dist[0]))
         #rotate image and update rectangle
         self.image = pygame.transform.rotate(self._original_image, self.__angle)
         self.rect = self.image.get_rect()
-        self.rect.center = self._position
+        self.rect.center = self.__position
 
     def check_alive(self):
         """
