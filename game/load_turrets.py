@@ -70,9 +70,9 @@ def create_turret(mouse_pos, turret_type):
 
     if min_distance <= max_placement_distance:
         if turret_type == "artillery":
-            new_turret = ArtilleryTurret(artillery_spritesheets, closest_base[0], closest_base[1], 150, ls.artillery_sfx)
+            new_turret = ArtilleryTurret(artillery_spritesheets, closest_base[0], closest_base[1], c.PRICE_ARTILLERY, ls.artillery_sfx)
         elif turret_type == "laser":
-            new_turret = LaserTurret(laser_spritesheets, closest_base[0], closest_base[1], 80, ls.laser_sfx)
+            new_turret = LaserTurret(laser_spritesheets, closest_base[0], closest_base[1], c.PRICE_LASER, ls.laser_sfx)
             
         turret_group.add(new_turret)
         # Remove cost of turret

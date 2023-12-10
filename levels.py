@@ -108,7 +108,7 @@ class Level():
     
     @level.setter
     def level(self, level):
-        return self._level
+        self._level = level
         
     @property
     def game_speed(self):
@@ -116,23 +116,27 @@ class Level():
     
     @game_speed.setter
     def game_speed(self, game_speed):
-        return self._game_speed
-           
+        self._game_speed = game_speed
+
+    @property
+    def killed_enemies(self):
+        return self._killed_enemies
+
+    @killed_enemies.setter
+    def killed_enemies(self, killed_enemies):
+        self._killed_enemies = killed_enemies     
+
     @property
     def spawned_enemies(self):
         return self._spawned_enemies
     
     @spawned_enemies.setter
     def spawned_enemies(self,spawned_enemies):
-        return self._spawned_enemies
+        self._spawned_enemies = spawned_enemies
              
     @property
     def enemy_list(self):
         return self._enemy_list
-                 
-    @property
-    def killed_enemies(self):
-        return self._killed_enemies
     
     @property
     def n_waves(self):
