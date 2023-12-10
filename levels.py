@@ -153,6 +153,8 @@ class Level():
         level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
         initial_money = level.money
         """
+        if self._money < 0:
+            self._money = 0
         return self._money
 
     @money.setter
@@ -276,9 +278,3 @@ class Level():
                 star = pygame.image.load("assets\others\star.png").convert_alpha()
                 star = pygame.transform.scale(star, (150, 150))
                 screen.blit(star, (325, 325))
-
-    def spawn_waves(self):
-        for wave in range(self.n_waves):
-            self.spawn_enemies()
-            self.level += 1
-            self.last_wave_spawn = pygame.time.get_ticks()
