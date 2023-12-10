@@ -33,6 +33,14 @@ def draw_text(text, font, text_col, x, y):
     img = font.render(text, True, text_col)
     screen.blit(img, (x, y))
 
+def display_data():
+    draw_text("LEVEL: " + str(level.level) + "/15", text_font, "grey100", 0, 0)
+    screen.blit(lo.heart_image, (5, 30))
+    draw_text(str(level.health), text_font, "grey100", 45, 30)
+    screen.blit(lo.coin_image, (5, 60))
+    draw_text(str(level.money), text_font, "grey100", 45, 60)
+
+
 # GAME VARIABLES
 # Game Moments
 is_paused = True
@@ -48,7 +56,7 @@ selected_turret = None
 last_enemy_spawn = pygame.time.get_ticks()
 
 # Initializing spawn enemies process
-ll.level.spawn_enemies()
+level.spawn_enemies()
 
 # Loop
 running = True
@@ -61,7 +69,7 @@ while running:
         screen.fill((126, 52, 0))
 
         # Inserting the map on the screen
-        ll.level.draw_map(screen)
+        level.draw_map(screen)
 
         # UPDATE GROUPS
         # Updating Turrets
@@ -107,9 +115,9 @@ while running:
                 enemy.kill()
             for turret in lt.turret_group:
                 turret.kill()
-            ll.level.clear_level_data()
+            level.clear_level_data()
             last_enemy_spawn = pygame.time.get_ticks()
-            ll.level.spawn_enemies()
+            level.spawn_enemies()
 
         if igb.exit_button.draw_button(screen):
             Menu()
@@ -121,10 +129,15 @@ while running:
             # if turret can be upgraded, show upgrade button
             if selected_turret.upgrade_level < c.TURRET_LEVELS:
                 if igb.upgrade_button.draw_button(screen):
-                    if ll.level.money >= selected_turret.upgrade_price:
+                    if level.money >= selected_turret.upgrade_price:
                         selected_turret.upgrade()
-                        ll.level.money -= selected_turret.upgrade_price
+                        level.money -= selected_turret.upgrade_price
         if not is_paused:
+            # Fast Forward Option
+            level.game_speed = 1
+            igb.fast_forward_button.draw_button(screen)
+            if igb.fast_forward_button.status == False:
+                level.game_speed = 4
             # Spawning enemies
             if pygame.time.get_ticks() - last_enemy_spawn > c.SPAWN_COOLDOWN:
                 if level.spawned_enemies < len(level.enemy_list):
@@ -141,17 +154,17 @@ while running:
                             is_starting = True
                             is_paused = True
                             on_going = False
-                            ll.level.game_over(screen, enemy_group, lt.turret_group, "victory")
+                            level.game_over(screen, enemy_group, lt.turret_group, "victory")
                         else:
-                            ll.level.level += 1
-                            ll.level.spawn_enemies()
+                            level.level += 1
+                            level.spawn_enemies()
     
         # Lose game
-        if ll.level.health <= 0:
+        if level.health <= 0:
             is_starting = True
             is_paused = True
             on_going = False
-            ll.level.game_over(screen, enemy_group, lt.turret_group, "defeat")
+            level.game_over(screen, enemy_group, lt.turret_group, "defeat")
     
     # Add buttons to game over screens
     if not on_going:
@@ -160,9 +173,9 @@ while running:
             igb.pause_button.status = True
             is_starting = True
             is_paused = True
-            ll.level.clear_level_data()
+            level.clear_level_data()
             last_enemy_spawn = pygame.time.get_ticks()
-            ll.level.spawn_enemies()
+            level.spawn_enemies()
 
         if igb.exit_game_over.draw_button(screen):
             Menu()
@@ -174,9 +187,7 @@ while running:
     for turret in lt.turret_group:
         turret.draw(screen)
 
-    # Drawing Text
-    draw_text(str(ll.level.health), text_font, "grey100", 0, 0)
-    draw_text(str(ll.level.money), text_font, "grey100", 0, 30)
+    display_data()
 
     # Drawing a tower that follows the mouse
     if placing_turrets == True and removing_turrets == False:
@@ -217,7 +228,7 @@ while running:
                     # Check whether the placing turrets button is pressed or not
                     if placing_turrets == True and removing_turrets == False:
                         # check if there is enough money
-                        if ll.level.money >= c.BUY_COST:
+                        if level.money >= c.BUY_COST:
                             # Put the turret
                             placing_turrets = lt.create_turret(mouse_pos, selected_turret_type)
                     # Check whether the removing turrets button is pressed or not

@@ -19,6 +19,8 @@ class Level():
     ----------
     level : int
         The current level of the game.
+    game_speed : int
+        The current speed the game is going at
     spawned_enemies : int
         Amount of enemies that have been spawned.
     enemy_list : list
@@ -53,6 +55,7 @@ class Level():
             must walk through.
         """
         self.level = 1
+        self.game_speed = 1
         self.spawned_enemies = 0
         self.enemy_list = []
         self.__map_image = pygame.image.load(map_image)

@@ -221,8 +221,8 @@ class Enemy(pygame.sprite.Sprite):
 
         distance = self.__movement.length()
         # If the distance to the next waypoint is greater than the enemy's speed, it will move at its natural speed
-        if distance >= self._speed:
-            self._position += self.__movement.normalize() * self._speed
+        if distance >= (self._speed * ll.level.game_speed):
+            self._position += self.__movement.normalize() * (self._speed * ll.level.game_speed)
         else:
             # While the distance is less than the enemy speed, the movement speed is equal to the distance
             if distance != 0:

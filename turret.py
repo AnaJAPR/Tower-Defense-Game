@@ -106,9 +106,8 @@ class BaseTurret(pygame.sprite.Sprite):
         """
         pygame.sprite.Sprite.__init__(self)
         self.upgrade_level = 1
-        self.turret_type = turret_type  # 'artillery' or 'laser'
+        self.turret_type = turret_type
 
-        # Other common properties...
         self.range = TURRET_DATA[self.turret_type][self.upgrade_level - 1].get("range")
         self.cooldown = TURRET_DATA[self.turret_type][self.upgrade_level - 1].get("cooldown")
         self.damage = TURRET_DATA[self.turret_type][self.upgrade_level - 1].get("damage")
@@ -193,7 +192,7 @@ class BaseTurret(pygame.sprite.Sprite):
             self.play_animation()
         else:
             # Search for a new target once turret has cooled down
-            if pygame.time.get_ticks() - self.last_shot > self.cooldown:
+            if pygame.time.get_ticks() - self.last_shot > (self.cooldown / ll.level.game_speed):
                 self.pick_target(le.enemy_group)
     
     def pick_target(self, enemy_group):
