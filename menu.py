@@ -193,7 +193,7 @@ class Menu:
     def toggle_sound(self):
         if self.sound_enabled:
             pygame.mixer.music.pause()
-            self.SOUND_TOGGLE.image = pygame.transform.scale(pygame.image.load("assets/buttons/sound_off.jpg"), (40,40))
+            self.SOUND_TOGGLE.image = pygame.transform.scale(pygame.image.load("assets/buttons/sound_off.png"), (40,40))
         else:
             pygame.mixer.music.unpause()
             self.SOUND_TOGGLE.image = pygame.transform.scale(pygame.image.load("assets/buttons/sound.png"), (40,40))
