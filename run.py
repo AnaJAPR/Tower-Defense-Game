@@ -1,5 +1,6 @@
 import pygame
 import sys
+import subprocess
 import constants as c
 from enemy import Enemy
 from game import load_turrets as lt
@@ -148,10 +149,13 @@ while running:
             level.clear_level_data()
             last_enemy_spawn = pygame.time.get_ticks()
             level.spawn_enemies()
-
+   
         if igb.exit_button.draw_button(screen):
-            Menu()
+            python_command = "python"
+            script_path = "main.py"
 
+            # Start the game in a new process
+            subprocess.Popen([python_command, script_path])
             sys.exit()
 
         # if turret is selected, show upgrade button
@@ -214,7 +218,11 @@ while running:
             level.spawn_enemies()
 
         if igb.exit_game_over.draw_button(screen):
-            Menu()
+            python_command = "python"
+            script_path = "main.py"
+
+            # Start the game in a new process
+            subprocess.Popen([python_command, script_path])
             sys.exit()
 
     # Drawing Groups
