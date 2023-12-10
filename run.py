@@ -26,10 +26,37 @@ large_font = pygame.font.SysFont("Consolas", 36)
 
 # function to show text on screen
 def draw_text(text, font, text_col, x, y):
+    """
+    Draw text on the screen.
+
+    Parameters
+    ---------- 
+    text : str
+        Text that will be written.
+    font : pygame.font.Font
+        Font used to write the text.
+    text_col : str
+        String containing the color used to write the text.
+    x : int
+        The x coordinate where the text will be written.
+    y : int
+        The y coordinate where the text will be written.
+    
+    Example
+    -------
+    draw_text("LEVEL: " + str(level.level) + "/15", text_font, "grey100", 0, 0)
+    """
     img = font.render(text, True, text_col)
     screen.blit(img, (x, y))
 
 def display_data():
+    """
+    Display the game data on the screen
+    
+    Example
+    -------
+    display_data()
+    """
     draw_text("LEVEL: " + str(level.level) + "/10", text_font, "grey100", 0, 0)
     screen.blit(lo.heart_image, (5, 30))
     draw_text(str(level.health), text_font, "grey100", 45, 30)
