@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>enemy module &#8212; Tower Defense - A2 LP  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=039e1c02" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="enemy-module">
+<h1>enemy module<a class="headerlink" href="#enemy-module" title="Link to this heading">¶</a></h1>
+<dl class="py class" id="module-enemy">
+<dt class="sig sig-object py" id="enemy.Enemy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">enemy.</span></span><span class="sig-name descname"><span class="pre">Enemy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">waypoints</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enemy_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#enemy.Enemy" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Sprite</span></code></p>
+<p>Represents the enemy and its mechanics.</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>waypoints<span class="classifier">list</span></dt><dd><p>A list of tuples representing the x and y coordinates of the points the enemies
+must walk through.</p>
+</dd>
+<dt>image<span class="classifier">pygame.surface.Surface</span></dt><dd><p>An image loaded using Pygame.</p>
+</dd>
+<dt>enemy_type<span class="classifier">str</span></dt><dd><p>A string saying what’s the type of the enemy.</p>
+</dd>
+</dl>
+</section>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>_speed<span class="classifier">float</span></dt><dd><p>Enemy’s speed obtained from the ENEMY_DATA dictionary.</p>
+</dd>
+<dt>_health<span class="classifier">int</span></dt><dd><p>Enemy’s health obtained from the ENEMY_DATA dictionary.</p>
+</dd>
+<dt>__initial_health<span class="classifier">int</span></dt><dd><p>Enemy’s initial health obtained from the ENEMY_DATA dictionary.</p>
+</dd>
+<dt>_reward<span class="classifier">int</span></dt><dd><p>Amount of money earned by the player when an enemy is killed. Obtained from the
+ENEMY_DATA dictionary.</p>
+</dd>
+<dt>_waypoints<span class="classifier">list</span></dt><dd><p>A list of tuples representing the x and y coordinates of the points the enemies
+must walk through.</p>
+</dd>
+<dt>_target_wp<span class="classifier">int</span></dt><dd><p>Index of the waypoints list that the enemy is currently going to.</p>
+</dd>
+<dt>_position<span class="classifier">pygame.math.Vector2</span></dt><dd><p>Current position of the enemy.</p>
+</dd>
+<dt>__angle<span class="classifier">int</span></dt><dd><p>Angle that the enemy must turn while walking</p>
+</dd>
+<dt>_original_image<span class="classifier">pygame.surface.Surface</span></dt><dd><p>An image loaded using Pygame.</p>
+</dd>
+<dt>image<span class="classifier">pygame.surface.Surface</span></dt><dd><p>Original image after being rotated.</p>
+</dd>
+<dt>rect<span class="classifier">pygame.rect.Rect</span></dt><dd><p>Rect where the enemy’s image is drawn.</p>
+</dd>
+<dt>rect.center<span class="classifier">tuple </span></dt><dd><p>Coordinates x and y for the center of the rect.</p>
+</dd>
+</dl>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
+<p>enemy = Enemy([(0, 0), (10, 10, (20, 20))], “assetsenemiesenemy_1.png”, “enemy_1”)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="enemy.Enemy.check_alive">
+<span class="sig-name descname"><span class="pre">check_alive</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#enemy.Enemy.check_alive" title="Link to this definition">¶</a></dt>
+<dd><p>Checks if the enemy is still alive, and if not, makes the enemy disappear.</p>
+<section id="id1">
+<h3>Example<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<p>enemy = Enemy([(0, 0), (10, 10, (20, 20))], “assetsenemiesenemy_1.png”, “enemy_1”)
+enemy.check_alive()</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="enemy.Enemy.draw_health_bar">
+<span class="sig-name descname"><span class="pre">draw_health_bar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#enemy.Enemy.draw_health_bar" title="Link to this definition">¶</a></dt>
+<dd><p>Draw the health bar on the specified surface.</p>
+<section id="id2">
+<h3>Parameters<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>surface<span class="classifier">pygame.surface.Surface</span></dt><dd><p>The surface on which the enemy’s health bar will be drawn.</p>
+</dd>
+</dl>
+</section>
+<section id="id3">
+<h3>Example<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<p>enemy = Enemy([(0, 0), (10, 10, (20, 20))], “assetsenemiesenemy_1.png”, “enemy_1”)
+enemy.draw_health_bar(screen)</p>
+</section>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="enemy.Enemy.health">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">health</span></span><a class="headerlink" href="#enemy.Enemy.health" title="Link to this definition">¶</a></dt>
+<dd><p>Get the current health of the enemy.</p>
+<section id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>int</dt><dd><p>The current health of the enemy.</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h3>Example<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<p>enemy = Enemy([(0, 0), (10, 10, (20, 20))], “assetsenemiesenemy_1.png”, “enemy_1”)
+enemy.health</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="enemy.Enemy.move">
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#enemy.Enemy.move" title="Link to this definition">¶</a></dt>
+<dd><p>Causes the enemy to walk through the waypoints.</p>
+<section id="id5">
+<h3>Example<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<p>enemy = Enemy([(0, 0), (10, 10, (20, 20))], “assetsenemiesenemy_1.png”, “enemy_1”)
+enemy.move()</p>
+</section>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="enemy.Enemy.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><a class="headerlink" href="#enemy.Enemy.position" title="Link to this definition">¶</a></dt>
+<dd><p>Get the current position of the enemy.</p>
+<section id="id6">
+<h3>Returns<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>pygame.math.Vector2</dt><dd><p>The current position of the enemy.</p>
+</dd>
+</dl>
+</section>
+<section id="id7">
+<h3>Example<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<p>enemy = Enemy([(0, 0), (10, 10, (20, 20))], “assetsenemiesenemy_1.png”, “enemy_1”)
+enemy.position</p>
+</section>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="enemy.Enemy.reward">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reward</span></span><a class="headerlink" href="#enemy.Enemy.reward" title="Link to this definition">¶</a></dt>
+<dd><p>Get how much money the player will earn if the enemy get killed.</p>
+<section id="id8">
+<h3>Returns<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>int</dt><dd><p>The amount of the money the player will earn.</p>
+</dd>
+</dl>
+</section>
+<section id="id9">
+<h3>Example<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
+<p>enemy = Enemy([(0, 0), (10, 10, (20, 20))], “assetsenemiesenemy_1.png”, “enemy_1”)
+enemy.reward</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="enemy.Enemy.rotate">
+<span class="sig-name descname"><span class="pre">rotate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#enemy.Enemy.rotate" title="Link to this definition">¶</a></dt>
+<dd><p>Causes the enemy to rotate so that they are always looking in the direction 
+they are going</p>
+<section id="id10">
+<h3>Example<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
+<p>enemy = Enemy([(0, 0), (10, 10, (20, 20))], “assetsenemiesenemy_1.png”, “enemy_1”)
+enemy.rotate()</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="enemy.Enemy.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#enemy.Enemy.update" title="Link to this definition">¶</a></dt>
+<dd><p>Updates the enemy, making it move and rotate, checking if it’s still alive and
+drawing its health bar.</p>
+<section id="id11">
+<h3>Example<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
+<p>enemy = Enemy([(0, 0), (10, 10, (20, 20))], “assetsenemiesenemy_1.png”, “enemy_1”)
+enemy.rotate()</p>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Tower Defense - A2 LP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Ana Júlia Amaro, Paulo César G. Rodrigues, Guilherme Castilho, Uriel Liann S. G. de Limaima.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../_sources/apidoc/enemy.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

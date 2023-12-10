@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>levels module &#8212; Tower Defense - A2 LP  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=039e1c02" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="levels-module">
+<h1>levels module<a class="headerlink" href="#levels-module" title="Link to this heading">¶</a></h1>
+<dl class="py class" id="module-levels">
+<dt class="sig sig-object py" id="levels.Level">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">levels.</span></span><span class="sig-name descname"><span class="pre">Level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">map_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">waypoints</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#levels.Level" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the game level with its mechanics.</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>map_image<span class="classifier">str</span></dt><dd><p>The file path to the file where the image is.</p>
+</dd>
+<dt>waypoints<span class="classifier">list</span></dt><dd><p>A list of tuples representing the x and y coordinates of the points the enemies
+must walk through.</p>
+</dd>
+</dl>
+</section>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>level<span class="classifier">int</span></dt><dd><p>The current level of the game.</p>
+</dd>
+<dt>spawned_enemies<span class="classifier">int</span></dt><dd><p>Amount of enemies that have been spawned.</p>
+</dd>
+<dt>enemy_list<span class="classifier">list</span></dt><dd><p>List of the enemies that have been spawned.</p>
+</dd>
+<dt>__map_image<span class="classifier">pygame.surface</span></dt><dd><p>An image of the map loaded using pygame.</p>
+</dd>
+<dt>_health<span class="classifier">int</span></dt><dd><p>The player’s health.</p>
+</dd>
+<dt>__initial_money<span class="classifier">int</span></dt><dd><p>The initial amount of money the player has.</p>
+</dd>
+<dt>_money<span class="classifier">int</span></dt><dd><p>The current amount of money the player has.</p>
+</dd>
+<dt>_waypoints<span class="classifier">list</span></dt><dd><p>A list of points defining the path that the enemies must follow.</p>
+</dd>
+<dt>killed_enemies<span class="classifier">int</span></dt><dd><p>The amount of enemies that were killed during the level.</p>
+</dd>
+</dl>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
+<p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="levels.Level.clear_level_data">
+<span class="sig-name descname"><span class="pre">clear_level_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#levels.Level.clear_level_data" title="Link to this definition">¶</a></dt>
+<dd><p>Reset all the game mechanics to their initial status.</p>
+<section id="id1">
+<h3>Parameters<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<p>None</p>
+</section>
+<section id="id2">
+<h3>Example<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
+level.clear_level_data()</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="levels.Level.draw_map">
+<span class="sig-name descname"><span class="pre">draw_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#levels.Level.draw_map" title="Link to this definition">¶</a></dt>
+<dd><p>Draw the map on the specified surface.</p>
+<section id="id3">
+<h3>Parameters<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>surface<span class="classifier">pygame.surface.Surface</span></dt><dd><p>The surface on which the map will be drawn.</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h3>Example<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
+level.draw_map(screen)</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="levels.Level.game_over">
+<span class="sig-name descname"><span class="pre">game_over</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enemy_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turret_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_game</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#levels.Level.game_over" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="levels.Level.health">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">health</span></span><a class="headerlink" href="#levels.Level.health" title="Link to this definition">¶</a></dt>
+<dd><p>Get the current health the player has.</p>
+<section id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>int</dt><dd><p>The current health the player has</p>
+</dd>
+</dl>
+</section>
+<section id="id5">
+<h3>Example<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
+health = level.health</p>
+</section>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="levels.Level.initial_health">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">initial_health</span></span><a class="headerlink" href="#levels.Level.initial_health" title="Link to this definition">¶</a></dt>
+<dd><p>Get the initial health the player has.</p>
+<section id="id6">
+<h3>Returns<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>int</dt><dd><p>The initial health the player has</p>
+</dd>
+</dl>
+</section>
+<section id="id7">
+<h3>Example<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
+initial_health = level.initial_health</p>
+</section>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="levels.Level.initial_money">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">initial_money</span></span><a class="headerlink" href="#levels.Level.initial_money" title="Link to this definition">¶</a></dt>
+<dd><p>Get the initial amount of money the player has.</p>
+<section id="id8">
+<h3>Returns<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>int</dt><dd><p>The initial amount of money the player has</p>
+</dd>
+</dl>
+</section>
+<section id="id9">
+<h3>Example<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
+<p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
+initial_money = level.initial_money</p>
+</section>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="levels.Level.money">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">money</span></span><a class="headerlink" href="#levels.Level.money" title="Link to this definition">¶</a></dt>
+<dd><p>Get the current amount of money the player has.</p>
+<section id="id10">
+<h3>Returns<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>int</dt><dd><p>The current amount of money the player has</p>
+</dd>
+</dl>
+</section>
+<section id="id11">
+<h3>Example<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
+<p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
+initial_money = level.money</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="levels.Level.process_enemies">
+<span class="sig-name descname"><span class="pre">process_enemies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#levels.Level.process_enemies" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="levels.Level.spawn_enemies">
+<span class="sig-name descname"><span class="pre">spawn_enemies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#levels.Level.spawn_enemies" title="Link to this definition">¶</a></dt>
+<dd><p>Spawn enemies on the map according to some level attributes.</p>
+<section id="id12">
+<h3>Parameters<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
+<p>None</p>
+</section>
+<section id="id13">
+<h3>Example<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h3>
+<p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
+level.spawn_enemies()</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="levels.Level.spawn_waves">
+<span class="sig-name descname"><span class="pre">spawn_waves</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#levels.Level.spawn_waves" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="levels.Level.transform_image_proportions">
+<span class="sig-name descname"><span class="pre">transform_image_proportions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#levels.Level.transform_image_proportions" title="Link to this definition">¶</a></dt>
+<dd><p>Transform the image proportions to a specified width and height using Pygame’s
+transform.scale function.</p>
+<section id="id14">
+<h3>Parameters<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>width: int</dt><dd><p>The desired width of the image.</p>
+</dd>
+<dt>height: int</dt><dd><p>The desired height of the image.</p>
+</dd>
+</dl>
+</section>
+<section id="id15">
+<h3>Example<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h3>
+<p>level = Level(“assets/maps/map_1.png”, [(0, 0), (40, 60), (100, 100)])
+level.transform_image_proportions(69, 42)</p>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Tower Defense - A2 LP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Ana Júlia Amaro, Paulo César G. Rodrigues, Guilherme Castilho, Uriel Liann S. G. de Limaima.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../_sources/apidoc/levels.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

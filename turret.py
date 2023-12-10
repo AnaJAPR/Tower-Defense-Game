@@ -1,10 +1,7 @@
-import sys
-sys.path.append('.')
 import pygame
 import constants as c
 from game import load_levels as ll
 from game import load_enemy as le
-from game import load_sounds as ls
 from turret_data import TURRET_DATA
 import math
 
@@ -106,9 +103,8 @@ class BaseTurret(pygame.sprite.Sprite):
         """
         pygame.sprite.Sprite.__init__(self)
         self.upgrade_level = 1
-        self.turret_type = turret_type  # 'artillery' or 'laser'
+        self.turret_type = turret_type
 
-        # Other common properties...
         self.range = TURRET_DATA[self.turret_type][self.upgrade_level - 1].get("range")
         self.cooldown = TURRET_DATA[self.turret_type][self.upgrade_level - 1].get("cooldown")
         self.damage = TURRET_DATA[self.turret_type][self.upgrade_level - 1].get("damage")
@@ -193,7 +189,7 @@ class BaseTurret(pygame.sprite.Sprite):
             self.play_animation()
         else:
             # Search for a new target once turret has cooled down
-            if pygame.time.get_ticks() - self.last_shot > self.cooldown:
+            if pygame.time.get_ticks() - self.last_shot > (self.cooldown / ll.level.game_speed):
                 self.pick_target(le.enemy_group)
     
     def pick_target(self, enemy_group):
@@ -261,6 +257,8 @@ class BaseTurret(pygame.sprite.Sprite):
         """
 
         self.upgrade_level += 1
+        if self.upgrade_level > 2:
+            self.upgrade_price += self.upgrade_price // 2
         self.range = TURRET_DATA[self.turret_type][self.upgrade_level - 1].get("range")
         self.cooldown = TURRET_DATA[self.turret_type][self.upgrade_level - 1].get("cooldown")
         self.damage = TURRET_DATA[self.turret_type][self.upgrade_level - 1].get("damage")
@@ -333,7 +331,7 @@ class ArtilleryTurret(BaseTurret):
     sfx : pygame.mixer.Sound
         Sound effects of the turret.
     turret_type : str
-        The turret type, defined as 'artillery'.
+        The turret type, defined as "artillery".
     
     Attributes
     ----------
@@ -409,9 +407,9 @@ class ArtilleryTurret(BaseTurret):
         sfx : pygame.mixer.Sound
             Sound effects of the turret.
         turret_type : str
-            The turret type, defined as 'artillery'.
+            The turret type, defined as "artillery".
         """
-        super().__init__(sprite_sheets, pos_x, pos_y, price, sfx, turret_type='artillery')
+        super().__init__(sprite_sheets, pos_x, pos_y, price, sfx, turret_type="artillery")
 
 # Laser Turret
 class LaserTurret(BaseTurret):
@@ -431,7 +429,7 @@ class LaserTurret(BaseTurret):
     sfx : pygame.mixer.Sound
         Sound effects of the turret.
     turret_type : str
-        The turret type, defined as 'laser'.
+        The turret type, defined as "laser".
     
     Attributes
     ----------
@@ -507,6 +505,6 @@ class LaserTurret(BaseTurret):
         sfx : pygame.mixer.Sound
             Sound effects of the turret.
         turret_type : str
-            The turret type, defined as 'laser'.
+            The turret type, defined as "laser".
         """
-        super().__init__(sprite_sheets, pos_x, pos_y, price, sfx, turret_type='laser')
+        super().__init__(sprite_sheets, pos_x, pos_y, price, sfx, turret_type="laser")

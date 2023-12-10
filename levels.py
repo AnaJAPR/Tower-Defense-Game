@@ -19,6 +19,8 @@ class Level():
     ----------
     level : int
         The current level of the game.
+    game_speed : int
+        The current speed the game is going at
     spawned_enemies : int
         Amount of enemies that have been spawned.
     enemy_list : list
@@ -53,6 +55,7 @@ class Level():
             must walk through.
         """
         self.level = 1
+        self.game_speed = 1
         self.spawned_enemies = 0
         self.enemy_list = []
         self.__map_image = pygame.image.load(map_image)
@@ -150,6 +153,8 @@ class Level():
         level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
         initial_money = level.money
         """
+        if self._money < 0:
+            self._money = 0
         return self._money
 
     @money.setter
@@ -245,6 +250,25 @@ class Level():
         self.level = 1
 
     def game_over(self, screen, enemy_group, turret_group, result_game):
+        """
+        All the game objects are removed and shows a victory or defeat screen.
+
+        Parameters
+        ---------- 
+        screen : pygame.surface.Surface
+            The screen where the game over screen is drawn.
+        enemy_group : pygame.sprite.Group
+            Group of enemies that will be removed from the level.
+        turret_group : pygame.sprite.Group
+            Group of turrets that will be removed from the level.
+        result_game : string
+            String "victory" or "defeat"
+        
+        Example
+        -------
+        level = Level("assets/maps/map_1.png", [(0, 0), (40, 60), (100, 100)])
+        level.game_over()
+        """
         for enemy in enemy_group:
             enemy.kill()
         for turret in turret_group:
@@ -273,21 +297,3 @@ class Level():
                 star = pygame.image.load("assets\others\star.png").convert_alpha()
                 star = pygame.transform.scale(star, (150, 150))
                 screen.blit(star, (325, 325))
-
-# class SpawnEnemies(Level):
-#     def __init__(self, map_image: str, waypoints: list):
-#         super().__init__(map_image, waypoints)
-    def spawn_waves(self):
-        for wave in range(self.n_waves):
-            self.spawn_enemies()
-            self.level += 1
-            self.last_wave_spawn = pygame.time.get_ticks()
-
-    def process_enemies(self):
-        enemies = ENEMY_SPAWN_DATA[self.level - 1]
-        for enemy_type in enemies:
-            enemies_to_spawn = enemies[enemy_type]
-            for enemy in range(enemies_to_spawn):
-                self.enemy_list.append(enemy_type)
-        #now rando the list to shuffle enemies
-        random.shuffle(self.enemy_list)

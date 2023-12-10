@@ -16,7 +16,7 @@ ROWS = 15
 COLS = 15
 
 # Game Mechanics Constants
-HEALTH = 100
+HEALTH = 40
 MONEY = 650
 
 # Spawn enemy constants
@@ -24,7 +24,7 @@ SPAWN_COOLDOWN = 500
 
 #turret constants
 TURRET_LEVELS = 4
-BUY_COST = 100
-UPGRADE_COST = 100
+PRICE_ARTILLERY = 150
+PRICE_LASER = 80
 ANIMATION_STEPS = 8
 ANIMATION_DELAY = 15
