@@ -138,10 +138,14 @@ while running:
                 # Win Game
                 else:
                     if not level.killed_enemies < level.spawned_enemies:
-                        is_starting = True
-                        is_paused = True
-                        on_going = False
-                        ll.level.end_game(screen, enemy_group, lt.turret_group, "victory")
+                        if level.level == level.n_waves:
+                            is_starting = True
+                            is_paused = True
+                            on_going = False
+                            ll.level.end_game(screen, enemy_group, lt.turret_group, "victory")
+                        else:
+                            ll.level.level += 1
+                            ll.level.spawn_enemies()
     
         # Lose game
         if ll.level.health <= 0:
@@ -186,6 +190,7 @@ while running:
             cursor_rect.center = cursor_pos
             if cursor_pos[1] <= c.SCREEN_HEIGHT:
                 screen.blit(cursor_turret, cursor_rect)
+                
         elif selected_turret_type == 'laser':
             cursor_turret = lt.cursor_laser
             cursor_rect = cursor_turret.get_rect()
